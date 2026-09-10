@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>بازی من، زمین من، قوانین من</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#0F1417; --surface:#171E24; --surface2:#1D262C; --border:#2A343B;
+  --text:#E8E6DE; --text-dim:#9AA3A8; --text-faint:#6B767C;
+  --gold:#C9A227; --gold-dim:#8F7420;
+  --green:#3F9C6D; --green-dim:#2C6E4C;
+  --red:#C0533B; --red-dim:#8A3B29;
+  --blue:#4A7FA6;
+  --radius-sm:6px; --radius-md:10px; --radius-lg:16px;
+  --shadow:0 8px 24px rgba(0,0,0,.35);
+}
+[data-theme="light"]{
+  --bg:#F3F1EC; --surface:#FFFFFF; --surface2:#F7F5F0; --border:#DEDAD0;
+  --text:#20241F; --text-dim:#5B5F58; --text-faint:#8A8E86;
+  --shadow:0 8px 24px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html,body{height:100%;}
+body{
+  font-family:'Vazirmatn', sans-serif; background:var(--bg); color:var(--text);
+  min-height:100vh; overflow-x:hidden; transition:background .2s,color .2s;
+}
+body[dir="ltr"]{font-family:'Vazirmatn', sans-serif;}
+a{color:inherit; text-decoration:none;}
+button{font-family:inherit; cursor:pointer;}
+input,select,textarea{font-family:inherit;}
+::-webkit-scrollbar{width:8px; height:8px;}
+::-webkit-scrollbar-thumb{background:var(--border); border-radius:8px;}
+
+/* LAYOUT */
+#app{display:flex; min-height:100vh;}
+#sidebar{
+  width:230px; background:var(--surface); border-inline-end:1px solid var(--border);
+  display:flex; flex-direction:column; padding:20px 14px; flex-shrink:0;
+  position:sticky; top:0; height:100vh;
+}
+#sidebar .brand{padding:10px 8px 22px; }
+#sidebar .brand .t1{font-size:13px; color:var(--gold); font-weight:600; letter-spacing:.3px;}
+#sidebar .brand .t2{font-size:19px; font-weight:800; margin-top:4px; line-height:1.5;}
+#sidebar nav{display:flex; flex-direction:column; gap:4px; flex:1;}
+.navitem{
+  display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:var(--radius-md);
+  color:var(--text-dim); font-size:14.5px; font-weight:600; border:1px solid transparent;
+}
+.navitem:hover{background:var(--surface2);}
+.navitem.active{background:var(--surface2); color:var(--gold); border-color:var(--border);}
+.navitem .ic{width:20px; text-align:center; font-size:16px;}
+#sidebar .sidefoot{font-size:11.5px; color:var(--text-faint); padding:10px 8px;}
+
+#main-col{flex:1; min-width:0; display:flex; flex-direction:column;}
+
+/* HEADER */
+#topheader{
+  position:sticky; top:0; z-index:20; background:var(--surface); border-bottom:1px solid var(--border);
+  padding:12px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+}
+#topheader .dateblock{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+#topheader .dchip{font-size:12.5px; color:var(--text-dim); background:var(--surface2); border:1px solid var(--border); padding:6px 10px; border-radius:999px; display:flex; gap:6px; align-items:center;}
+#topheader .clock{font-weight:800; font-size:16px; color:var(--gold); font-variant-numeric: tabular-nums;}
+#topheader .statusblock{display:flex; align-items:center; gap:12px;}
+.ministat{text-align:center;}
+.ministat .v{font-weight:800; font-size:15px;}
+.ministat .l{font-size:10.5px; color:var(--text-faint);}
+#themeToggle{background:var(--surface2); border:1px solid var(--border); border-radius:999px; padding:7px 12px; font-size:13px; color:var(--text);}
+
+main{flex:1; padding:18px 20px 90px; max-width:1400px; width:100%; margin:0 auto;}
+@media(min-width:900px){ main{padding:22px 30px 40px;} }
+
+/* CARDS */
+.card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px; box-shadow:var(--shadow);}
+.card + .card{margin-top:14px;}
+.grid{display:grid; gap:14px;}
+.grid.cols-2{grid-template-columns:1fr; }
+.grid.cols-3{grid-template-columns:1fr;}
+.grid.cols-4{grid-template-columns:repeat(2,1fr);}
+@media(min-width:700px){
+  .grid.cols-2{grid-template-columns:1fr 1fr;}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .grid.cols-4{grid-template-columns:repeat(4,1fr);}
+}
+.summary-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:14px;}
+.summary-card .sv{font-size:22px; font-weight:800;}
+.summary-card .sl{font-size:12px; color:var(--text-dim); margin-top:4px;}
+.summary-card .sicon{font-size:18px; opacity:.7; margin-bottom:6px;}
+
+h1.pagetitle{font-size:20px; font-weight:800; margin-bottom:4px;}
+.pagesub{font-size:13px; color:var(--text-dim); margin-bottom:16px;}
+.sectiontitle{font-size:15px; font-weight:700; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between;}
+
+/* BUTTONS */
+.btn{display:inline-flex; align-items:center; gap:6px; padding:9px 14px; border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--surface2); color:var(--text); font-size:13.5px; font-weight:600;}
+.btn:hover{border-color:var(--gold);}
+.btn.primary{background:var(--gold); border-color:var(--gold); color:#141414;}
+.btn.danger{background:transparent; border-color:var(--red-dim); color:var(--red);}
+.btn.ghost{background:transparent;}
+.btn.sm{padding:5px 9px; font-size:12px;}
+.btn:disabled{opacity:.4; cursor:not-allowed;}
+
+/* TABS/FILTER */
+.tabbar{display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; margin-bottom:14px;}
+.tabbtn{white-space:nowrap; padding:8px 14px; border-radius:999px; border:1px solid var(--border); background:var(--surface); font-size:13px; color:var(--text-dim); font-weight:600;}
+.tabbtn.active{background:var(--gold); color:#141414; border-color:var(--gold);}
+.filterrow{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; align-items:center;}
+.filterrow select, .filterrow input[type=text]{background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:8px 10px; border-radius:var(--radius-sm); font-size:13px;}
+
+/* LIST ITEMS */
+.item-row{background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 14px; margin-bottom:10px;}
+.item-row .irow-top{display:flex; align-items:center; justify-content:space-between; gap:8px;}
+.item-row .ititle{font-weight:700; font-size:14.5px;}
+.item-row .idesc{font-size:12.5px; color:var(--text-dim); margin-top:4px;}
+.item-row .imeta{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;}
+.badge{font-size:11px; padding:3px 9px; border-radius:999px; border:1px solid var(--border); color:var(--text-dim);}
+.badge.gold{color:var(--gold); border-color:var(--gold-dim);}
+.badge.green{color:var(--green); border-color:var(--green-dim);}
+.badge.red{color:var(--red); border-color:var(--red-dim);}
+.item-actions{display:flex; gap:6px;}
+.chk-progress{height:6px; background:var(--border); border-radius:4px; overflow:hidden; margin-top:8px;}
+.chk-progress > div{height:100%; background:var(--green);}
+
+.checklist-mini{margin-top:10px; border-top:1px dashed var(--border); padding-top:8px;}
+.cl-item{display:flex; align-items:center; gap:8px; padding:5px 0; font-size:13px;}
+.cl-item input[type=checkbox]{width:16px; height:16px; accent-color:var(--green);}
+.cl-item.done .cltext{text-decoration:line-through; color:var(--text-faint);}
+.cl-item .cltext{flex:1;}
+
+/* MODAL */
+.overlay{position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:100; display:flex; align-items:flex-end; justify-content:center;}
+@media(min-width:700px){ .overlay{align-items:center;} }
+.modal{background:var(--surface); border:1px solid var(--border); border-radius:16px 16px 0 0; width:100%; max-width:520px; max-height:88vh; overflow-y:auto; padding:20px; box-shadow:var(--shadow);}
+@media(min-width:700px){ .modal{border-radius:16px;} }
+.modal h3{font-size:16px; font-weight:800; margin-bottom:14px;}
+.field{margin-bottom:12px;}
+.field label{display:block; font-size:12.5px; color:var(--text-dim); margin-bottom:5px; font-weight:600;}
+.field input, .field select, .field textarea{width:100%; background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:10px; border-radius:var(--radius-sm); font-size:14px;}
+.field textarea{min-height:70px; resize:vertical;}
+.modal .modal-actions{display:flex; gap:8px; justify-content:flex-end; margin-top:16px;}
+.field-row{display:flex; gap:10px;}
+.field-row > .field{flex:1;}
+
+.toast{position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:var(--surface2); border:1px solid var(--gold-dim); color:var(--text); padding:10px 18px; border-radius:999px; font-size:13px; z-index:200; box-shadow:var(--shadow); font-weight:600;}
+@media(min-width:900px){ .toast{bottom:24px;} }
+
+.empty-state{text-align:center; padding:40px 20px; color:var(--text-faint);}
+.empty-state .eicon{font-size:32px; margin-bottom:10px;}
+
+/* BOTTOM NAV */
+#bottomnav{
+  position:fixed; bottom:0; inset-inline:0; background:var(--surface); border-top:1px solid var(--border);
+  display:flex; justify-content:space-around; padding:6px 4px calc(6px + env(safe-area-inset-bottom)); z-index:30;
+}
+#bottomnav .bnitem{flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; padding:6px 2px; color:var(--text-faint); font-size:10.5px; font-weight:600;}
+#bottomnav .bnitem.active{color:var(--gold);}
+#bottomnav .bnitem .ic{font-size:19px;}
+
+@media(min-width:900px){ #sidebar{display:flex;} #bottomnav{display:none;} }
+@media(max-width:899px){ #sidebar{display:none;} main{padding-bottom:80px;} }
+
+.chart-wrap{position:relative; height:220px;}
+.progressbar-lg{height:16px; background:var(--border); border-radius:999px; overflow:hidden; margin:10px 0;}
+.progressbar-lg > div{height:100%; background:linear-gradient(90deg,var(--gold-dim),var(--gold));}
+
+.rule-row{display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
+.rule-row .rn{width:22px; height:22px; border-radius:50%; background:var(--surface2); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:var(--gold); flex-shrink:0;}
+
+.quiz-opt{display:block; width:100%; text-align:start; padding:12px 14px; border:1px solid var(--border); background:var(--surface2); border-radius:var(--radius-md); margin-bottom:9px; font-size:14px;}
+.quiz-opt.selected{border-color:var(--gold); background:rgba(201,162,39,.12);}
+.quiz-opt.correct{border-color:var(--green); background:rgba(63,156,109,.14);}
+.quiz-opt.wrong{border-color:var(--red); background:rgba(192,83,59,.14);}
+
+.streakflame{color:var(--gold); font-weight:800;}
+.gj-entry{background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px; margin-bottom:8px;}
+.gj-entry .gdate{font-size:11px; color:var(--text-faint);}
+
+.lang-pick{display:flex; gap:8px; flex-wrap:wrap;}
+.lang-pick button{flex:1; min-width:90px;}
+
+.dailymission-item{display:flex; align-items:center; gap:10px; padding:9px 4px; border-bottom:1px solid var(--border);}
+.dailymission-item:last-child{border-bottom:none;}
+.dailymission-item .dmic{font-size:17px; width:24px; text-align:center;}
+.dailymission-item .dmlabel{flex:1; font-size:13.5px; font-weight:600;}
+
+.avatar-circle{width:56px; height:56px; border-radius:50%; background:var(--surface2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; color:var(--gold);}
+.hrline{border:none; border-top:1px solid var(--border); margin:14px 0;}
+.smallnote{font-size:11.5px; color:var(--text-faint); line-height:1.7; margin-top:6px;}
+.kpi-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;}
+.kpi-row .kpi{background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:8px 12px; font-size:12px; flex:1; min-width:100px; text-align:center;}
+.kpi-row .kpi b{display:block; font-size:16px; margin-top:2px;}
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar">
+    <div class="brand">
+      <div class="t1" id="brandT1">MY GAME</div>
+      <div class="t2" id="brandT2">بازی من، زمین من،<br>قوانین من</div>
+    </div>
+    <nav id="sidenav"></nav>
+    <div class="sidefoot" id="sideFoot">نسخه ۱.۰ — ذخیره محلی</div>
+  </aside>
+  <div id="main-col">
+    <header id="topheader">
+      <div class="dateblock" id="dateblock"></div>
+      <div class="statusblock" id="statusblock"></div>
+      <button id="themeToggle">🌙</button>
+    </header>
+    <main id="mainview"></main>
+  </div>
+</div>
+<nav id="bottomnav"></nav>
+<div id="modalRoot"></div>
+<div id="toastRoot"></div>
+
+<script>
+/* ============ I18N ============ */
+const I18N = {
+fa:{
+  dir:'rtl', brandT1:'بازی من', brandT2:'بازی من، زمین من،<br>قوانین من', sideFoot:'نسخه ۱.۰ — ذخیره محلی',
+  nav_dashboard:'داشبورد', nav_performance:'عملکرد', nav_goals:'اهداف', nav_quiz:'آزمون‌ها', nav_settings:'تنظیمات',
+  weekday_0:'یکشنبه',weekday_1:'دوشنبه',weekday_2:'سه‌شنبه',weekday_3:'چهارشنبه',weekday_4:'پنجشنبه',weekday_5:'جمعه',weekday_6:'شنبه',
+  overallStatus:'وضعیت کلی', goalsProgress:'پیشرفت اهداف',
+  dash_title:'داشبورد', dash_sub:'امروز آیا واقعاً دارم در بازی خودم بهتر می‌شوم؟',
+  today_perf:'عملکرد امروز', week_perf:'عملکرد این هفته', month_perf:'عملکرد این ماه', goals_pct:'درصد اهداف',
+  active_challenges:'چالش‌های فعال', active_opps:'فرصت‌های فعال', active_threats:'تهدیدهای فعال', tasks_done:'وظایف تکمیل‌شده',
+  quiz_score:'امتیاز آزمون', overall_score:'امتیاز کلی سیستم',
+  chart_perf_time:'روند عملکرد', chart_status:'وضعیت کارها', chart_compare:'مقایسه بخش‌ها', chart_waterfall:'تحلیل امتیاز (Waterfall)',
+  daily:'روزانه', weekly:'هفتگی', monthly:'ماهانه',
+  done:'انجام‌شده', inprogress:'در حال انجام', notdone:'انجام نشده', canceled:'لغو شده',
+  daily_mission:'مأموریت روزانه', dm_income:'یک اقدام درآمدزا', dm_learning:'یک اقدام یادگیری', dm_physical:'یک اقدام بدنی',
+  dm_social:'یک اقدام اجتماعی', dm_discipline:'یک اقدام نظم شخصی', dm_gratitude:'یک مورد شکرگزاری', dm_prob:'یک تصمیم احتمالاتی',
+  daily_score:'امتیاز روزانه', compound_title:'اثر مرکب — اگر ادامه بدهم چه می‌شود؟', compound_amount:'مقدار هر بار', compound_times:'تعداد تکرار',
+  compound_unit:'واحد', compound_calc:'محاسبه', compound_result:'نتیجه',
+  financial_goal:'هدف مالی اصلی', fg_current:'مبلغ فعلی', fg_remaining:'باقی‌مانده', fg_pct:'درصد پیشرفت', fg_avg:'میانگین درآمد',
+  fg_addincome:'ثبت درآمد جدید', fg_target:'هدف', fg_edit:'ویرایش هدف مالی',
+  myrules_title:'بازی من، زمین من، قوانین من', mygame:'بازی من', myland:'زمین من', myrules:'قوانین من',
+  mygame_q:'اهداف و بازی اصلی زندگی من چیست؟', myland_q:'من در چه شرایطی بازی می‌کنم؟',
+  add_rule:'افزودن قانون', edit:'ویرایش', delete:'حذف', save:'ذخیره', cancel:'انصراف', add:'افزودن جدید',
+  performance_title:'عملکرد', performance_sub:'چالش‌ها، فرصت‌ها، تهدیدها و توسعه',
+  challenges:'چالش‌ها', opportunities:'فرصت‌ها', threats:'تهدیدها', development:'توسعه',
+  title_f:'عنوان', desc_f:'توضیح', severity_f:'شدت', created_f:'تاریخ ایجاد', followup_f:'تاریخ پیگیری', status_f:'وضعیت',
+  score_f:'امتیاز', note_f:'یادداشت', probability_f:'احتمال موفقیت (%)', benefit_f:'میزان سود', cost_f:'هزینه', risk_f:'ریسک',
+  date_f:'تاریخ', impact_f:'شدت پیامد', risklevel_f:'سطح ریسک', prevent_f:'اقدام پیشگیرانه', category_f:'دسته‌بندی', priority_f:'اولویت',
+  low:'پایین', medium:'متوسط', high:'بالا', critical:'بحرانی',
+  opp_score:'امتیاز فرصت', risk_score:'امتیاز ریسک',
+  add_challenge:'چالش جدید', add_opportunity:'فرصت جدید', add_threat:'تهدید جدید', add_dev:'مورد توسعه جدید',
+  filter_all:'همه', filter_today:'امروز', filter_tomorrow:'فردا', filter_week:'این هفته', filter_month:'این ماه',
+  filter_overdue:'عقب‌افتاده', filter_done:'تکمیل‌شده', filter_notdone:'تکمیل‌نشده', search_ph:'جستجو...',
+  checklist:'چک‌لیست', add_item:'افزودن مورد', empty_generic:'هنوز موردی ثبت نشده است.',
+  goals_title:'اهداف', goals_sub:'مدیریت اهداف بلندمدت و پیشرفت واقعی',
+  new_goal:'هدف جدید', goal_name:'نام هدف', goal_deadline:'ضرب‌الاجل', goal_start:'تاریخ شروع', goal_importance:'اهمیت',
+  goal_progress:'درصد پیشرفت', new_list:'لیست جدید', list_name:'نام لیست',
+  quiz_title:'آزمون‌ها', quiz_sub:'۱۰۰ سؤال چهارگزینه‌ای برای سنجش تفکر و تصمیم‌گیری',
+  start_quiz:'شروع آزمون', quiz_progress:'سؤال', of_word:'از', next:'بعدی', finish:'پایان آزمون',
+  quiz_result:'نتیجه آزمون', category_breakdown:'تفکیک بر اساس حوزه', weak_area:'ضعف اصلی فعلی',
+  suggested_checklist:'چک‌لیست پیشنهادی', add_to_dev:'افزودن به توسعه',
+  need_review:'نیازمند بازنگری', weak:'ضعیف', mediumres:'متوسط', good:'خوب', vgood:'بسیار خوب', excellent:'عالی',
+  settings_title:'تنظیمات', about_me:'درباره من', name_f:'نام', age_f:'سن', bio_f:'توضیح کوتاه', mygoals_f:'اهداف',
+  contact_us:'ارتباط با ما', email_f:'ایمیل', message_f:'پیام', send:'ارسال', message_sent:'پیام شما ثبت شد (فقط نمایشی).',
+  language:'زبان', theme_dark:'تیره', theme_light:'روشن', theme:'پوسته',
+  weekly_review:'مرور هفتگی', wr_q1:'چه چیزی خوب پیش رفت؟', wr_q2:'چه چیزی بد پیش رفت؟', wr_q3:'بزرگ‌ترین فرصت چه بود؟',
+  wr_q4:'بزرگ‌ترین تهدید چه بود؟', wr_q5:'کدام عادت بیشترین اثر را داشت؟', wr_q6:'کدام رفتار باید حذف شود؟',
+  wr_q7:'کدام تصمیم اشتباه بود؟', wr_q8:'چه چیزی درباره احتمال‌ها یاد گرفتم؟', wr_q9:'بابت چه چیزی شکرگزارم؟', wr_q10:'قانون هفته آینده چیست؟',
+  weekly_score:'امتیاز هفتگی', new_review:'مرور جدید', past_reviews:'مرورهای قبلی',
+  gratitude_title:'دفتر شکرگزاری', gratitude_ph:'امروز بابت چه چیزی شکرگزارم؟', gratitude_feeling:'احساس',
+  gratitude_streak:'زنجیره روزها', gratitude_days:'تعداد روزهای ثبت‌شده', gratitude_note:'شکرگزاری جایگزین اقدام نیست؛ کنار واقع‌بینی و تصمیم‌گیری قرار دارد.',
+  save_success:'با موفقیت ذخیره شد', delete_confirm:'آیا از حذف این مورد مطمئن هستید؟', deleted:'حذف شد', undo:'بازگردانی',
+  yes_delete:'بله، حذف کن', close:'بستن', no_data:'داده‌ای موجود نیست', complete:'تکمیل', uncomplete:'برگرداندن',
+  duplicate:'کپی', financial_goal_title:'رسیدن به ۱۸,۰۰۰ دلار قبل از ۳۰ سالگی', income_amount:'مبلغ درآمد', income_desc:'شرح درآمد',
+  loop_title:'حلقهٔ عملکرد', loop_sub:'مشاهده ← فکر ← تخمین ← اقدام ← اندازه‌گیری ← بازخورد ← اصلاح ← تکرار ← اثر مرکب',
+  profile_saved:'پروفایل ذخیره شد', rule_ph:'قانون شخصی جدید...', myland_ph:'مثلاً: زمان، پول، مهارت، روابط، محدودیت‌ها...',
+  mygame_ph:'مثلاً: رسیدن به استقلال مالی و ساختن یک زندگی معنادار...'
+},
+en:{
+  dir:'ltr', brandT1:'MY GAME', brandT2:'My Game, My Land,<br>My Rules', sideFoot:'v1.0 — Local Storage',
+  nav_dashboard:'Dashboard', nav_performance:'Performance', nav_goals:'Goals', nav_quiz:'Quiz', nav_settings:'Settings',
+  weekday_0:'Sunday',weekday_1:'Monday',weekday_2:'Tuesday',weekday_3:'Wednesday',weekday_4:'Thursday',weekday_5:'Friday',weekday_6:'Saturday',
+  overallStatus:'Overall Status', goalsProgress:'Goals Progress',
+  dash_title:'Dashboard', dash_sub:'Am I truly getting better at my own game today?',
+  today_perf:'Today', week_perf:'This Week', month_perf:'This Month', goals_pct:'Goals %',
+  active_challenges:'Active Challenges', active_opps:'Active Opportunities', active_threats:'Active Threats', tasks_done:'Tasks Done',
+  quiz_score:'Quiz Score', overall_score:'Overall Score',
+  chart_perf_time:'Performance Trend', chart_status:'Task Status', chart_compare:'Section Comparison', chart_waterfall:'Score Analysis (Waterfall)',
+  daily:'Daily', weekly:'Weekly', monthly:'Monthly',
+  done:'Done', inprogress:'In Progress', notdone:'Not Done', canceled:'Canceled',
+  daily_mission:'Daily Mission', dm_income:'One income action', dm_learning:'One learning action', dm_physical:'One physical action',
+  dm_social:'One social action', dm_discipline:'One discipline action', dm_gratitude:'One gratitude item', dm_prob:'One probabilistic decision',
+  daily_score:'Daily Score', compound_title:'Compound Effect — What if I keep going?', compound_amount:'Amount per time', compound_times:'Number of repeats',
+  compound_unit:'Unit', compound_calc:'Calculate', compound_result:'Result',
+  financial_goal:'Main Financial Goal', fg_current:'Current', fg_remaining:'Remaining', fg_pct:'Progress %', fg_avg:'Avg Income',
+  fg_addincome:'Add Income Entry', fg_target:'Target', fg_edit:'Edit Financial Goal',
+  myrules_title:'My Game, My Land, My Rules', mygame:'My Game', myland:'My Land', myrules:'My Rules',
+  mygame_q:'What is the main goal / game of my life?', myland_q:'What conditions am I playing under?',
+  add_rule:'Add Rule', edit:'Edit', delete:'Delete', save:'Save', cancel:'Cancel', add:'Add New',
+  performance_title:'Performance', performance_sub:'Challenges, Opportunities, Threats and Development',
+  challenges:'Challenges', opportunities:'Opportunities', threats:'Threats', development:'Development',
+  title_f:'Title', desc_f:'Description', severity_f:'Severity', created_f:'Created Date', followup_f:'Follow-up Date', status_f:'Status',
+  score_f:'Score', note_f:'Note', probability_f:'Success Probability (%)', benefit_f:'Benefit', cost_f:'Cost', risk_f:'Risk',
+  date_f:'Date', impact_f:'Impact', risklevel_f:'Risk Level', prevent_f:'Preventive Action', category_f:'Category', priority_f:'Priority',
+  low:'Low', medium:'Medium', high:'High', critical:'Critical',
+  opp_score:'Opportunity Score', risk_score:'Risk Score',
+  add_challenge:'New Challenge', add_opportunity:'New Opportunity', add_threat:'New Threat', add_dev:'New Development Item',
+  filter_all:'All', filter_today:'Today', filter_tomorrow:'Tomorrow', filter_week:'This Week', filter_month:'This Month',
+  filter_overdue:'Overdue', filter_done:'Done', filter_notdone:'Not Done', search_ph:'Search...',
+  checklist:'Checklist', add_item:'Add Item', empty_generic:'Nothing here yet.',
+  goals_title:'Goals', goals_sub:'Manage long-term goals with real progress',
+  new_goal:'New Goal', goal_name:'Goal Name', goal_deadline:'Deadline', goal_start:'Start Date', goal_importance:'Importance',
+  goal_progress:'Progress %', new_list:'New List', list_name:'List Name',
+  quiz_title:'Quiz', quiz_sub:'100 multiple-choice questions to test thinking and decisions',
+  start_quiz:'Start Quiz', quiz_progress:'Question', of_word:'of', next:'Next', finish:'Finish Quiz',
+  quiz_result:'Quiz Result', category_breakdown:'Category Breakdown', weak_area:'Current Weak Area',
+  suggested_checklist:'Suggested Checklist', add_to_dev:'Add to Development',
+  need_review:'Needs Review', weak:'Weak', mediumres:'Medium', good:'Good', vgood:'Very Good', excellent:'Excellent',
+  settings_title:'Settings', about_me:'About Me', name_f:'Name', age_f:'Age', bio_f:'Short Bio', mygoals_f:'Goals',
+  contact_us:'Contact Us', email_f:'Email', message_f:'Message', send:'Send', message_sent:'Your message was recorded (demo only).',
+  language:'Language', theme_dark:'Dark', theme_light:'Light', theme:'Theme',
+  weekly_review:'Weekly Review', wr_q1:'What went well?', wr_q2:'What went badly?', wr_q3:'Biggest opportunity?',
+  wr_q4:'Biggest threat?', wr_q5:'Which habit had the most impact?', wr_q6:'Which behavior should be dropped?',
+  wr_q7:'Which decision was wrong?', wr_q8:'What did I learn about probabilities?', wr_q9:'What am I grateful for?', wr_q10:'Rule for next week?',
+  weekly_score:'Weekly Score', new_review:'New Review', past_reviews:'Past Reviews',
+  gratitude_title:'Gratitude Journal', gratitude_ph:'What am I grateful for today?', gratitude_feeling:'Feeling',
+  gratitude_streak:'Day Streak', gratitude_days:'Days Logged', gratitude_note:'Gratitude is not a substitute for action — it stands beside realism and decision-making.',
+  save_success:'Saved successfully', delete_confirm:'Are you sure you want to delete this?', deleted:'Deleted', undo:'Undo',
+  yes_delete:'Yes, Delete', close:'Close', no_data:'No data', complete:'Complete', uncomplete:'Uncomplete',
+  duplicate:'Duplicate', financial_goal_title:'Reach $18,000 before turning 30', income_amount:'Income Amount', income_desc:'Income Description',
+  loop_title:'Performance Loop', loop_sub:'Observe → Think → Estimate → Act → Measure → Feedback → Correct → Repeat → Compound',
+  profile_saved:'Profile saved', rule_ph:'New personal rule...', myland_ph:'e.g. time, money, skill, relationships, constraints...',
+  mygame_ph:'e.g. reach financial independence and build a meaningful life...'
+},
+ar:{
+  dir:'rtl', brandT1:'لعبتي', brandT2:'لعبتي، أرضي،<br>قواعدي', sideFoot:'الإصدار ١.٠ — تخزين محلي',
+  nav_dashboard:'لوحة التحكم', nav_performance:'الأداء', nav_goals:'الأهداف', nav_quiz:'الاختبارات', nav_settings:'الإعدادات',
+  weekday_0:'الأحد',weekday_1:'الإثنين',weekday_2:'الثلاثاء',weekday_3:'الأربعاء',weekday_4:'الخميس',weekday_5:'الجمعة',weekday_6:'السبت',
+  overallStatus:'الحالة العامة', goalsProgress:'تقدم الأهداف',
+  dash_title:'لوحة التحكم', dash_sub:'هل أتحسن فعلاً في لعبتي اليوم؟',
+  today_perf:'أداء اليوم', week_perf:'أداء الأسبوع', month_perf:'أداء الشهر', goals_pct:'نسبة الأهداف',
+  active_challenges:'التحديات النشطة', active_opps:'الفرص النشطة', active_threats:'التهديدات النشطة', tasks_done:'المهام المنجزة',
+  quiz_score:'نتيجة الاختبار', overall_score:'النتيجة الكلية',
+  chart_perf_time:'اتجاه الأداء', chart_status:'حالة المهام', chart_compare:'مقارنة الأقسام', chart_waterfall:'تحليل النتيجة',
+  daily:'يومي', weekly:'أسبوعي', monthly:'شهري',
+  done:'منجز', inprogress:'قيد التنفيذ', notdone:'غير منجز', canceled:'ملغى',
+  daily_mission:'مهمة اليوم', dm_income:'إجراء واحد للدخل', dm_learning:'إجراء واحد للتعلم', dm_physical:'إجراء بدني واحد',
+  dm_social:'إجراء اجتماعي واحد', dm_discipline:'إجراء انضباط واحد', dm_gratitude:'مورد شكر واحد', dm_prob:'قرار احتمالي واحد',
+  daily_score:'نتيجة اليوم', compound_title:'الأثر المركب — ماذا لو استمررت؟', compound_amount:'المقدار في كل مرة', compound_times:'عدد التكرارات',
+  compound_unit:'الوحدة', compound_calc:'احسب', compound_result:'النتيجة',
+  financial_goal:'الهدف المالي الرئيسي', fg_current:'المبلغ الحالي', fg_remaining:'المتبقي', fg_pct:'نسبة التقدم', fg_avg:'متوسط الدخل',
+  fg_addincome:'إضافة دخل جديد', fg_target:'الهدف', fg_edit:'تعديل الهدف المالي',
+  myrules_title:'لعبتي، أرضي، قواعدي', mygame:'لعبتي', myland:'أرضي', myrules:'قواعدي',
+  mygame_q:'ما هو هدفي الأساسي في الحياة؟', myland_q:'في أي ظروف ألعب؟',
+  add_rule:'إضافة قاعدة', edit:'تعديل', delete:'حذف', save:'حفظ', cancel:'إلغاء', add:'إضافة جديد',
+  performance_title:'الأداء', performance_sub:'التحديات والفرص والتهديدات والتطوير',
+  challenges:'التحديات', opportunities:'الفرص', threats:'التهديدات', development:'التطوير',
+  title_f:'العنوان', desc_f:'الوصف', severity_f:'الشدة', created_f:'تاريخ الإنشاء', followup_f:'تاريخ المتابعة', status_f:'الحالة',
+  score_f:'النتيجة', note_f:'ملاحظة', probability_f:'احتمال النجاح (%)', benefit_f:'الفائدة', cost_f:'التكلفة', risk_f:'الخطر',
+  date_f:'التاريخ', impact_f:'شدة الأثر', risklevel_f:'مستوى الخطر', prevent_f:'إجراء وقائي', category_f:'الفئة', priority_f:'الأولوية',
+  low:'منخفض', medium:'متوسط', high:'مرتفع', critical:'حرج',
+  opp_score:'نتيجة الفرصة', risk_score:'نتيجة الخطر',
+  add_challenge:'تحدٍ جديد', add_opportunity:'فرصة جديدة', add_threat:'تهديد جديد', add_dev:'عنصر تطوير جديد',
+  filter_all:'الكل', filter_today:'اليوم', filter_tomorrow:'غدًا', filter_week:'هذا الأسبوع', filter_month:'هذا الشهر',
+  filter_overdue:'متأخر', filter_done:'منجز', filter_notdone:'غير منجز', search_ph:'بحث...',
+  checklist:'قائمة المهام', add_item:'إضافة عنصر', empty_generic:'لا يوجد شيء بعد.',
+  goals_title:'الأهداف', goals_sub:'إدارة الأهداف طويلة المدى بتقدم حقيقي',
+  new_goal:'هدف جديد', goal_name:'اسم الهدف', goal_deadline:'الموعد النهائي', goal_start:'تاريخ البدء', goal_importance:'الأهمية',
+  goal_progress:'نسبة التقدم', new_list:'قائمة جديدة', list_name:'اسم القائمة',
+  quiz_title:'الاختبارات', quiz_sub:'١٠٠ سؤال متعدد الخيارات لقياس التفكير واتخاذ القرار',
+  start_quiz:'ابدأ الاختبار', quiz_progress:'سؤال', of_word:'من', next:'التالي', finish:'إنهاء الاختبار',
+  quiz_result:'نتيجة الاختبار', category_breakdown:'التفصيل حسب المجال', weak_area:'نقطة الضعف الحالية',
+  suggested_checklist:'قائمة مقترحة', add_to_dev:'أضف إلى التطوير',
+  need_review:'يحتاج مراجعة', weak:'ضعيف', mediumres:'متوسط', good:'جيد', vgood:'جيد جدًا', excellent:'ممتاز',
+  settings_title:'الإعدادات', about_me:'عني', name_f:'الاسم', age_f:'العمر', bio_f:'نبذة قصيرة', mygoals_f:'الأهداف',
+  contact_us:'اتصل بنا', email_f:'البريد الإلكتروني', message_f:'الرسالة', send:'إرسال', message_sent:'تم تسجيل رسالتك (عرض فقط).',
+  language:'اللغة', theme_dark:'داكن', theme_light:'فاتح', theme:'المظهر',
+  weekly_review:'المراجعة الأسبوعية', wr_q1:'ما الذي سار بشكل جيد؟', wr_q2:'ما الذي سار بشكل سيء؟', wr_q3:'ما أكبر فرصة؟',
+  wr_q4:'ما أكبر تهديد؟', wr_q5:'أي عادة كان لها أكبر أثر؟', wr_q6:'أي سلوك يجب إزالته؟',
+  wr_q7:'أي قرار كان خاطئًا؟', wr_q8:'ماذا تعلمت عن الاحتمالات؟', wr_q9:'على ماذا أنا شاكر؟', wr_q10:'ما قاعدة الأسبوع القادم؟',
+  weekly_score:'نتيجة الأسبوع', new_review:'مراجعة جديدة', past_reviews:'مراجعات سابقة',
+  gratitude_title:'دفتر الشكر', gratitude_ph:'على ماذا أنا شاكر اليوم؟', gratitude_feeling:'الشعور',
+  gratitude_streak:'سلسلة الأيام', gratitude_days:'عدد الأيام المسجلة', gratitude_note:'الشكر ليس بديلاً عن الفعل؛ إنه يقف إلى جانب الواقعية واتخاذ القرار.',
+  save_success:'تم الحفظ بنجاح', delete_confirm:'هل أنت متأكد من الحذف؟', deleted:'تم الحذف', undo:'تراجع',
+  yes_delete:'نعم، احذف', close:'إغلاق', no_data:'لا توجد بيانات', complete:'إتمام', uncomplete:'إلغاء الإتمام',
+  duplicate:'نسخ', financial_goal_title:'الوصول إلى ١٨,٠٠٠ دولار قبل سن الثلاثين', income_amount:'مبلغ الدخل', income_desc:'وصف الدخل',
+  loop_title:'حلقة الأداء', loop_sub:'ملاحظة ← تفكير ← تقدير ← فعل ← قياس ← تغذية راجعة ← تصحيح ← تكرار ← تراكم',
+  profile_saved:'تم حفظ الملف الشخصي', rule_ph:'قاعدة شخصية جديدة...', myland_ph:'مثال: الوقت، المال، المهارة، العلاقات...',
+  mygame_ph:'مثال: تحقيق الاستقلال المالي وبناء حياة ذات معنى...'
+}
+};
+function t(k){ return (I18N[STATE.lang] && I18N[STATE.lang][k]) || I18N.fa[k] || k; }
+
+/* ============ STORAGE / STATE ============ */
+const STORE_KEY = 'zmqm_app_state_v1';
+function uid(){ return 'id_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8); }
+function todayISO(){ const d=new Date(); return d.toISOString().slice(0,10); }
+function defaultState(){
+  return {
+    lang:'fa', theme:'dark',
+    user:{name:'', age:'', bio:'', goalsText:''},
+    challenges:[], opportunities:[], threats:[], development:[],
+    goals:[
+      {id:uid(), name:'رسیدن به $18,000 قبل از 30 سالگی', description:'هدف مالی پیش‌فرض سیستم', startDate:todayISO(), deadline:'', category:'مالی', importance:'high', status:'inprogress', isFinancial:true,
+        lists:[
+          {id:uid(), name:'درآمد', checklist:[
+            {id:uid(), title:'پیدا کردن 5 فرصت کاری', done:false, score:5},
+            {id:uid(), title:'ارسال درخواست', done:false, score:5},
+            {id:uid(), title:'تماس با مشتری', done:false, score:5},
+            {id:uid(), title:'انجام پروژه', done:false, score:10},
+            {id:uid(), title:'ثبت درآمد', done:false, score:5}
+          ]},
+          {id:uid(), name:'مهارت', checklist:[
+            {id:uid(), title:'یادگیری مهارت', done:false, score:5},
+            {id:uid(), title:'تمرین', done:false, score:5},
+            {id:uid(), title:'ساخت نمونه‌کار', done:false, score:10}
+          ]}
+        ]
+      }
+    ],
+    financial:{target:18000, current:0, incomeEntries:[]},
+    rules:[
+      'قبل از تصمیم مهم، احتمال را بررسی می‌کنم.',
+      'همه دارایی را در یک تصمیم پرریسک قرار نمی‌دهم.',
+      'هر روز حداقل یک اقدام درآمدزا انجام می‌دهم.',
+      'کار کوچک را دست‌کم نمی‌گیرم.',
+      'اشتباه را اندازه‌گیری و اصلاح می‌کنم.',
+      'شکرگزاری جایگزین اقدام نیست.',
+      'شکست یک داده است، نه هویت من.',
+      'قبل از تقلید، سؤال می‌کنم.',
+      'پیشرفت را اندازه می‌گیرم.',
+      'تصمیم امروز را با اثر آن در آینده می‌سنجم.'
+    ].map(r=>({id:uid(), text:r})),
+    myGame:'', myLand:'',
+    gratitude:[],
+    quizResults:[],
+    weeklyReviews:[],
+    dailyMissions:{}, // date -> {income:false,...}
+    dailyScores:{}, // date -> score
+    perfHistory:{}, // date -> {score}
+    devFromQuiz:[]
+  };
+}
+let STATE = loadState();
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return defaultState();
+    const parsed = JSON.parse(raw);
+    const def = defaultState();
+    return Object.assign(def, parsed);
+  }catch(e){ return defaultState(); }
+}
+function saveState(){
+  localStorage.setItem(STORE_KEY, JSON.stringify(STATE));
+}
+function showToast(msg){
+  const root = document.getElementById('toastRoot');
+  const el = document.createElement('div');
+  el.className='toast'; el.textContent=msg;
+  root.appendChild(el);
+  setTimeout(()=>{ el.remove(); }, 2200);
+}
+
+/* ============ DATE UTILS ============ */
+function toJalali(gy, gm, gd) {
+  const g_d_m = [0,31,59,90,120,151,181,212,243,273,304,334];
+  let jy;
+  gy = gm > 2 ? gy + 1 : gy;
+  let days = 355666 + (365 * gy) + Math.floor((gy + 8) / 4) - Math.floor((gy + 99) / 100) + Math.floor((gy + 399) / 400) + gd + g_d_m[gm - 1];
+  jy = -1595 + (33 * Math.floor(days / 12053));
+  days %= 12053;
+  jy += 4 * Math.floor(days / 1461);
+  days %= 1461;
+  if (days > 365) { jy += Math.floor((days - 1) / 365); days = (days - 1) % 365; }
+  let jm, jd;
+  if (days < 186) { jm = 1 + Math.floor(days / 31); jd = 1 + (days % 31); }
+  else { jm = 7 + Math.floor((days - 186) / 30); jd = 1 + ((days - 186) % 30); }
+  return [jy, jm, jd];
+}
+const JMONTHS=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const GMONTHS_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function faDigits(str){ const fa=['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹']; return String(str).replace(/[0-9]/g,d=>fa[d]); }
+function arDigits(str){ const ar=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩']; return String(str).replace(/[0-9]/g,d=>ar[d]); }
+function formatJalali(date){
+  const [jy,jm,jd]=toJalali(date.getFullYear(), date.getMonth()+1, date.getDate());
+  const s = `${jd} ${JMONTHS[jm-1]} ${jy}`;
+  return STATE.lang==='fa'? faDigits(s): s;
+}
+function formatGregorian(date){
+  if(STATE.lang==='en') return `${GMONTHS_EN[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+  const s = `${date.getDate()} ${GMONTHS_EN[date.getMonth()]} ${date.getFullYear()}`;
+  return STATE.lang==='ar'? arDigits(s): faDigits(s);
+}
+function weekdayName(date){
+  const idx=date.getDay();
+  return t('weekday_'+idx);
+}
+function localizeNum(n){
+  n = Math.round(n*10)/10;
+  if(STATE.lang==='fa') return faDigits(n);
+  if(STATE.lang==='ar') return arDigits(n);
+  return String(n);
+}
+function fmtClock(date){
+  const h=String(date.getHours()).padStart(2,'0'), m=String(date.getMinutes()).padStart(2,'0'), s=String(date.getSeconds()).padStart(2,'0');
+  const str = `${h}:${m}:${s}`;
+  return STATE.lang==='fa'?faDigits(str):(STATE.lang==='ar'?arDigits(str):str);
+}
+function startOfWeek(d){ const dt=new Date(d); const day=dt.getDay(); dt.setDate(dt.getDate()-day); dt.setHours(0,0,0,0); return dt; }
+function isSameDay(d1,d2){ return d1.toDateString()===d2.toDateString(); }
+function isThisWeek(dateStr){ if(!dateStr) return false; const d=new Date(dateStr); const now=new Date(); const sw=startOfWeek(now); const ew=new Date(sw); ew.setDate(ew.getDate()+7); return d>=sw && d<ew; }
+function isThisMonth(dateStr){ if(!dateStr) return false; const d=new Date(dateStr); const now=new Date(); return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear(); }
+function isToday(dateStr){ if(!dateStr) return false; return isSameDay(new Date(dateStr), new Date()); }
+function isTomorrow(dateStr){ if(!dateStr) return false; const now=new Date(); now.setDate(now.getDate()+1); return isSameDay(new Date(dateStr), now); }
+function isOverdue(dateStr, done){ if(!dateStr || done) return false; return new Date(dateStr) < new Date(new Date().toDateString()); }
+
+/* ============ SCORE HELPERS ============ */
+function checklistProgress(list){
+  if(!list || !list.length) return 0;
+  const done = list.filter(i=>i.done).length;
+  return Math.round((done/list.length)*100);
+}
+function weightedPerf(items, getChecklist){
+  // Performance Score = completed weighted tasks / total weighted tasks * 100
+  let totalW=0, doneW=0;
+  items.forEach(it=>{
+    const cl = getChecklist(it) || [];
+    cl.forEach(c=>{
+      const w = c.score||1;
+      totalW+=w;
+      if(c.done) doneW+=w;
+    });
+  });
+  if(totalW===0) return 0;
+  return Math.round((doneW/totalW)*100);
+}
+function allChecklistItems(){
+  let all=[];
+  STATE.challenges.forEach(c=> (c.checklist||[]).forEach(i=>all.push({...i, _date:c.followUpDate||c.createdDate})));
+  STATE.opportunities.forEach(c=> (c.checklist||[]).forEach(i=>all.push({...i, _date:c.date})));
+  STATE.threats.forEach(c=> (c.checklist||[]).forEach(i=>all.push({...i, _date:c.date})));
+  STATE.development.forEach(c=> (c.checklist||[]).forEach(i=>all.push({...i, _date:c.date})));
+  STATE.goals.forEach(g=> (g.lists||[]).forEach(l=> (l.checklist||[]).forEach(i=>all.push({...i, _date:i.date||g.deadline}))));
+  return all;
+}
+function overallPerformanceScore(filterFn){
+  const items = allChecklistItems().filter(i=> filterFn? filterFn(i): true);
+  if(!items.length) return 0;
+  let totalW=0, doneW=0;
+  items.forEach(c=>{ const w=c.score||1; totalW+=w; if(c.done) doneW+=w; });
+  return totalW? Math.round((doneW/totalW)*100):0;
+}
+function todayPerf(){ return overallPerformanceScore(i=> i._date && isToday(i._date)) || overallPerformanceScore(null); }
+function weekPerf(){ return overallPerformanceScore(i=> i._date && isThisWeek(i._date)) || overallPerformanceScore(null); }
+function monthPerf(){ return overallPerformanceScore(i=> i._date && isThisMonth(i._date)) || overallPerformanceScore(null); }
+function goalsProgressPct(){
+  if(!STATE.goals.length) return 0;
+  const pcts = STATE.goals.map(g=>goalProgress(g));
+  return Math.round(pcts.reduce((a,b)=>a+b,0)/pcts.length);
+}
+function goalProgress(goal){
+  let all=[];
+  (goal.lists||[]).forEach(l=> all=all.concat(l.checklist||[]));
+  if(!all.length) return 0;
+  return checklistProgress(all);
+}
+function oppScore(o){
+  const p=(Number(o.probability)||0)/100;
+  return Math.round((p*(Number(o.benefit)||0)) - (Number(o.cost)||0) - (Number(o.risk)||0));
+}
+function riskScore(th){
+  const p=(Number(th.probability)||0)/100;
+  return Math.round(p*(Number(th.impact)||0));
+}
+function riskLevelFromScore(s){
+  if(s>=75) return 'critical'; if(s>=50) return 'high'; if(s>=25) return 'medium'; return 'low';
+}
+function countActive(arr){ return arr.filter(x=>x.status!=='done' && x.status!=='canceled').length; }
+function countTasksDone(){
+  return allChecklistItems().filter(i=>i.done).length;
+}
+function lastQuizScore(){
+  if(!STATE.quizResults.length) return 0;
+  return STATE.quizResults[STATE.quizResults.length-1].scorePct;
+}
+function overallSystemScore(){
+  const parts = [todayPerf(), goalsProgressPct(), lastQuizScore()];
+  return Math.round(parts.reduce((a,b)=>a+b,0)/parts.length);
+}
+function gratitudeStreak(){
+  if(!STATE.gratitude.length) return 0;
+  const dates = [...new Set(STATE.gratitude.map(g=>g.date))].sort().reverse();
+  let streak=0; let cur=new Date();
+  for(let i=0;i<dates.length;i++){
+    const d=new Date(dates[i]);
+    const diff = Math.round((new Date(cur.toDateString())-new Date(d.toDateString()))/86400000);
+    if(diff===0 || diff===1){ streak++; cur=d; } else break;
+  }
+  return streak;
+}
+function scoreLabel(pct){
+  if(pct<=20) return t('need_review');
+  if(pct<=40) return t('weak');
+  if(pct<=60) return t('mediumres');
+  if(pct<=80) return t('good');
+  if(pct<=90) return t('vgood');
+  return t('excellent');
+}
+
+/* ============ QUIZ BANK (100 questions across 7 categories) ============ */
+function QB(cat,q,opts,correct,exp){ return {id:uid(), category:cat, question:q, options:opts, correct:correct, explanation:exp}; }
+function buildQuizBank(){
+  let bank = [];
+
+  /* --- 1. INDEPENDENT THINKING (هدف 15) --- */
+  bank.push(
+  QB('independent','همه دوستانت دارند سرمایه‌شان را وارد یک پروژه می‌کنند که «همه دارند وارد می‌شوند». بهترین واکنش کدام است؟',
+    ['بلافاصله وارد شوم چون جمع اشتباه نمی‌کند','قبل از تصمیم، داده‌ها و ریسک واقعی پروژه را بررسی کنم','چون می‌ترسم جا بمانم سریع تصمیم بگیرم','منتظر بمانم تا یک نفر دیگر برایم تصمیم بگیرد'], 1,
+    'پیروی کورکورانه از جمع جای بررسی مستقل را نمی‌گیرد؛ همیشه باید داده و ریسک را خودت بسنجی.'),
+  QB('independent','یک باور قدیمی داری که هرگز آن را زیر سؤال نبرده‌ای. رویکرد سالم چیست؟',
+    ['چون قدیمی است پس درست است','گاهی از خودت بپرسی چرا این باور را داری و شواهدش چیست','باورها را هرگز نباید تغییر داد','فقط باید باورهایی را که دیگران تأیید می‌کنند نگه داری'], 1,
+    'تفکر مستقل یعنی باورها را دوره‌ای بازبینی کنی، نه اینکه صرفاً به قدمت آن‌ها تکیه کنی.'),
+  QB('independent','یک متخصص معروف نظری می‌دهد که با تجربه شخصی تو در تضاد است. چه کار می‌کنی؟',
+    ['چون متخصص است حتماً درست می‌گوید','نظر او را کاملاً نادیده می‌گیرم','هم نظر او و هم تجربه‌ام را وزن‌دهی و بررسی می‌کنم','چون با نظرم فرق دارد او را رد می‌کنم'], 2,
+    'تفکر مستقل به معنای رد کامل یا قبول کامل نیست؛ بلکه ارزیابی شواهد از منابع مختلف است.'),
+  QB('independent','دوستت می‌گوید «همه همینطور فکر می‌کنند، تو هم باید همین‌طور فکر کنی». این جمله چه مشکلی دارد؟',
+    ['هیچ مشکلی ندارد و باید بپذیری','رایج بودن یک باور دلیلی بر درستی آن نیست','چون دوستت است حتماً راست می‌گوید','باید همیشه با اکثریت هم‌نظر بود'], 1,
+    'مغالطه «اکثریت» یکی از رایج‌ترین دلایل تقلید کورکورانه است؛ رایج بودن = درست بودن نیست.'),
+  QB('independent','بهترین سؤالی که قبل از پذیرفتن یک ادعای بزرگ باید از خودت بپرسی چیست؟',
+    ['این ادعا را چند نفر پسندیده‌اند؟','شواهد و منبع این ادعا چیست؟','آیا این ادعا هیجان‌انگیز است؟','آیا این ادعا با احساسم هم‌خوانی دارد؟'], 1,
+    'اعتبار یک ادعا به شواهد و منبع آن بستگی دارد، نه به میزان محبوبیت یا هیجان آن.'),
+  QB('independent','وقتی احساس می‌کنی داری صرفاً رفتار دیگران را تقلید می‌کنی بدون دلیل شخصی، بهترین کار چیست؟',
+    ['ادامه بده چون راحت‌تر است','لحظه‌ای توقف کن و دلیل خودت را برای آن کار پیدا کن','فوراً برعکس بقیه عمل کن','نظر بقیه را کاملاً کنار بگذار'], 1,
+    'هدف تفکر مستقل، داشتن دلیل شخصی برای انتخاب‌هاست؛ نه صرفاً تقلید یا لجبازی.'),
+  QB('independent','یک خبر در شبکه‌های اجتماعی بسیار پربازدید شده. قبل از باور و بازنشر آن چه باید کرد؟',
+    ['چون پربازدید است حتماً درست است','منبع اصلی و شواهد آن را بررسی کنیم','فوراً بازنشر کنیم تا دیگران هم بدانند','چون احساسی است پس واقعی است'], 1,
+    'محبوبیت یک خبر معیار صحت آن نیست؛ باید منبع و شواهد را جدا بررسی کرد.'),
+  QB('independent','گوسفند نبودن در این سیستم دقیقاً به چه معناست؟',
+    ['با همه مخالفت کردن','فکر و بررسی مستقل قبل از پذیرش یا رد هر ایده','هرگز به نظر دیگران گوش ندادن','همیشه اولین کسی بودن که کاری را انجام می‌دهد'], 1,
+    'گوسفند نبودن یعنی پیش از پذیرش یا رد یک ایده، آن را با تفکر و شواهد خودت بسنجی.'),
+  QB('independent','یک فروشنده با فشار زیاد می‌گوید «فقط امروز» باید تصمیم بگیری. بهترین واکنش؟',
+    ['فوراً تصمیم بگیر تا فرصت از دست نرود','فشار زمانی مصنوعی را تشخیص بده و با آرامش ارزیابی کن','چون فروشنده مطمئن است حتماً پیشنهاد خوبی است','هرگز به فروشندگان اعتماد نکن'], 1,
+    'فشار زمانی مصنوعی ابزار رایج برای جلوگیری از تفکر مستقل است؛ باید آن را تشخیص داد.'),
+  QB('independent','بهترین نشانه‌ی رشد تفکر مستقل کدام است؟',
+    ['هرگز نظرت را عوض نکنی','با شواهد جدید، نظرت را به‌روزرسانی کنی','همیشه با گروه هم‌نظر باشی','هیچ‌وقت سؤال نپرسی'], 1,
+    'انعطاف در برابر شواهد جدید، نشانه تفکر سالم است، نه ضعف.')
+  );
+
+  /* --- 2. MANAGEMENT & FEEDBACK (هدف 15) --- */
+  bank.push(
+  QB('management','مهم‌ترین ویژگی یک هدف خوب طبق مدیریت یک‌دقیقه‌ای چیست؟',
+    ['مبهم و کلی باشد','روشن، قابل اندازه‌گیری و کوتاه باشد','فقط در ذهن مدیر باشد','هرگز نوشته نشود'], 1,
+    'اهداف روشن و قابل اندازه‌گیری (که در یک دقیقه قابل مرور باشند) پایه مدیریت مؤثر است.'),
+  QB('management','بعد از انجام یک کار، بهترین زمان برای بازخورد گرفتن چه زمانی است؟',
+    ['هر چند ماه یک‌بار','در اسرع وقت و نزدیک به لحظه انجام کار','فقط در پایان سال','هرگز نیازی به بازخورد نیست'], 1,
+    'بازخورد سریع باعث اصلاح سریع رفتار می‌شود؛ هرچه فاصله بیشتر شود اثر آن کمتر است.'),
+  QB('management','وقتی کاری را خوب انجام داده‌ای، بهترین نوع بازخورد به خودت چیست؟',
+    ['نادیده گرفتن کامل','تحسین مشخص و فوری از همان رفتار خوب','فقط تمرکز روی اشتباهات آینده','مقایسه با دیگران'], 1,
+    'تحسین مشخص و فوری، رفتار درست را تقویت می‌کند و احتمال تکرار آن را بالا می‌برد.'),
+  QB('management','وقتی اشتباهی رخ می‌دهد، رویکرد سازنده کدام است؟',
+    ['حمله به شخصیت فرد','تمرکز روی رفتار اشتباه، نه هویت فرد، و اصلاح سریع آن','نادیده گرفتن کامل اشتباه','تنبیه بدون توضیح'], 1,
+    'بازخورد اصلاحی مؤثر روی رفتار تمرکز دارد نه روی برچسب زدن به شخصیت.'),
+  QB('management','یک هدف یک‌دقیقه‌ای خوب چه شکلی دارد؟',
+    ['«بهتر کار کن»','«تا جمعه، 5 مشتری جدید تماس بگیر»','«یک روزی موفق شو»','«کاری که دیگران می‌گویند انجام بده»'], 1,
+    'هدف باید مشخص، زمان‌دار و قابل سنجش باشد؛ جملات کلی قابل پیگیری نیستند.'),
+  QB('management','چرا بازخورد فوری از بازخورد تأخیری مؤثرتر است؟',
+    ['چون کوتاه‌تر است','چون ارتباط رفتار و نتیجه در ذهن هنوز زنده است','چون نیازی به فکر کردن ندارد','هیچ تفاوتی ندارد'], 1,
+    'وقتی فاصله زمانی کم باشد، مغز راحت‌تر رفتار را به نتیجه مرتبط می‌کند و یادگیری سریع‌تر رخ می‌دهد.'),
+  QB('management','وقتی داری به خودت بازخورد می‌دهی، چه چیزی باید بررسی شود؟',
+    ['فقط نتیجه نهایی','هم رفتار مشخص و هم نتیجه آن','فقط احساسات','فقط مقایسه با دیگران'], 1,
+    'بازخورد مؤثر باید رفتار قابل مشاهده را با نتیجه‌ی واقعی آن پیوند دهد.'),
+  QB('management','مدیریت خوب یک پروژه شخصی به چه معناست؟',
+    ['هدف مبهم و بدون پیگیری','هدف روشن + پیگیری منظم + اصلاح سریع','فقط شروع کردن بدون برنامه','منتظر ماندن برای الهام'], 1,
+    'مدیریت مؤثر ترکیبی از هدف‌گذاری روشن، پایش مستمر و اصلاح به‌موقع است.'),
+  QB('management','اگر یک هفته هدف تعیین‌شده محقق نشد، بهترین واکنش چیست؟',
+    ['کنار گذاشتن کامل هدف','بررسی علت، اصلاح روش و ادامه','سرزنش شدید خود','نادیده گرفتن و ادامه بدون تغییر'], 1,
+    'شکست در رسیدن به هدف باید نقطه شروع تحلیل و اصلاح باشد، نه رهاکردن یا سرزنش مخرب.'),
+  QB('management','چرا نوشتن اهداف روی کاغذ یا سیستم مهم است؟',
+    ['فقط برای زیبایی','چون اهداف نوشته‌شده قابل پیگیری و اندازه‌گیری‌اند','هیچ فایده‌ای ندارد','فقط برای نمایش به دیگران'], 1,
+    'نوشتن هدف آن را از یک نیت مبهم به یک قرارداد قابل سنجش با خود تبدیل می‌کند.')
+  );
+
+  /* --- 3. SCARCITY (هدف 15) --- */
+  bank.push(
+  QB('scarcity','وقتی زمان یا پول کم است، ذهن انسان معمولاً چه واکنشی نشان می‌دهد؟',
+    ['تمرکز بیشتر بلندمدت','تونل ذهنی و تمرکز کوتاه‌مدت روی کمبود','آرامش کامل','بی‌تفاوتی نسبت به همه چیز'], 1,
+    'کمبود باعث «تونل ذهنی» می‌شود که تمرکز را روی حل فوری کمبود می‌برد و دید بلندمدت را کاهش می‌دهد.'),
+  QB('scarcity','فردی که دائم درگیر کمبود پول است، چرا معمولاً تصمیم‌های بدتری می‌گیرد؟',
+    ['چون باهوش نیست','چون ظرفیت ذهنی محدودش صرف نگرانی کمبود می‌شود','چون تنبل است','چون شانس ندارد'], 1,
+    'کمبود، «پهنای باند ذهنی» را اشغال می‌کند و توان تصمیم‌گیری برای بقیه امور را کاهش می‌دهد.'),
+  QB('scarcity','بهترین راه مقابله با فشار ذهنی ناشی از کمبود چیست؟',
+    ['نادیده گرفتن کامل مشکل','ایجاد بافر (ذخیره، زمان اضافه) برای کاهش فشار تصمیم‌های اضطراری','قرض گرفتن بیشتر بدون برنامه','گرفتن همه تصمیم‌ها در آخرین لحظه'], 1,
+    'داشتن بافر مالی یا زمانی، فشار تصمیم‌گیری در لحظه بحران را کاهش می‌دهد.'),
+  QB('scarcity','«فقر احمق می‌کند» دقیقاً به چه معناست؟',
+    ['فقرا کم‌هوش‌اند','کمبود منابع، ظرفیت شناختی برای تصمیم درست را کاهش می‌دهد، نه هوش ذاتی','ثروتمندان همیشه باهوش‌ترند','این جمله علمی نیست'], 1,
+    'این مفهوم به کاهش موقت ظرفیت تصمیم‌گیری زیر فشار کمبود اشاره دارد، نه به هوش ذاتی افراد.'),
+  QB('scarcity','وقتی زیر فشار کمبود وقت هستی، چرا بهتر است تصمیم‌های مهم را به‌تعویق نیندازی تا لحظه آخر؟',
+    ['چون لحظه آخر همیشه بهترین ایده‌ها می‌آید','چون در لحظه آخر، تونل ذهنی باعث تصمیم ضعیف‌تر می‌شود','چون قانون است','فرقی ندارد'], 1,
+    'نزدیک به ددلاین، تونل ذهنی افزایش یافته و کیفیت تصمیم‌گیری کاهش می‌یابد.'),
+  QB('scarcity','یک فرد با بودجه محدود، بهترین استراتژی برای تصمیم‌های خرید کدام است؟',
+    ['خرید آنی بر اساس احساس','برنامه‌ریزی از قبل و اولویت‌بندی نیازها پیش از مواجهه با فشار لحظه','هر خریدی که تخفیف دارد را انجام دهد','هرگز پول خرج نکند'], 1,
+    'برنامه‌ریزی پیشین، تصمیم‌گیری زیر فشار لحظه‌ای (که کیفیت پایین‌تری دارد) را کاهش می‌دهد.'),
+  QB('scarcity','«قرض گرفتن از آینده» در شرایط کمبود به چه معناست؟',
+    ['گرفتن وام رسمی از بانک','حل مشکل امروز به قیمت ایجاد مشکل بزرگ‌تر در آینده','پس‌انداز برای آینده','سرمایه‌گذاری بلندمدت'], 1,
+    'در شرایط کمبود افراد اغلب مشکل امروز را با هزینه‌ای بزرگ‌تر در آینده حل می‌کنند (تونل ذهنی).'),
+  QB('scarcity','مؤثرترین راه کاهش اثر منفی کمبود توجه (Bandwidth Tax) کدام است؟',
+    ['گرفتن تصمیمات بیشتر همزمان','ساده‌سازی تصمیم‌ها و کاهش تعداد تصمیم‌های روزانه غیرضروری','نادیده گرفتن برنامه‌ریزی','افزایش استرس برای انگیزه بیشتر'], 1,
+    'کاهش تعداد تصمیم‌های کوچک روزانه، ظرفیت ذهنی بیشتری برای تصمیم‌های مهم آزاد می‌کند.'),
+  QB('scarcity','چرا سیستم داشبورد این برنامه روی «چالش‌های فعال» تمرکز دارد؟',
+    ['برای ایجاد استرس بیشتر','برای دید واضح از منابع محدود و اولویت‌بندی بهتر آن‌ها','بدون دلیل خاص','فقط برای زیبایی بصری'], 1,
+    'دیدن واضح چالش‌ها و منابع محدود، امکان اولویت‌بندی آگاهانه به‌جای واکنش هیجانی را می‌دهد.'),
+  QB('scarcity','فردی زیر فشار مالی شدید، احتمالاً در کدام مورد ضعیف‌تر عمل می‌کند؟',
+    ['حل مسائل فوری امروز','برنامه‌ریزی بلندمدت و تصمیم‌های آینده‌نگر','واکنش سریع به بحران','تمرکز کوتاه‌مدت'], 1,
+    'کمبود شدید، ظرفیت را صرف مسائل فوری می‌کند و برنامه‌ریزی بلندمدت را تضعیف می‌کند.')
+  );
+
+  /* --- 4. PROBABILITY & RISK (هدف 15، شامل سناریو) --- */
+  bank.push(
+  QB('probability','تو ۱۰ دلار داری. فرصت A احتمال موفقیت ۸۰٪ با سود ۵ دلار دارد. فرصت B احتمال موفقیت ۳۰٪ با سود ۵۰ دلار دارد. چه اطلاعات دیگری برای تصمیم لازم است؟',
+    ['فقط رنگ مورد علاقه‌ات','میزان ضرر در صورت شکست و اینکه آیا توان تحمل آن ضرر را داری','نظر دوستانت درباره فرصت‌ها','هیچ اطلاعات دیگری لازم نیست'], 1,
+    'ارزش مورد انتظار به‌تنهایی کافی نیست؛ باید میزان ضرر احتمالی و ظرفیت تحمل ریسک را هم سنجید.'),
+  QB('probability','ارزش مورد انتظار (Expected Value) فرصت A در سؤال بالا چقدر است؟ (۸۰٪ × ۵ دلار)',
+    ['۱ دلار','۴ دلار','۵ دلار','۸ دلار'], 1,
+    'EV = احتمال × سود = 0.8 × 5 = 4 دلار.'),
+  QB('probability','ارزش مورد انتظار فرصت B چقدر است؟ (۳۰٪ × ۵۰ دلار)',
+    ['۱۰ دلار','۱۵ دلار','۲۰ دلار','۵۰ دلار'], 1,
+    'EV = 0.3 × 50 = 15 دلار؛ با اینکه احتمال کمتر است، ارزش مورد انتظار بالاتر است.'),
+  QB('probability','اگر ارزش مورد انتظار یک تصمیم بالاتر باشد ولی احتمال شکست هم بالا باشد، مهم‌ترین نکته چیست؟',
+    ['همیشه گزینه با EV بالاتر را انتخاب کن بدون فکر دیگر','بررسی کن که آیا از پس ضرر احتمالی برمی‌آیی (مدیریت ریسک نابودکننده)','هرگز ریسک نکن','فقط شانس را امتحان کن'], 1,
+    'حتی با EV مثبت، اگر ضرر احتمالی نابودکننده باشد (Ruin)، تصمیم عاقلانه نیست.'),
+  QB('probability','چرا نباید تمام سرمایه را روی یک تصمیم پرریسک با احتمال موفقیت پایین گذاشت؟',
+    ['چون قانون است','چون یک شکست می‌تواند تمام بازی را تمام کند (ریسک نابودکننده)','چون بقیه این کار را نمی‌کنند','هیچ دلیلی ندارد'], 1,
+    'تنوع‌بخشی و مدیریت اندازه شرط (Position Sizing) از ریسک نابودکننده جلوگیری می‌کند.'),
+  QB('probability','بعد از دریافت نتیجه واقعی یک تصمیم، چه کاری باید انجام داد؟',
+    ['نتیجه را فراموش کن','پیش‌بینی اولیه را با نتیجه واقعی مقایسه و تخمین‌های بعدی را اصلاح کن','همیشه به تخمین اول پایبند بمان','نتیجه را نادیده بگیر'], 1,
+    'به‌روزرسانی باور بر اساس شواهد جدید (Bayesian Thinking) کیفیت تصمیم‌های آینده را بهبود می‌دهد.'),
+  QB('probability','ریسک یک تهدید در این سیستم چگونه محاسبه می‌شود؟',
+    ['احتمال + شدت پیامد','احتمال × شدت پیامد','فقط شدت پیامد','فقط احتمال'], 1,
+    'Risk Score = Probability × Impact؛ ترکیب هر دو عامل، سطح واقعی خطر را نشان می‌دهد.'),
+  QB('probability','اگر احتمال وقوع یک تهدید ۷۰٪ و شدت پیامد آن ۹۰ باشد، سطح ریسک تقریبی کدام است؟',
+    ['پایین (زیر ۲۵)','متوسط (۲۵ تا ۴۹)','بالا (۵۰ تا ۷۴)','بحرانی (۷۵ به بالا)'], 2,
+    '0.7 × 90 = 63 که در بازه «بالا» قرار می‌گیرد.'),
+  QB('probability','چرا «قطعیت کاذب» (اطمینان بیش‌ازحد به یک نتیجه) خطرناک است؟',
+    ['چون هیچ‌وقت اشتباه نیست','چون باعث نادیده گرفتن ریسک‌های واقعی و عدم آماده‌سازی برای شکست می‌شود','چون باعث موفقیت تضمینی می‌شود','خطرناک نیست'], 1,
+    'اطمینان بیش‌ازحد باعث می‌شود فرد برای سناریوهای شکست برنامه‌ای نداشته باشد.'),
+  QB('probability','بهترین رویکرد قبل از هر تصمیم بزرگ در این سیستم چیست؟',
+    ['فقط بر اساس احساس تصمیم بگیر','احتمال موفقیت، سود، هزینه و ریسک را تخمین بزن، سپس تصمیم بگیر','منتظر بمان تا مطمئن ۱۰۰٪ شوی','از دیگران بخواه به‌جایت تصمیم بگیرند'], 1,
+    'تصمیم‌گیری احتمالاتی یعنی تخمین آگاهانه‌ی عوامل کلیدی قبل از اقدام، نه انتظار قطعیت مطلق که هرگز وجود ندارد.')
+  );
+
+  /* --- 5. ATOMIC HABITS (هدف 15) --- */
+  bank.push(
+  QB('habits','طبق عادت‌های اتمی، تغییر پایدار از کجا شروع می‌شود؟',
+    ['از تغییر هدف بزرگ','از تغییر هویت («من چه کسی هستم»)','از خرید وسایل جدید','از فشار دیگران'], 1,
+    'تغییر واقعی وقتی پایدار می‌شود که از سطح هویت شروع شود، نه صرفاً از نتیجه دلخواه.'),
+  QB('habits','قانون «۱٪ بهتر شدن روزانه» به چه معناست؟',
+    ['یک تغییر بزرگ در یک روز','پیشرفت‌های کوچک و مداوم که در طول زمان تجمع می‌یابند','بی‌اهمیت بودن پیشرفت کوچک','نیازی به تکرار روزانه نیست'], 1,
+    'بهبودهای کوچک و مستمر، در بلندمدت اثر تصاعدی ایجاد می‌کنند.'),
+  QB('habits','برای شروع یک عادت جدید، کدام راهکار مؤثرتر است؟',
+    ['عادت را هرچه سخت‌تر و پیچیده‌تر طراحی کنی','عادت را کوچک و آسان شروع کنی (Two-Minute Rule)','منتظر انگیزه کامل بمانی','فقط به آن فکر کنی'], 1,
+    'شروع بسیار کوچک احتمال پایبندی و تبدیل شدن به عادت را افزایش می‌دهد.'),
+  QB('habits','نقش محیط در شکل‌گیری عادت‌ها چیست؟',
+    ['هیچ نقشی ندارد','محیط می‌تواند عادت خوب را آسان‌تر و عادت بد را سخت‌تر کند','فقط اراده مهم است','محیط فقط روی دیگران اثر دارد'], 1,
+    'طراحی محیط (مثلاً در دسترس بودن موارد مفید) یکی از قوی‌ترین ابزارهای ساخت عادت است.'),
+  QB('habits','چرا اندازه‌گیری عادت‌ها (مثلاً با چک‌لیست روزانه) مهم است؟',
+    ['فقط برای نمایش پیشرفت','چون آنچه اندازه‌گیری می‌شود، بهتر مدیریت و تکرار می‌شود','هیچ اهمیتی ندارد','فقط برای رقابت با دیگران'], 1,
+    'ردیابی پیشرفت باعث دیده‌شدن روند و افزایش انگیزه برای تداوم می‌شود.'),
+  QB('habits','بهترین راه برای ترک یک عادت بد کدام است؟',
+    ['فقط با اراده در لحظه مقاومت کنی','عادت بد را نامرئی و سخت کنی (مثلاً حذف محرک از محیط)','منتظر بمانی خودش از بین برود','آن را نادیده بگیری'], 1,
+    'کاهش دسترسی و نامرئی‌کردن محرک، مقاومت در برابر عادت بد را ساده‌تر می‌کند.'),
+  QB('habits','«هویت‌محور بودن عادت» یعنی چه؟',
+    ['«من می‌خواهم بدوم» به‌جای «من یک دونده‌ام»','«من یک دونده‌ام» به‌جای «می‌خواهم بدوم»','هیچ‌کدام مهم نیست','فقط نتیجه نهایی مهم است'], 1,
+    'وقتی رفتار بخشی از هویت شود («من فردی‌ام که…»)، تداوم آن راحت‌تر از تمرکز صرف بر نتیجه است.'),
+  QB('habits','چرا شکستن یک روز از زنجیره عادت خطرناک است اگر تکرار شود؟',
+    ['هیچ خطری ندارد','یک بار جاافتادن قابل جبران است ولی جاافتادن مکرر الگوی جدید می‌سازد','باید فوراً کل عادت را رها کرد','عادت‌ها هرگز نباید متوقف شوند'], 1,
+    'یک روز جاافتادن معمولاً بی‌ضرر است، اما تکرار آن الگوی رفتاری جدید (ترک عادت) می‌سازد.'),
+  QB('habits','نقش «رضایت فوری» در تثبیت عادت خوب چیست؟',
+    ['هیچ نقشی ندارد','دادن پاداش کوچک بلافاصله بعد از عادت خوب، تکرار آن را تقویت می‌کند','باید همیشه پاداش را به تعویق انداخت','فقط برای عادت‌های بد کاربرد دارد'], 1,
+    'مغز به پاداش فوری بهتر پاسخ می‌دهد؛ افزودن رضایت آنی به عادت‌های مفید، تکرار آن‌ها را تقویت می‌کند.'),
+  QB('habits','برای اندازه‌گیری بهتر عادت، کدام روش مناسب‌تر است؟',
+    ['فقط بر اساس حس درونی قضاوت کنی','یک معیار قابل مشاهده و قابل ثبت تعریف کنی (مثلاً چک‌لیست روزانه)','هیچ اندازه‌گیری لازم نیست','فقط در پایان سال بررسی کنی'], 1,
+    'معیار قابل مشاهده و قابل ثبت، امکان پیگیری دقیق روند را فراهم می‌کند.')
+  );
+
+  /* --- 6. COMPOUND EFFECT (هدف 15) --- */
+  bank.push(
+  QB('compound','اگر هر روز ۳۰ دقیقه یادگیری داشته باشی، در یک سال (۳۶۵ روز) چند ساعت می‌شود؟',
+    ['۹۱ ساعت','۱۸۲.۵ ساعت','۲۷۳ ساعت','۳۶۵ ساعت'], 1,
+    '30 دقیقه × 365 روز = 10950 دقیقه = 182.5 ساعت.'),
+  QB('compound','اثر مرکب بیشتر به کدام مورد وابسته است؟',
+    ['یک تصمیم بزرگ یک‌باره','تکرار مداوم انتخاب‌های کوچک در طول زمان','شانس','استعداد ذاتی'], 1,
+    'اثر مرکب از تکرار مستمر رفتارهای کوچک در بازه زمانی طولانی حاصل می‌شود.'),
+  QB('compound','چرا نتیجه اثر مرکب در ابتدای مسیر کم به‌نظر می‌رسد؟',
+    ['چون اثر مرکب واقعی نیست','چون رشد تصاعدی در ابتدا کند و در بلندمدت چشمگیر می‌شود','چون باید سریع‌تر تلاش کرد','چون نتیجه فوری نیاز است'], 1,
+    'منحنی رشد تصاعدی در ابتدا صاف به‌نظر می‌رسد اما در بلندمدت شتاب می‌گیرد.'),
+  QB('compound','اگر روزی ۵ فرصت شغلی بررسی کنی، در ۳۰ روز چند فرصت بررسی کرده‌ای؟',
+    ['۵۰','۱۰۰','۱۵۰','۳۰۰'], 2,
+    '5 × 30 = 150 فرصت.'),
+  QB('compound','مهم‌ترین درس اثر مرکب برای تصمیم‌های روزانه چیست؟',
+    ['هر انتخاب کوچک بی‌اهمیت است','هر انتخاب کوچک در طول زمان تجمع می‌یابد و نتیجه بزرگ می‌سازد','فقط تصمیم‌های بزرگ مهم‌اند','نتیجه فقط به شانس بستگی دارد'], 1,
+    'رفتارهای کوچک تکرارشونده، اثر تجمعی بزرگی در بلندمدت ایجاد می‌کنند.'),
+  QB('compound','اثر مرکب منفی (عادت‌های بد کوچک) چه نتیجه‌ای دارد؟',
+    ['هیچ اثری ندارد','در طول زمان می‌تواند به همان اندازه اثر مثبت، مخرب باشد','فقط اثر کوتاه‌مدت دارد','خودش را اصلاح می‌کند'], 1,
+    'همان‌طور که عادت خوب تجمع می‌یابد، عادت بد کوچک هم در بلندمدت اثر تخریبی تجمعی دارد.'),
+  QB('compound','چرا صبر و تداوم در اثر مرکب کلیدی است؟',
+    ['چون نتیجه فوری است','چون نتیجه واقعی معمولاً دیرتر از انتظار ظاهر می‌شود','چون صبر لازم نیست','چون هرچه سریع‌تر بهتر است'], 1,
+    'اثر تصاعدی زمان می‌برد تا قابل مشاهده شود؛ ترک زودهنگام مانع رسیدن به نقطه شتاب می‌شود.'),
+  QB('compound','ابزار «محاسبه‌گر اثر مرکب» در این برنامه چه کاربردی دارد؟',
+    ['فقط سرگرمی','نمایش نتیجه تجمعی یک رفتار تکرارشونده در طول زمان','هیچ کاربرد عملی ندارد','فقط برای اهداف مالی است'], 1,
+    'این ابزار به کاربر کمک می‌کند نتیجه بلندمدت یک رفتار کوچک تکرارشونده را عینی ببیند.'),
+  QB('compound','رابطه اثر مرکب با عادت‌های اتمی چیست؟',
+    ['هیچ ارتباطی ندارند','عادت‌های کوچک و مداوم، ماده خام اثر مرکب هستند','فقط یکی از آن‌ها واقعی است','اثر مرکب فقط در پول کاربرد دارد'], 1,
+    'عادت‌های کوچک روزانه، همان انتخاب‌های تکرارشونده‌ای هستند که اثر مرکب از آن‌ها ساخته می‌شود.'),
+  QB('compound','اگر هر ماه ۲٪ مهارتت بهبود یابد، بعد از ۱۲ ماه چه اتفاقی نزدیک‌تر به واقعیت است؟',
+    ['فقط ۲۴٪ بهتر شده‌ای (جمع ساده)','به دلیل رشد تصاعدی، بیش از ۲۴٪ بهتر شده‌ای','هیچ تغییری نکرده‌ای','بدتر شده‌ای'], 1,
+    'رشد تصاعدی (compounding) معمولاً بیشتر از جمع خطی ساده نتیجه می‌دهد.')
+  );
+
+  /* --- 7. GRATITUDE (هدف 10) --- */
+  bank.push(
+  QB('gratitude','نقش شکرگزاری در این سیستم دقیقاً چیست؟',
+    ['جایگزین اقدام و برنامه‌ریزی','ابزار توجه آگاهانه در کنار اقدام و واقع‌بینی','تنها عامل موفقیت مالی','کاملاً بی‌فایده'], 1,
+    'شکرگزاری مکمل اقدام است، نه جایگزین آن؛ باعث تعادل ذهنی و توجه به فرصت‌ها می‌شود.'),
+  QB('gratitude','چرا ثبت روزانه شکرگزاری می‌تواند مفید باشد؟',
+    ['چون مشکلات را حل می‌کند','چون توجه را به داشته‌ها و فرصت‌های موجود جلب می‌کند','چون جای برنامه‌ریزی مالی را می‌گیرد','هیچ فایده‌ای ندارد'], 1,
+    'تمرین منظم شکرگزاری، توجه آگاهانه به منابع و فرصت‌های موجود را تقویت می‌کند.'),
+  QB('gratitude','کدام جمله با فلسفه این سیستم درباره شکرگزاری همخوانی دارد؟',
+    ['«فقط شکرگزار باش، بقیه‌اش خودش حل می‌شود»','«شکرگزار باش و همزمان واقع‌بین بمان و اقدام کن»','«شکرگزاری فقط برای افراد ضعیف است»','«شکرگزاری هیچ ربطی به عملکرد ندارد»'], 1,
+    'سیستم تأکید دارد شکرگزاری باید همراه با واقع‌بینی و اقدام باشد، نه جایگزین آن‌ها.'),
+  QB('gratitude','«زنجیره روزهای شکرگزاری» در این برنامه چه چیزی را نشان می‌دهد؟',
+    ['میزان ثروت کاربر','تعداد روزهای متوالی ثبت شکرگزاری','امتیاز آزمون‌ها','تعداد چالش‌های حل‌شده'], 1,
+    'زنجیره روزها نشان‌دهنده تداوم تمرین توجه آگاهانه روزانه است.'),
+  QB('gratitude','اگر کسی فقط شکرگزار باشد ولی هیچ اقدامی برای بهبود وضعیت نکند، طبق این سیستم چه مشکلی دارد؟',
+    ['هیچ مشکلی ندارد و کافی است','شکرگزاری به‌تنهایی جایگزین اقدام و تصمیم‌گیری نمی‌شود','باید فوراً شکرگزاری را متوقف کند','شکرگزاری اضافی همیشه بد است'], 1,
+    'سیستم صراحتاً هشدار می‌دهد که شکرگزاری نباید جایگزین عمل و واقعیت‌سنجی شود.'),
+  QB('gratitude','ثبت «احساس» در کنار متن شکرگزاری چه کمکی می‌کند؟',
+    ['هیچ کمکی نمی‌کند','افزایش آگاهی هیجانی و درک بهتر از تجربه روزانه','فقط برای زیبایی ظاهری فرم است','جایگزین چک‌لیست روزانه می‌شود'], 1,
+    'ثبت احساس همراه با رویداد، به خودآگاهی هیجانی و درک عمیق‌تر تجربه کمک می‌کند.'),
+  QB('gratitude','بهترین زمان برای ثبت شکرگزاری روزانه چه زمانی است؟',
+    ['هرگز لازم نیست ثبت شود','هر زمانی که برای کاربر ثابت و قابل تکرار باشد (مثلاً پایان روز)','فقط زمانی که اتفاق خیلی بزرگی افتاده','فقط یک‌بار در سال'], 1,
+    'تداوم و ثبات زمان ثبت، مهم‌تر از لحظه دقیق آن است و به شکل‌گیری عادت کمک می‌کند.'),
+  QB('gratitude','رابطه شکرگزاری با تصمیم‌گیری احتمالاتی در این سیستم چگونه است؟',
+    ['کاملاً بی‌ربط و جدا از هم','شکرگزاری دیدگاه را متعادل می‌کند تا تصمیم‌ها از ترس یا کمبود صرف گرفته نشوند','شکرگزاری باید جای تحلیل احتمال را بگیرد','هیچ رابطه‌ای تعریف نشده'], 1,
+    'دیدی متعادل و شکرگزارانه می‌تواند از تصمیم‌گیری صرفاً از سر ترس یا کمبود جلوگیری کند.')
+  );
+
+  // Pad each category to target counts using template generator
+  const targets = {independent:15, management:15, scarcity:15, probability:15, habits:15, compound:15, gratitude:10};
+  const padTemplates = {
+    independent:[
+      ['یک ادعای جدید در اینترنت می‌بینی که با تجربه شخصی‌ات تناقض دارد. اول چه کاری منطقی است؟',['فوراً باور کنی','منبع و شواهد را بررسی کنی','فوراً رد کنی','نادیده بگیری و فراموش کنی'],1,'همیشه شواهد را قبل از پذیرش یا رد بررسی کن.'],
+      ['گروهی از افراد بدون دلیل مشخص مسیر یکسانی را انتخاب می‌کنند. تفکر مستقل چه می‌گوید؟',['حتماً همراه شوی','دلیل انتخاب آن‌ها را بررسی و متناسب با شرایط خودت تصمیم بگیری','همیشه مخالف جمع باشی','بی‌تفاوت باشی'],1,'هدف پیروی کورکورانه نیست، بلکه تصمیم آگاهانه و متناسب با شرایط خودت است.'],
+      ['وقتی یک باور شخصی‌ات با شواهد جدید در تضاد قرار می‌گیرد، رفتار سالم چیست؟',['اصرار بر باور قبلی','بازبینی باور بر اساس شواهد جدید','نادیده گرفتن شواهد','عصبانی شدن از منبع شواهد'],1,'به‌روزرسانی باور بر اساس شواهد، نشانه رشد فکری است.'],
+      ['چرا پرسیدن سؤال «چرا این‌طور فکر می‌کنم؟» مفید است؟',['هیچ فایده‌ای ندارد','به شناسایی باورهای بدون‌پایه کمک می‌کند','وقت‌تلف‌کردن است','باید فقط از دیگران پرسید'],1,'خودپرسی منظم، باورهای بدون‌پایه را آشکار می‌کند.'],
+      ['یک تبلیغ ادعا می‌کند «۹۹٪ افراد این محصول را دوست دارند». بهترین واکنش؟',['فوراً بخری','منبع آمار را بررسی کنی','چون آمار بالاست حتماً درست است','بی‌اهمیت بدانی و فراموش کنی'],1,'آمار بدون منبع معتبر، ابزار اقناع است نه اثبات؛ باید بررسی شود.']
+    ],
+    management:[
+      ['هدف این هفته‌ات «بهتر شدن» است. مشکل این هدف چیست؟',['هیچ مشکلی ندارد','مبهم است و قابل اندازه‌گیری نیست','خیلی سخت است','خیلی آسان است'],1,'اهداف باید مشخص و قابل سنجش باشند تا قابل پیگیری شوند.'],
+      ['بعد از یک هفته کاری، بهترین کار برای بهبود عملکرد چیست؟',['هیچ کاری نکنی','مرور کوتاه و مشخص کردن یک اصلاح برای هفته بعد','فراموش کردن هفته گذشته','فقط نگران هفته بعد باشی'],1,'مرور منظم و اصلاح کوچک، پایه بهبود مستمر عملکرد است.'],
+      ['وقتی یک عضو تیم (یا خودت) کار خوبی انجام می‌دهد، بهترین بازخورد چیست؟',['سکوت کامل','تشکر مشخص و فوری از همان رفتار','مقایسه با دیگران','تعریف کلی و مبهم'],1,'بازخورد مشخص و فوری، رفتار خوب را تقویت می‌کند.'],
+      ['کدام مورد نمونه‌ی یک هدف SMART (روشن) است؟',['«ورزش کن»','«۳ بار در هفته، ۳۰ دقیقه پیاده‌روی»','«سالم باش»','«هر وقت وقت داشتی ورزش کن»'],1,'هدف مشخص، زمان‌دار و قابل اندازه‌گیری نمونه هدف روشن است.'],
+      ['چرا پیگیری مکرر (Check-in) بهتر از بررسی فقط در پایان سال است؟',['فرقی ندارد','امکان اصلاح مسیر در طول راه را فراهم می‌کند','فقط وقت‌گیر است','فقط برای نمایش است'],1,'پیگیری منظم، اصلاح سریع مسیر را ممکن می‌سازد.']
+    ],
+    scarcity:[
+      ['وقتی هم‌زمان کمبود وقت و پول داری، بهترین راهبرد چیست؟',['هم‌زمان به همه چیز فکر کنی','اولویت‌بندی کنی و روی مهم‌ترین مورد تمرکز کنی','همه تصمیم‌ها را به تعویق بیندازی','از استرس اجتناب کامل کنی'],1,'اولویت‌بندی زیر فشار کمبود، ظرفیت ذهنی محدود را بهینه مصرف می‌کند.'],
+      ['«تونل ذهنی» ناشی از کمبود چه هزینه‌ای دارد؟',['هیچ هزینه‌ای','غفلت از مسائل مهم غیرفوری بلندمدت','بهبود تمرکز کلی','هیچ‌کدام'],1,'تونل ذهنی روی فوری‌ترین مسئله تمرکز می‌کند و مسائل مهم دیگر نادیده گرفته می‌شوند.'],
+      ['ایجاد یک صندوق ذخیره اضطراری کوچک چه کمکی می‌کند؟',['هیچ کمکی نمی‌کند','کاهش فشار تصمیم‌گیری در بحران‌های ناگهانی','فقط برای نمایش است','باعث افزایش هزینه می‌شود'],1,'بافر مالی، تصمیم‌گیری تحت فشار اضطراری را کاهش می‌دهد.'],
+      ['چرا افراد در شرایط کمبود گاهی تصمیم‌های کوتاه‌مدت مضر می‌گیرند؟',['چون تنبل‌اند','چون ظرفیت ذهنی صرف حل فوری کمبود می‌شود','چون باهوش نیستند','بدون دلیل خاص'],1,'کمبود، ظرفیت شناختی را برای تصمیم بلندمدت کاهش می‌دهد.'],
+      ['ساده‌سازی تصمیم‌های کوچک روزانه (مثلاً لباس، غذا) چه فایده‌ای در شرایط کمبود دارد؟',['هیچ فایده‌ای','آزاد کردن ظرفیت ذهنی برای تصمیم‌های مهم‌تر','باعث سردرگمی می‌شود','فقط زمان تلف می‌کند'],1,'کاهش تصمیم‌های کوچک، انرژی ذهنی بیشتری برای تصمیم‌های کلیدی باقی می‌گذارد.']
+    ],
+    probability:[
+      ['یک فرصت با احتمال موفقیت ۹۰٪ و سود ۱۰ دلار در برابر فرصتی با احتمال ۲۰٪ و سود ۱۰۰ دلار قرار دارد. کدام لزوماً بهتر است؟',['همیشه فرصت اول','بستگی به ارزش مورد انتظار و توان تحمل ریسک دارد','همیشه فرصت دوم','هیچ‌کدام هرگز خوب نیست'],1,'تصمیم درست به ترکیب ارزش مورد انتظار و ظرفیت تحمل ریسک بستگی دارد، نه فقط یک عدد.'],
+      ['اگر احتمال شکست یک پروژه ۶۰٪ باشد، این یعنی چه؟',['پروژه حتماً شکست می‌خورد','در بلندمدت به‌طور میانگین حدود ۶۰٪ مواقع شکست رخ می‌دهد','پروژه حتماً موفق می‌شود','این عدد بی‌معناست'],1,'احتمال یک برآورد آماری بلندمدت است، نه پیش‌گویی قطعی یک رویداد.'],
+      ['بعد از یک شکست، چرا نباید فوراً نتیجه گرفت که «تصمیم اشتباه بود»؟',['چون شکست همیشه خوب است','چون یک تصمیم خوب می‌تواند با احتمال پایین هم شکست بخورد','چون شکست هرگز رخ نمی‌دهد','چون باید فوراً همه‌چیز را تغییر داد'],1,'کیفیت تصمیم را باید از روی فرآیند تصمیم‌گیری سنجید، نه فقط نتیجه یک بار.'],
+      ['ریسک یک فرصت شغلی با احتمال موفقیت ۵۰٪ و شدت پیامد منفی ۸۰ چقدر است؟',['۱۳۰','۴۰','۸۰','۵۰'],1,'0.5 × 80 = 40.'],
+      ['چرا تنوع‌بخشی به فرصت‌ها (به‌جای تمرکز روی یک فرصت) منطقی است؟',['چون هیچ تفاوتی ندارد','چون ریسک کلی را کاهش و احتمال بقا را افزایش می‌دهد','چون سریع‌تر ثروتمند می‌شوی','چون تصمیم‌گیری را سخت‌تر می‌کند'],1,'تنوع‌بخشی، اثر شکست یک گزینه را روی کل نتیجه کاهش می‌دهد.']
+    ],
+    habits:[
+      ['برای تثبیت یک عادت جدید، «پیوند عادت» (Habit Stacking) یعنی چه؟',['انجام یک عادت جدید کاملاً جدا از روتین','چسباندن عادت جدید بعد از یک عادت موجود','فراموش کردن روتین قبلی','هیچ ارتباطی با عادت‌سازی ندارد'],1,'پیوند عادت جدید به یک عادت تثبیت‌شده، احتمال تکرار آن را افزایش می‌دهد.'],
+      ['چرا وضوح محرک (Cue) در شکل‌گیری عادت مهم است؟',['اهمیتی ندارد','محرک واضح باعث شروع خودکار رفتار می‌شود','فقط پاداش مهم است','فقط تلاش کافی است'],1,'محرک واضح، اولین قدم در شکل‌گیری خودکار یک عادت است.'],
+      ['اگر بخواهی یک عادت بد را کاهش دهی، اولین قدم چیست؟',['نادیده گرفتن آن','شناسایی محرک و موقعیتی که آن را فعال می‌کند','افزایش شدت آن','مقایسه با عادت دیگران'],1,'شناخت محرک، پیش‌نیاز مداخله مؤثر برای تغییر رفتار است.'],
+      ['کدام گزینه نمونه یک «عادت اتمی» (بسیار کوچک) برای شروع ورزش است؟',['دویدن ۱۰ کیلومتر از روز اول','پوشیدن کفش ورزشی و ۲ دقیقه کشش','ثبت‌نام در مسابقه ماراتن','خرید تجهیزات گران‌قیمت'],1,'شروع بسیار کوچک، مقاومت اولیه در برابر عادت جدید را کاهش می‌دهد.'],
+      ['نقش «هویت» در ادامه‌دادن یک عادت سخت در بلندمدت چیست؟',['هیچ نقشی ندارد','وقتی رفتار بخشی از تصویر ذهنی از خودت شود، ادامه آن راحت‌تر می‌شود','فقط انگیزه لحظه‌ای مهم است','هویت ربطی به رفتار ندارد'],1,'وقتی «من چنین آدمی‌ام» شکل بگیرد، رفتار حتی بدون انگیزه لحظه‌ای ادامه می‌یابد.']
+    ],
+    compound:[
+      ['اگر هفته‌ای یک کتاب مهارتی بخوانی، در یک سال (۵۲ هفته) چند کتاب خوانده‌ای؟',['۱۲','۲۴','۵۲','۱۰۰'],2,'1 × 52 = 52 کتاب در سال.'],
+      ['چرا کنارگذاشتن زودهنگام یک روند مثبت، بزرگ‌ترین اشتباه در اثر مرکب است؟',['چون نتیجه فوری لازم نیست','چون بیشترین رشد معمولاً در انتهای منحنی تصاعدی رخ می‌دهد','چون شروع مهم‌تر از ادامه است','هیچ اهمیتی ندارد'],1,'رشد تصاعدی در ابتدا کند به‌نظر می‌رسد ولی شتاب اصلی معمولاً دیرتر ظاهر می‌شود.'],
+      ['اگر هر روز فقط ۱۰ دقیقه روی یک مهارت کار کنی، در ۱۰۰ روز چند دقیقه می‌شود؟',['۵۰۰','۱۰۰۰','۱۵۰۰','۲۰۰۰'],1,'10 × 100 = 1000 دقیقه.'],
+      ['اثر مرکب در روابط انسانی چگونه عمل می‌کند؟',['هیچ ارتباطی به روابط ندارد','تعاملات کوچک مثبت روزانه در بلندمدت اعتماد عمیق می‌سازند','فقط یک ملاقات بزرگ کافی است','روابط تصادفی‌اند و اثر مرکب ندارند'],1,'اعتماد و روابط قوی معمولاً از تجمع تعاملات کوچک مثبت شکل می‌گیرند.'],
+      ['چرا اندازه‌گیری بلندمدت (مثلاً نمودار روند ماهانه) برای دیدن اثر مرکب مهم است؟',['هیچ اهمیتی ندارد','چون تغییرات روزانه کوچک‌اند و فقط در روند بلندمدت قابل مشاهده‌اند','فقط برای زیبایی داشبورد است','فقط داده‌های روزانه مهم‌اند'],1,'روند بلندمدت، تجمع تغییرات کوچک روزانه را قابل مشاهده می‌کند.']
+    ],
+    gratitude:[
+      ['اگر یک روز فراموش کنی شکرگزاری‌ات را ثبت کنی، بهترین واکنش چیست؟',['کل عادت را رها کنی','همان روز بعد دوباره شروع کنی بدون سرزنش شدید خود','خودت را شدیداً سرزنش کنی','دیگر هرگز ثبت نکنی'],1,'یک وقفه کوچک طبیعی است؛ ادامه‌دادن مهم‌تر از کمال است.'],
+      ['شکرگزاری از یک فرصت از‌دست‌رفته چه فایده‌ای می‌تواند داشته باشد؟',['هیچ فایده‌ای ندارد','کمک به دیدن درس یا جنبه مثبت پنهان، بدون انکار واقعیت شکست','باعث انکار کامل شکست می‌شود','جایگزین تحلیل شکست می‌شود'],1,'شکرگزاری می‌تواند در کنار تحلیل واقع‌بینانه، دیدگاه را متعادل نگه دارد.']
+    ]
+  };
+  Object.keys(targets).forEach(cat=>{
+    const have = bank.filter(b=>b.category===cat).length;
+    const need = targets[cat]-have;
+    const tmpl = padTemplates[cat]||[];
+    for(let i=0;i<need;i++){
+      const s = tmpl[i%tmpl.length];
+      if(!s) continue;
+      bank.push(QB(cat, s[0], s[1], s[2], s[3]));
+    }
+  });
+  return bank;
+}
+const QUIZ_BANK = buildQuizBank();
+const CATS = ['independent','management','scarcity','probability','habits','compound','gratitude'];
+const CAT_LABELS = {
+  independent:{fa:'تفکر مستقل',en:'Independent Thinking',ar:'التفكير المستقل'},
+  management:{fa:'مدیریت و بازخورد',en:'Management & Feedback',ar:'الإدارة والتغذية الراجعة'},
+  scarcity:{fa:'فقر و اثر کمبود',en:'Scarcity Effect',ar:'أثر الندرة'},
+  probability:{fa:'احتمالات و ریسک',en:'Probability & Risk',ar:'الاحتمالات والمخاطر'},
+  habits:{fa:'عادت‌ها',en:'Habits',ar:'العادات'},
+  compound:{fa:'اثر مرکب',en:'Compound Effect',ar:'الأثر المركب'},
+  gratitude:{fa:'شکرگزاری',en:'Gratitude',ar:'الشكر'}
+};
+
+/* ============ MODAL SYSTEM ============ */
+function closeModal(){ document.getElementById('modalRoot').innerHTML=''; }
+function openModal(html){
+  document.getElementById('modalRoot').innerHTML = `<div class="overlay" id="ovl"><div class="modal">${html}</div></div>`;
+  document.getElementById('ovl').addEventListener('click', (e)=>{ if(e.target.id==='ovl') closeModal(); });
+}
+function confirmDelete(onYes){
+  openModal(`
+    <h3>${t('delete_confirm')}</h3>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal()">${t('cancel')}</button>
+      <button class="btn danger" id="confirmDelBtn">${t('yes_delete')}</button>
+    </div>`);
+  document.getElementById('confirmDelBtn').onclick = ()=>{ onYes(); closeModal(); };
+}
+function esc(s){ return (s||'').toString().replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+/* Generic mini checklist renderer used inside challenge/opp/threat/dev/goal items.
+   scope: 'perf' (uses PERF_TAB + itemId) or 'goal' (uses goalId+listId) */
+function renderMiniChecklist(containerId, list, scope, ids){
+  const pct = checklistProgress(list);
+  let toggleCall, addCall, deleteCallPrefix;
+  if(scope==='perf'){
+    toggleCall = (clId)=>`toggleChecklistItem('${ids.itemId}','${clId}')`;
+    addCall = `addChecklistItem('${ids.itemId}','${containerId}')`;
+    deleteCallPrefix = (clId)=>`deleteChecklistItem('${ids.itemId}','${clId}')`;
+  } else {
+    toggleCall = (clId)=>`toggleGoalChecklistItem('${ids.goalId}','${ids.listId}','${clId}')`;
+    addCall = `addGoalChecklistItem('${ids.goalId}','${ids.listId}','${containerId}')`;
+    deleteCallPrefix = (clId)=>`deleteGoalChecklistItem('${ids.goalId}','${ids.listId}','${clId}')`;
+  }
+  let html = `<div class="checklist-mini">`;
+  (list||[]).forEach(item=>{
+    html += `<div class="cl-item ${item.done?'done':''}">
+      <input type="checkbox" ${item.done?'checked':''} onchange="${toggleCall(item.id)}">
+      <span class="cltext">${esc(item.title)}</span>
+      <span class="badge">${item.score||1}</span>
+      <button class="btn sm ghost" onclick="${deleteCallPrefix(item.id)}">✕</button>
+    </div>`;
+  });
+  html += `<div class="chk-progress"><div style="width:${pct}%"></div></div>`;
+  html += `<div style="display:flex; gap:6px; margin-top:8px;">
+      <input type="text" id="${containerId}_newitem" placeholder="${t('add_item')}" style="flex:1; background:var(--surface); border:1px solid var(--border); color:var(--text); padding:7px 9px; border-radius:6px; font-size:12.5px;">
+      <button class="btn sm" onclick="${addCall}">+</button>
+    </div>`;
+  html += `</div>`;
+  return html;
+}
+
+function statusBadgeClass(status){
+  if(status==='done') return 'green';
+  if(status==='canceled') return 'red';
+  return '';
+}
+function statusLabel(status){
+  const map = {done:t('done'), inprogress:t('inprogress'), notdone:t('notdone'), canceled:t('canceled')};
+  return map[status] || status;
+}
+function levelBadgeClass(lvl){
+  if(lvl==='critical'||lvl==='high') return 'red';
+  if(lvl==='medium') return 'gold';
+  return 'green';
+}
+function levelLabel(lvl){
+  return t(lvl) || lvl;
+}
+
+/* ============ ROUTER / NAV / HEADER ============ */
+const PAGES = [
+  {key:'dashboard', icon:'🎯', labelKey:'nav_dashboard'},
+  {key:'performance', icon:'📊', labelKey:'nav_performance'},
+  {key:'goals', icon:'🏁', labelKey:'nav_goals'},
+  {key:'quiz', icon:'🧠', labelKey:'nav_quiz'},
+  {key:'settings', icon:'⚙️', labelKey:'nav_settings'}
+];
+let CURRENT_PAGE = 'dashboard';
+let PERF_TAB = 'challenges';
+let charts = {};
+
+function renderNav(){
+  document.getElementById('brandT1').textContent = t('brandT1');
+  document.getElementById('brandT2').innerHTML = t('brandT2');
+  document.getElementById('sideFoot').textContent = t('sideFoot');
+  const nav = document.getElementById('sidenav');
+  nav.innerHTML = PAGES.map(p=>`<a class="navitem ${CURRENT_PAGE===p.key?'active':''}" href="#" data-page="${p.key}"><span class="ic">${p.icon}</span><span>${t(p.labelKey)}</span></a>`).join('');
+  nav.querySelectorAll('.navitem').forEach(el=> el.addEventListener('click', (e)=>{ e.preventDefault(); navigate(el.dataset.page); }));
+  const bn = document.getElementById('bottomnav');
+  bn.innerHTML = PAGES.map(p=>`<a class="bnitem ${CURRENT_PAGE===p.key?'active':''}" href="#" data-page="${p.key}"><span class="ic">${p.icon}</span><span>${t(p.labelKey)}</span></a>`).join('');
+  bn.querySelectorAll('.bnitem').forEach(el=> el.addEventListener('click', (e)=>{ e.preventDefault(); navigate(el.dataset.page); }));
+}
+function navigate(page){
+  CURRENT_PAGE = page;
+  renderNav();
+  renderPage();
+  window.scrollTo(0,0);
+}
+function renderHeader(){
+  const now = new Date();
+  const db = document.getElementById('dateblock');
+  db.innerHTML = `
+    <div class="clock" id="liveClock">${fmtClock(now)}</div>
+    <div class="dchip">📅 ${weekdayName(now)}</div>
+    <div class="dchip">🗓️ ${formatJalali(now)}</div>
+    <div class="dchip">🌍 ${formatGregorian(now)}</div>
+  `;
+  const sb = document.getElementById('statusblock');
+  const overall = overallSystemScore();
+  const gp = goalsProgressPct();
+  sb.innerHTML = `
+    <div class="ministat"><div class="v" style="color:var(--gold)">${localizeNum(overall)}%</div><div class="l">${t('overallStatus')}</div></div>
+    <div class="ministat"><div class="v" style="color:var(--green)">${localizeNum(gp)}%</div><div class="l">${t('goalsProgress')}</div></div>
+  `;
+  document.getElementById('themeToggle').textContent = STATE.theme==='dark' ? '🌙' : '☀️';
+}
+setInterval(()=>{ const el=document.getElementById('liveClock'); if(el) el.textContent = fmtClock(new Date()); }, 1000);
+
+document.getElementById('themeToggle').addEventListener('click', ()=>{
+  STATE.theme = STATE.theme==='dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', STATE.theme);
+  saveState(); renderHeader();
+});
+
+function applyLangDir(){
+  const dir = I18N[STATE.lang].dir;
+  document.documentElement.setAttribute('dir', dir);
+  document.documentElement.setAttribute('lang', STATE.lang);
+  document.body.setAttribute('dir', dir);
+}
+function renderPage(){
+  const main = document.getElementById('mainview');
+  if(CURRENT_PAGE==='dashboard') main.innerHTML = pageDashboard();
+  else if(CURRENT_PAGE==='performance') main.innerHTML = pagePerformance();
+  else if(CURRENT_PAGE==='goals') main.innerHTML = pageGoals();
+  else if(CURRENT_PAGE==='quiz') main.innerHTML = pageQuiz();
+  else if(CURRENT_PAGE==='settings') main.innerHTML = pageSettings();
+  afterRender();
+}
+
+/* ============ DASHBOARD PAGE ============ */
+function pageDashboard(){
+  const summary = [
+    {icon:'📆', v:localizeNum(todayPerf())+'%', l:t('today_perf')},
+    {icon:'📅', v:localizeNum(weekPerf())+'%', l:t('week_perf')},
+    {icon:'🗓️', v:localizeNum(monthPerf())+'%', l:t('month_perf')},
+    {icon:'🏁', v:localizeNum(goalsProgressPct())+'%', l:t('goals_pct')},
+    {icon:'⚔️', v:localizeNum(countActive(STATE.challenges)), l:t('active_challenges')},
+    {icon:'💡', v:localizeNum(countActive(STATE.opportunities)), l:t('active_opps')},
+    {icon:'⚠️', v:localizeNum(countActive(STATE.threats)), l:t('active_threats')},
+    {icon:'✅', v:localizeNum(countTasksDone()), l:t('tasks_done')},
+    {icon:'🧠', v:localizeNum(lastQuizScore())+'%', l:t('quiz_score')},
+    {icon:'⭐', v:localizeNum(overallSystemScore())+'%', l:t('overall_score')}
+  ];
+  const dateKey = todayISO();
+  const dm = STATE.dailyMissions[dateKey] || {income:false,learning:false,physical:false,social:false,discipline:false,gratitude:false,prob:false};
+  const dmKeys = ['income','learning','physical','social','discipline','gratitude','prob'];
+  const dmIcons = {income:'💰',learning:'📚',physical:'🏃',social:'🤝',discipline:'📏',gratitude:'🙏',prob:'🎲'};
+  const dmDone = dmKeys.filter(k=>dm[k]).length;
+  const dailyScorePct = Math.round((dmDone/dmKeys.length)*100);
+
+  const fg = STATE.financial;
+  const fgPct = fg.target? Math.min(100, Math.round((fg.current/fg.target)*100)) : 0;
+  const avgIncome = fg.incomeEntries.length ? Math.round(fg.incomeEntries.reduce((a,b)=>a+Number(b.amount||0),0)/fg.incomeEntries.length) : 0;
+
+  return `
+  <h1 class="pagetitle">${t('dash_title')}</h1>
+  <div class="pagesub">${t('dash_sub')}</div>
+
+  <div class="grid cols-4">
+    ${summary.map(s=>`<div class="summary-card"><div class="sicon">${s.icon}</div><div class="sv">${s.v}</div><div class="sl">${s.l}</div></div>`).join('')}
+  </div>
+
+  <div class="grid cols-2" style="margin-top:14px;">
+    <div class="card">
+      <div class="sectiontitle">${t('chart_perf_time')}</div>
+      <div class="chart-wrap"><canvas id="chartLine"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="sectiontitle">${t('chart_status')}</div>
+      <div class="chart-wrap"><canvas id="chartDonut"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="sectiontitle">${t('chart_compare')}</div>
+      <div class="chart-wrap"><canvas id="chartBar"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="sectiontitle">${t('chart_waterfall')}</div>
+      <div class="chart-wrap"><canvas id="chartWaterfall"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid cols-2" style="margin-top:14px;">
+    <div class="card">
+      <div class="sectiontitle">${t('daily_mission')} <span class="badge gold">${localizeNum(dailyScorePct)}/100</span></div>
+      ${dmKeys.map(k=>`
+        <div class="dailymission-item">
+          <span class="dmic">${dmIcons[k]}</span>
+          <span class="dmlabel">${t('dm_'+k)}</span>
+          <input type="checkbox" ${dm[k]?'checked':''} onchange="toggleDailyMission('${k}')">
+        </div>`).join('')}
+      <div class="progressbar-lg"><div style="width:${dailyScorePct}%"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="sectiontitle">${t('financial_goal')}</div>
+      <div class="smallnote" style="font-size:13px; color:var(--text-dim); margin-bottom:6px;">${STATE.goals.find(g=>g.isFinancial)?esc(STATE.goals.find(g=>g.isFinancial).name):t('financial_goal_title')}</div>
+      <div class="progressbar-lg"><div style="width:${fgPct}%"></div></div>
+      <div class="kpi-row">
+        <div class="kpi">${t('fg_current')}<b>$${localizeNum(fg.current)}</b></div>
+        <div class="kpi">${t('fg_remaining')}<b>$${localizeNum(Math.max(0,fg.target-fg.current))}</b></div>
+        <div class="kpi">${t('fg_pct')}<b>${localizeNum(fgPct)}%</b></div>
+        <div class="kpi">${t('fg_avg')}<b>$${localizeNum(avgIncome)}</b></div>
+      </div>
+      <button class="btn primary sm" style="margin-top:10px;" onclick="openIncomeModal()">${t('fg_addincome')}</button>
+    </div>
+  </div>
+
+  <div class="grid cols-2" style="margin-top:14px;">
+    <div class="card">
+      <div class="sectiontitle">${t('compound_title')}</div>
+      <div class="field-row">
+        <div class="field"><label>${t('compound_amount')}</label><input type="number" id="compAmount" value="30"></div>
+        <div class="field"><label>${t('compound_times')}</label><input type="number" id="compTimes" value="365"></div>
+      </div>
+      <div class="field"><label>${t('compound_unit')}</label><input type="text" id="compUnit" value="دقیقه یادگیری"></div>
+      <button class="btn primary sm" onclick="calcCompound()">${t('compound_calc')}</button>
+      <div id="compoundResult" style="margin-top:10px; font-weight:800; font-size:15px; color:var(--gold);"></div>
+    </div>
+
+    <div class="card">
+      <div class="sectiontitle">${t('myrules_title')}</div>
+      <div style="font-size:12.5px; color:var(--text-dim); margin-bottom:6px;">${t('myrules')}</div>
+      ${STATE.rules.slice(0,5).map((r,i)=>`<div class="rule-row"><div class="rn">${localizeNum(i+1)}</div><div>${esc(r.text)}</div></div>`).join('') || `<div class="empty-state">${t('no_data')}</div>`}
+      <button class="btn ghost sm" style="margin-top:10px;" onclick="navigate('settings')">${t('edit')} →</button>
+    </div>
+  </div>
+  `;
+}
+function toggleDailyMission(k){
+  const dateKey = todayISO();
+  if(!STATE.dailyMissions[dateKey]) STATE.dailyMissions[dateKey] = {income:false,learning:false,physical:false,social:false,discipline:false,gratitude:false,prob:false};
+  STATE.dailyMissions[dateKey][k] = !STATE.dailyMissions[dateKey][k];
+  saveState();
+  renderPage(); renderHeader();
+}
+function calcCompound(){
+  const amount = parseFloat(document.getElementById('compAmount').value)||0;
+  const times = parseFloat(document.getElementById('compTimes').value)||0;
+  const unit = document.getElementById('compUnit').value||'';
+  const total = amount*times;
+  document.getElementById('compoundResult').textContent = `${localizeNum(amount)} × ${localizeNum(times)} = ${localizeNum(total)} ${unit}`;
+}
+function openIncomeModal(){
+  openModal(`
+    <h3>${t('fg_addincome')}</h3>
+    <div class="field"><label>${t('income_amount')} ($)</label><input type="number" id="m_incomeAmt"></div>
+    <div class="field"><label>${t('income_desc')}</label><input type="text" id="m_incomeDesc"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal()">${t('cancel')}</button>
+      <button class="btn primary" onclick="saveIncome()">${t('save')}</button>
+    </div>`);
+}
+function saveIncome(){
+  const amt = parseFloat(document.getElementById('m_incomeAmt').value)||0;
+  const desc = document.getElementById('m_incomeDesc').value||'';
+  STATE.financial.incomeEntries.push({date:todayISO(), amount:amt, desc:desc});
+  STATE.financial.current += amt;
+  saveState(); closeModal(); showToast(t('save_success'));
+  renderPage(); renderHeader();
+}
+
+/* ============ PERFORMANCE PAGE ============ */
+let PERF_FILTER = 'all';
+let PERF_SEARCH = '';
+
+function pagePerformance(){
+  const tabs = ['challenges','opportunities','threats','development'];
+  return `
+  <h1 class="pagetitle">${t('performance_title')}</h1>
+  <div class="pagesub">${t('performance_sub')}</div>
+  <div class="tabbar">
+    ${tabs.map(tb=>`<button class="tabbtn ${PERF_TAB===tb?'active':''}" onclick="setPerfTab('${tb}')">${t(tb)}</button>`).join('')}
+  </div>
+  <div class="filterrow">
+    <input type="text" placeholder="${t('search_ph')}" value="${esc(PERF_SEARCH)}" oninput="PERF_SEARCH=this.value; renderPage();">
+    <select onchange="PERF_FILTER=this.value; renderPage();">
+      <option value="all" ${PERF_FILTER==='all'?'selected':''}>${t('filter_all')}</option>
+      <option value="today" ${PERF_FILTER==='today'?'selected':''}>${t('filter_today')}</option>
+      <option value="tomorrow" ${PERF_FILTER==='tomorrow'?'selected':''}>${t('filter_tomorrow')}</option>
+      <option value="week" ${PERF_FILTER==='week'?'selected':''}>${t('filter_week')}</option>
+      <option value="month" ${PERF_FILTER==='month'?'selected':''}>${t('filter_month')}</option>
+      <option value="overdue" ${PERF_FILTER==='overdue'?'selected':''}>${t('filter_overdue')}</option>
+      <option value="done" ${PERF_FILTER==='done'?'selected':''}>${t('filter_done')}</option>
+      <option value="notdone" ${PERF_FILTER==='notdone'?'selected':''}>${t('filter_notdone')}</option>
+    </select>
+    <button class="btn primary" onclick="openItemModal('${PERF_TAB}')">+ ${t('add_'+(PERF_TAB==='challenges'?'challenge':PERF_TAB==='opportunities'?'opportunity':PERF_TAB==='threats'?'threat':'dev'))}</button>
+  </div>
+  <div id="perfList">${renderPerfList()}</div>
+  `;
+}
+function setPerfTab(tb){ PERF_TAB=tb; PERF_FILTER='all'; PERF_SEARCH=''; renderPage(); }
+function matchesFilter(dateVal, status){
+  const done = status==='done';
+  switch(PERF_FILTER){
+    case 'today': return isToday(dateVal);
+    case 'tomorrow': return isTomorrow(dateVal);
+    case 'week': return isThisWeek(dateVal);
+    case 'month': return isThisMonth(dateVal);
+    case 'overdue': return isOverdue(dateVal, done);
+    case 'done': return done;
+    case 'notdone': return !done;
+    default: return true;
+  }
+}
+function matchesSearch(obj){
+  if(!PERF_SEARCH) return true;
+  const s = PERF_SEARCH.toLowerCase();
+  return (obj.title||'').toLowerCase().includes(s) || (obj.description||'').toLowerCase().includes(s);
+}
+function renderPerfList(){
+  const arr = STATE[PERF_TAB];
+  const filtered = arr.filter(o=> matchesFilter(o.date||o.followUpDate||o.createdDate, o.status) && matchesSearch(o));
+  if(!filtered.length) return `<div class="empty-state"><div class="eicon">🗂️</div>${t('empty_generic')}</div>`;
+  return filtered.map(o=>renderPerfItem(o)).join('');
+}
+function renderPerfItem(o){
+  const pct = checklistProgress(o.checklist);
+  let scoreLine='';
+  if(PERF_TAB==='opportunities'){
+    scoreLine = `<span class="badge gold">${t('opp_score')}: ${localizeNum(oppScore(o))}</span>`;
+  } else if(PERF_TAB==='threats'){
+    const rs = riskScore(o);
+    scoreLine = `<span class="badge ${levelBadgeClass(riskLevelFromScore(rs))}">${t('risk_score')}: ${localizeNum(rs)} (${levelLabel(riskLevelFromScore(rs))})</span>`;
+  } else {
+    scoreLine = `<span class="badge">${t('score_f')}: ${localizeNum(o.score||0)}</span>`;
+  }
+  const dateStr = o.date||o.followUpDate||o.createdDate||'';
+  return `
+  <div class="item-row">
+    <div class="irow-top">
+      <div>
+        <div class="ititle">${esc(o.title)}</div>
+        ${o.description?`<div class="idesc">${esc(o.description)}</div>`:''}
+      </div>
+      <div class="item-actions">
+        <button class="btn sm ghost" onclick="openItemModal('${PERF_TAB}','${o.id}')">✎</button>
+        <button class="btn sm ghost" onclick="duplicateItem('${PERF_TAB}','${o.id}')">⧉</button>
+        <button class="btn sm danger" onclick="deletePerfItem('${o.id}')">✕</button>
+      </div>
+    </div>
+    <div class="imeta">
+      <span class="badge ${statusBadgeClass(o.status)}">${statusLabel(o.status)}</span>
+      ${scoreLine}
+      ${dateStr?`<span class="badge">📅 ${dateStr}</span>`:''}
+      ${o.severity?`<span class="badge ${levelBadgeClass(o.severity)}">${t('severity_f')}: ${levelLabel(o.severity)}</span>`:''}
+    </div>
+    ${renderMiniChecklist('cl_'+o.id, o.checklist, 'perf', {itemId:o.id})}
+  </div>`;
+}
+function findPerfItem(id){ return STATE[PERF_TAB].find(x=>x.id===id); }
+function toggleChecklistItem(itemId, clId){
+  const o = findPerfItem(itemId); if(!o) return;
+  const c = (o.checklist||[]).find(x=>x.id===clId); if(!c) return;
+  c.done = !c.done;
+  updateParentStatusFromChecklist(o);
+  saveState(); renderPage(); renderHeader();
+}
+function updateParentStatusFromChecklist(o){
+  if(!o.checklist || !o.checklist.length) return;
+  const pct = checklistProgress(o.checklist);
+  if(pct===100) o.status='done';
+  else if(pct>0) o.status='inprogress';
+}
+function addChecklistItem(itemId, containerId){
+  const o = findPerfItem(itemId); if(!o) return;
+  const input = document.getElementById(containerId+'_newitem');
+  const val = input.value.trim();
+  if(!val) return;
+  if(!o.checklist) o.checklist=[];
+  o.checklist.push({id:uid(), title:val, done:false, score:5});
+  saveState(); renderPage(); renderHeader();
+}
+function deleteChecklistItem(itemId, clId){
+  const o = findPerfItem(itemId); if(!o) return;
+  o.checklist = (o.checklist||[]).filter(x=>x.id!==clId);
+  updateParentStatusFromChecklist(o);
+  saveState(); renderPage(); renderHeader();
+}
+function deletePerfItem(id){
+  confirmDelete(()=>{
+    STATE[PERF_TAB] = STATE[PERF_TAB].filter(x=>x.id!==id);
+    saveState(); showToast(t('deleted')); renderPage(); renderHeader();
+  });
+}
+function duplicateItem(tab, id){
+  const o = STATE[tab].find(x=>x.id===id); if(!o) return;
+  const copy = JSON.parse(JSON.stringify(o));
+  copy.id = uid();
+  copy.title = copy.title + ' (copy)';
+  if(copy.checklist) copy.checklist = copy.checklist.map(c=>({...c, id:uid()}));
+  STATE[tab].push(copy);
+  saveState(); showToast(t('save_success')); renderPage();
+}
+
+function openItemModal(tab, id){
+  const isEdit = !!id;
+  const o = isEdit ? STATE[tab].find(x=>x.id===id) : null;
+  let fields = '';
+  if(tab==='challenges'){
+    fields = `
+      <div class="field"><label>${t('title_f')}</label><input id="f_title" value="${esc(o?.title||'')}"></div>
+      <div class="field"><label>${t('desc_f')}</label><textarea id="f_desc">${esc(o?.description||'')}</textarea></div>
+      <div class="field-row">
+        <div class="field"><label>${t('severity_f')}</label><select id="f_severity">
+          ${['low','medium','high','critical'].map(l=>`<option value="${l}" ${o?.severity===l?'selected':''}>${t(l)}</option>`).join('')}
+        </select></div>
+        <div class="field"><label>${t('followup_f')}</label><input type="date" id="f_followUpDate" value="${o?.followUpDate||''}"></div>
+      </div>
+      <div class="field"><label>${t('note_f')}</label><textarea id="f_note">${esc(o?.note||'')}</textarea></div>`;
+  } else if(tab==='opportunities'){
+    fields = `
+      <div class="field"><label>${t('title_f')}</label><input id="f_title" value="${esc(o?.title||'')}"></div>
+      <div class="field"><label>${t('desc_f')}</label><textarea id="f_desc">${esc(o?.description||'')}</textarea></div>
+      <div class="field-row">
+        <div class="field"><label>${t('probability_f')}</label><input type="number" id="f_probability" value="${o?.probability??50}"></div>
+        <div class="field"><label>${t('benefit_f')}</label><input type="number" id="f_benefit" value="${o?.benefit??0}"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>${t('cost_f')}</label><input type="number" id="f_cost" value="${o?.cost??0}"></div>
+        <div class="field"><label>${t('risk_f')}</label><input type="number" id="f_risk" value="${o?.risk??0}"></div>
+      </div>
+      <div class="field"><label>${t('date_f')}</label><input type="date" id="f_date" value="${o?.date||''}"></div>`;
+  } else if(tab==='threats'){
+    fields = `
+      <div class="field"><label>${t('title_f')}</label><input id="f_title" value="${esc(o?.title||'')}"></div>
+      <div class="field"><label>${t('desc_f')}</label><textarea id="f_desc">${esc(o?.description||'')}</textarea></div>
+      <div class="field-row">
+        <div class="field"><label>${t('probability_f')}</label><input type="number" id="f_probability" value="${o?.probability??50}"></div>
+        <div class="field"><label>${t('impact_f')}</label><input type="number" id="f_impact" value="${o?.impact??50}"></div>
+      </div>
+      <div class="field"><label>${t('prevent_f')}</label><input id="f_prevent" value="${esc(o?.preventiveAction||'')}"></div>
+      <div class="field"><label>${t('date_f')}</label><input type="date" id="f_date" value="${o?.date||''}"></div>`;
+  } else { // development
+    fields = `
+      <div class="field"><label>${t('title_f')}</label><input id="f_title" value="${esc(o?.title||'')}"></div>
+      <div class="field"><label>${t('desc_f')}</label><textarea id="f_desc">${esc(o?.description||'')}</textarea></div>
+      <div class="field"><label>${t('category_f')}</label><input id="f_category" value="${esc(o?.category||'')}" placeholder="مهارت / زبان / بدن / ..."></div>
+      <div class="field"><label>${t('date_f')}</label><input type="date" id="f_date" value="${o?.date||''}"></div>`;
+  }
+  openModal(`
+    <h3>${isEdit?t('edit'):t('add')}</h3>
+    ${fields}
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal()">${t('cancel')}</button>
+      <button class="btn primary" onclick="saveItemModal('${tab}','${id||''}')">${t('save')}</button>
+    </div>`);
+}
+function saveItemModal(tab, id){
+  const title = document.getElementById('f_title').value.trim();
+  if(!title){ showToast('...'); return; }
+  const desc = document.getElementById('f_desc') ? document.getElementById('f_desc').value : '';
+  let obj;
+  const existing = id ? STATE[tab].find(x=>x.id===id) : null;
+  if(existing){ obj = existing; } else { obj = {id:uid(), status:'notdone', checklist:[], createdDate:todayISO()}; STATE[tab].push(obj); }
+  obj.title = title; obj.description = desc;
+  if(tab==='challenges'){
+    obj.severity = document.getElementById('f_severity').value;
+    obj.followUpDate = document.getElementById('f_followUpDate').value;
+    obj.note = document.getElementById('f_note').value;
+  } else if(tab==='opportunities'){
+    obj.probability = Number(document.getElementById('f_probability').value)||0;
+    obj.benefit = Number(document.getElementById('f_benefit').value)||0;
+    obj.cost = Number(document.getElementById('f_cost').value)||0;
+    obj.risk = Number(document.getElementById('f_risk').value)||0;
+    obj.date = document.getElementById('f_date').value;
+    obj.score = oppScore(obj);
+  } else if(tab==='threats'){
+    obj.probability = Number(document.getElementById('f_probability').value)||0;
+    obj.impact = Number(document.getElementById('f_impact').value)||0;
+    obj.preventiveAction = document.getElementById('f_prevent').value;
+    obj.date = document.getElementById('f_date').value;
+    obj.riskLevel = riskLevelFromScore(riskScore(obj));
+  } else {
+    obj.category = document.getElementById('f_category').value;
+    obj.date = document.getElementById('f_date').value;
+  }
+  saveState(); closeModal(); showToast(t('save_success'));
+  renderPage(); renderHeader();
+}
+
+/* ============ GOALS PAGE ============ */
+function pageGoals(){
+  return `
+  <h1 class="pagetitle">${t('goals_title')}</h1>
+  <div class="pagesub">${t('goals_sub')}</div>
+  <div style="margin-bottom:14px;"><button class="btn primary" onclick="openGoalModal()">+ ${t('new_goal')}</button></div>
+  ${STATE.goals.length? STATE.goals.map(g=>renderGoalCard(g)).join('') : `<div class="empty-state"><div class="eicon">🏁</div>${t('empty_generic')}</div>`}
+  `;
+}
+function renderGoalCard(g){
+  const pct = goalProgress(g);
+  return `
+  <div class="card">
+    <div class="irow-top">
+      <div>
+        <div class="ititle" style="font-size:16px;">${esc(g.name)} ${g.isFinancial?'💰':''}</div>
+        ${g.description?`<div class="idesc">${esc(g.description)}</div>`:''}
+      </div>
+      <div class="item-actions">
+        <button class="btn sm ghost" onclick="openGoalModal('${g.id}')">✎</button>
+        ${g.isFinancial?'':`<button class="btn sm danger" onclick="deleteGoal('${g.id}')">✕</button>`}
+      </div>
+    </div>
+    <div class="imeta">
+      ${g.deadline?`<span class="badge">⏳ ${g.deadline}</span>`:''}
+      ${g.importance?`<span class="badge ${levelBadgeClass(g.importance)}">${t('goal_importance')}: ${levelLabel(g.importance)}</span>`:''}
+      <span class="badge gold">${t('goal_progress')}: ${localizeNum(pct)}%</span>
+    </div>
+    <div class="progressbar-lg"><div style="width:${pct}%"></div></div>
+    <div style="margin-top:10px;">
+      ${(g.lists||[]).map(l=>renderGoalList(g,l)).join('')}
+      <button class="btn sm ghost" onclick="openGoalListModal('${g.id}')">+ ${t('new_list')}</button>
+    </div>
+  </div>`;
+}
+function renderGoalList(g,l){
+  const pct = checklistProgress(l.checklist);
+  return `
+  <div class="item-row">
+    <div class="irow-top">
+      <div class="ititle">${esc(l.name)}</div>
+      <div class="item-actions"><button class="btn sm danger" onclick="deleteGoalList('${g.id}','${l.id}')">✕</button></div>
+    </div>
+    ${renderMiniChecklist('gl_'+l.id, l.checklist, 'goal', {goalId:g.id, listId:l.id})}
+  </div>`;
+}
+function findGoal(id){ return STATE.goals.find(x=>x.id===id); }
+function toggleGoalChecklistItem(gid,lid,clId){
+  const g=findGoal(gid); if(!g) return;
+  const l=(g.lists||[]).find(x=>x.id===lid); if(!l) return;
+  const c=(l.checklist||[]).find(x=>x.id===clId); if(!c) return;
+  c.done=!c.done;
+  if(g.isFinancial){} // financial goal progress derives from checklist automatically
+  const pct = goalProgress(g);
+  if(pct===100) g.status='done'; else if(pct>0) g.status='inprogress';
+  saveState(); renderPage(); renderHeader();
+}
+function addGoalChecklistItem(gid,lid,containerId){
+  const g=findGoal(gid); if(!g) return;
+  const l=(g.lists||[]).find(x=>x.id===lid); if(!l) return;
+  const input = document.getElementById(containerId+'_newitem');
+  const val = input.value.trim(); if(!val) return;
+  if(!l.checklist) l.checklist=[];
+  l.checklist.push({id:uid(), title:val, done:false, score:5});
+  saveState(); renderPage(); renderHeader();
+}
+function deleteGoalChecklistItem(gid,lid,clId){
+  const g=findGoal(gid); if(!g) return;
+  const l=(g.lists||[]).find(x=>x.id===lid); if(!l) return;
+  l.checklist = (l.checklist||[]).filter(x=>x.id!==clId);
+  saveState(); renderPage(); renderHeader();
+}
+function deleteGoalList(gid,lid){
+  confirmDelete(()=>{
+    const g=findGoal(gid); if(!g) return;
+    g.lists = (g.lists||[]).filter(x=>x.id!==lid);
+    saveState(); renderPage();
+  });
+}
+function deleteGoal(gid){
+  confirmDelete(()=>{
+    STATE.goals = STATE.goals.filter(x=>x.id!==gid);
+    saveState(); showToast(t('deleted')); renderPage(); renderHeader();
+  });
+}
+function openGoalListModal(gid){
+  openModal(`
+    <h3>${t('new_list')}</h3>
+    <div class="field"><label>${t('list_name')}</label><input id="f_listname"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal()">${t('cancel')}</button>
+      <button class="btn primary" onclick="saveGoalList('${gid}')">${t('save')}</button>
+    </div>`);
+}
+function saveGoalList(gid){
+  const name = document.getElementById('f_listname').value.trim();
+  if(!name) return;
+  const g = findGoal(gid); if(!g) return;
+  if(!g.lists) g.lists=[];
+  g.lists.push({id:uid(), name:name, checklist:[]});
+  saveState(); closeModal(); renderPage();
+}
+function openGoalModal(id){
+  const isEdit=!!id;
+  const g = isEdit ? findGoal(id) : null;
+  openModal(`
+    <h3>${isEdit?t('edit'):t('new_goal')}</h3>
+    <div class="field"><label>${t('goal_name')}</label><input id="f_gname" value="${esc(g?.name||'')}"></div>
+    <div class="field"><label>${t('desc_f')}</label><textarea id="f_gdesc">${esc(g?.description||'')}</textarea></div>
+    <div class="field-row">
+      <div class="field"><label>${t('goal_start')}</label><input type="date" id="f_gstart" value="${g?.startDate||todayISO()}"></div>
+      <div class="field"><label>${t('goal_deadline')}</label><input type="date" id="f_gdeadline" value="${g?.deadline||''}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>${t('category_f')}</label><input id="f_gcat" value="${esc(g?.category||'')}"></div>
+      <div class="field"><label>${t('goal_importance')}</label><select id="f_gimportance">
+        ${['low','medium','high','critical'].map(l=>`<option value="${l}" ${g?.importance===l?'selected':''}>${t(l)}</option>`).join('')}
+      </select></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal()">${t('cancel')}</button>
+      <button class="btn primary" onclick="saveGoalModal('${id||''}')">${t('save')}</button>
+    </div>`);
+}
+function saveGoalModal(id){
+  const name = document.getElementById('f_gname').value.trim();
+  if(!name) return;
+  let g = id ? findGoal(id) : null;
+  if(!g){ g = {id:uid(), status:'notdone', lists:[]}; STATE.goals.push(g); }
+  g.name=name;
+  g.description=document.getElementById('f_gdesc').value;
+  g.startDate=document.getElementById('f_gstart').value;
+  g.deadline=document.getElementById('f_gdeadline').value;
+  g.category=document.getElementById('f_gcat').value;
+  g.importance=document.getElementById('f_gimportance').value;
+  saveState(); closeModal(); showToast(t('save_success')); renderPage(); renderHeader();
+}
+
+/* ============ QUIZ PAGE ============ */
+let QUIZ_SESSION = null; // {questions:[], index:0, answers:[], selected:null}
+
+function pageQuiz(){
+  if(QUIZ_SESSION && !QUIZ_SESSION.finished) return renderQuizQuestion();
+  if(QUIZ_SESSION && QUIZ_SESSION.finished) return renderQuizResult(QUIZ_SESSION.result);
+  return `
+  <h1 class="pagetitle">${t('quiz_title')}</h1>
+  <div class="pagesub">${t('quiz_sub')}</div>
+  <div class="card">
+    <div class="sectiontitle">${t('category_breakdown')}</div>
+    <div class="grid cols-3">
+      ${CATS.map(c=>`<div class="summary-card"><div class="sicon">📌</div><div class="sv" style="font-size:14px;">${CAT_LABELS[c][STATE.lang]||CAT_LABELS[c].fa}</div><div class="sl">${QUIZ_BANK.filter(q=>q.category===c).length} ${t('quiz_progress')==='Question'?'Qs':'سؤال'}</div></div>`).join('')}
+    </div>
+    <button class="btn primary" style="margin-top:16px;" onclick="startQuiz()">${t('start_quiz')} (100)</button>
+  </div>
+  ${STATE.quizResults.length? `
+  <div class="card">
+    <div class="sectiontitle">${t('past_reviews')||''} ${t('quiz_result')}</div>
+    ${STATE.quizResults.slice().reverse().slice(0,5).map(r=>`
+      <div class="item-row"><div class="irow-top"><div class="ititle">${r.date}</div><div class="badge gold">${localizeNum(r.scorePct)}%</div></div>
+      <div class="idesc">${scoreLabel(r.scorePct)}</div></div>`).join('')}
+  </div>`:''}
+  `;
+}
+function startQuiz(){
+  const shuffled = QUIZ_BANK.slice().sort(()=>Math.random()-0.5);
+  QUIZ_SESSION = {questions:shuffled, index:0, answers:[], finished:false, selected:null};
+  renderPage();
+}
+function renderQuizQuestion(){
+  const q = QUIZ_SESSION.questions[QUIZ_SESSION.index];
+  const sel = QUIZ_SESSION.selected;
+  return `
+  <h1 class="pagetitle">${t('quiz_title')}</h1>
+  <div class="pagesub">${t('quiz_progress')} ${localizeNum(QUIZ_SESSION.index+1)} ${t('of_word')} ${localizeNum(QUIZ_SESSION.questions.length)} — ${CAT_LABELS[q.category][STATE.lang]||CAT_LABELS[q.category].fa}</div>
+  <div class="progressbar-lg"><div style="width:${(QUIZ_SESSION.index/QUIZ_SESSION.questions.length)*100}%"></div></div>
+  <div class="card">
+    <div style="font-weight:700; font-size:15.5px; margin-bottom:14px; line-height:1.8;">${esc(q.question)}</div>
+    ${q.options.map((opt,i)=>{
+      let cls='quiz-opt';
+      if(sel!==null){
+        if(i===q.correct) cls+=' correct';
+        else if(i===sel && sel!==q.correct) cls+=' wrong';
+      }
+      return `<button class="${cls}" ${sel!==null?'disabled':''} onclick="selectQuizAnswer(${i})">${esc(opt)}</button>`;
+    }).join('')}
+    ${sel!==null? `<div class="smallnote" style="margin-top:10px; font-size:12.5px;">${esc(q.explanation)}</div>
+      <button class="btn primary" style="margin-top:14px;" onclick="nextQuizQuestion()">${QUIZ_SESSION.index+1>=QUIZ_SESSION.questions.length? t('finish'): t('next')}</button>` : ''}
+  </div>`;
+}
+function selectQuizAnswer(i){
+  if(QUIZ_SESSION.selected!==null) return;
+  QUIZ_SESSION.selected = i;
+  const q = QUIZ_SESSION.questions[QUIZ_SESSION.index];
+  QUIZ_SESSION.answers.push({category:q.category, correct: i===q.correct});
+  renderPage();
+}
+function nextQuizQuestion(){
+  QUIZ_SESSION.index++;
+  QUIZ_SESSION.selected=null;
+  if(QUIZ_SESSION.index>=QUIZ_SESSION.questions.length){
+    finishQuiz();
+  } else {
+    renderPage();
+  }
+}
+function finishQuiz(){
+  const answers = QUIZ_SESSION.answers;
+  const totalCorrect = answers.filter(a=>a.correct).length;
+  const scorePct = Math.round((totalCorrect/answers.length)*100);
+  const byCat = {};
+  CATS.forEach(c=>{
+    const catAnswers = answers.filter(a=>a.category===c);
+    byCat[c] = catAnswers.length? Math.round((catAnswers.filter(a=>a.correct).length/catAnswers.length)*100) : null;
+  });
+  let weakCat = null, weakVal = 101;
+  Object.keys(byCat).forEach(c=>{ if(byCat[c]!==null && byCat[c]<weakVal){ weakVal=byCat[c]; weakCat=c; } });
+  const result = {scorePct, byCat, weakCat, weakVal, date:todayISO()};
+  STATE.quizResults.push(result);
+  saveState();
+  QUIZ_SESSION.finished = true;
+  QUIZ_SESSION.result = result;
+  renderPage(); renderHeader();
+}
+const SUGGESTED_CHECKLISTS = {
+  independent:['قبل از پذیرش یک ادعا، منبع آن را بررسی کن.','هفته‌ای یک باور قدیمی خودت را زیر سؤال ببر.','قبل از تقلید از جمع، دلیل شخصی خودت را بنویس.'],
+  management:['هر روز یک هدف مشخص و قابل‌سنجش برای خودت بنویس.','بلافاصله بعد از هر کار مهم به خودت بازخورد بده.','هفته‌ای یک‌بار عملکردت را مرور کن.'],
+  scarcity:['قبل از هر خرید مهم، ۲۴ ساعت صبر کن.','یک بافر (ذخیره) کوچک برای مواقع اضطراری بساز.','تصمیم‌های کوچک روزانه را ساده‌تر کن.'],
+  probability:['هر روز یک تصمیم را با احتمال موفقیت تخمین بزن.','نتیجه واقعی را ثبت کن.','تفاوت پیش‌بینی و نتیجه را بررسی کن.'],
+  habits:['یک عادت جدید را در کوچک‌ترین شکل ممکن شروع کن.','محیط اطرافت را برای تسهیل عادت خوب بچین.','عادت جدید را به یک عادت موجود پیوند بزن.'],
+  compound:['یک رفتار کوچک مثبت را انتخاب و هر روز تکرار کن.','نتیجه تجمعی آن را ماهانه اندازه بگیر.','از رهاکردن زودهنگام روند مثبت خودداری کن.'],
+  gratitude:['هر روز حداقل یک مورد شکرگزاری ثبت کن.','شکرگزاری را همراه با یک اقدام واقعی انجام بده.','از انکار مشکلات با شکرگزاری اجتناب کن.']
+};
+function renderQuizResult(result){
+  const weakLabel = result.weakCat ? (CAT_LABELS[result.weakCat][STATE.lang]||CAT_LABELS[result.weakCat].fa) : '-';
+  return `
+  <h1 class="pagetitle">${t('quiz_result')}</h1>
+  <div class="card" style="text-align:center;">
+    <div style="font-size:42px; font-weight:800; color:var(--gold);">${localizeNum(result.scorePct)}%</div>
+    <div style="font-size:15px; color:var(--text-dim); margin-top:4px;">${scoreLabel(result.scorePct)}</div>
+  </div>
+  <div class="card">
+    <div class="sectiontitle">${t('category_breakdown')}</div>
+    ${CATS.map(c=>{
+      const v = result.byCat[c];
+      if(v===null) return '';
+      return `<div style="margin-bottom:10px;">
+        <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px;"><span>${CAT_LABELS[c][STATE.lang]||CAT_LABELS[c].fa}</span><span>${localizeNum(v)}%</span></div>
+        <div class="chk-progress"><div style="width:${v}%; background:${v<50?'var(--red)':'var(--green)'}"></div></div>
+      </div>`;
+    }).join('')}
+  </div>
+  ${result.weakCat? `
+  <div class="card">
+    <div class="sectiontitle">⚠️ ${t('weak_area')}: ${weakLabel}</div>
+    <div class="sectiontitle" style="margin-top:10px; font-size:13px;">${t('suggested_checklist')}</div>
+    ${(SUGGESTED_CHECKLISTS[result.weakCat]||[]).map(s=>`<div class="cl-item"><span style="margin-inline-end:6px;">□</span><span class="cltext">${esc(s)}</span></div>`).join('')}
+    <button class="btn primary sm" style="margin-top:12px;" onclick="addWeakChecklistToDev('${result.weakCat}')">${t('add_to_dev')}</button>
+  </div>`:''}
+  <button class="btn ghost" onclick="QUIZ_SESSION=null; renderPage();">${t('close')}</button>
+  `;
+}
+function addWeakChecklistToDev(cat){
+  const label = CAT_LABELS[cat][STATE.lang]||CAT_LABELS[cat].fa;
+  const items = (SUGGESTED_CHECKLISTS[cat]||[]).map(s=>({id:uid(), title:s, done:false, score:5}));
+  STATE.development.push({id:uid(), title:label, description:t('weak_area'), category:label, date:todayISO(), status:'notdone', checklist:items});
+  saveState(); showToast(t('save_success'));
+}
+
+/* ============ SETTINGS PAGE (incl. rules, gratitude, weekly review) ============ */
+let SETTINGS_TAB = 'profile';
+function pageSettings(){
+  const tabs = [
+    {k:'profile', l:t('about_me')},
+    {k:'rules', l:t('myrules_title')},
+    {k:'gratitude', l:t('gratitude_title')},
+    {k:'weekly', l:t('weekly_review')},
+    {k:'contact', l:t('contact_us')},
+    {k:'prefs', l:t('language')+' / '+t('theme')}
+  ];
+  return `
+  <h1 class="pagetitle">${t('settings_title')}</h1>
+  <div class="tabbar">${tabs.map(tb=>`<button class="tabbtn ${SETTINGS_TAB===tb.k?'active':''}" onclick="SETTINGS_TAB='${tb.k}'; renderPage();">${tb.l}</button>`).join('')}</div>
+  <div id="settingsBody">${renderSettingsTab()}</div>
+  `;
+}
+function renderSettingsTab(){
+  if(SETTINGS_TAB==='profile') return settingsProfile();
+  if(SETTINGS_TAB==='rules') return settingsRules();
+  if(SETTINGS_TAB==='gratitude') return settingsGratitude();
+  if(SETTINGS_TAB==='weekly') return settingsWeekly();
+  if(SETTINGS_TAB==='contact') return settingsContact();
+  if(SETTINGS_TAB==='prefs') return settingsPrefs();
+  return '';
+}
+function settingsProfile(){
+  const u = STATE.user;
+  return `
+  <div class="card">
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:14px;">
+      <div class="avatar-circle">${(u.name||'?').slice(0,1)}</div>
+      <div style="font-weight:800; font-size:16px;">${esc(u.name||'')}</div>
+    </div>
+    <div class="field"><label>${t('name_f')}</label><input id="f_uname" value="${esc(u.name)}"></div>
+    <div class="field-row">
+      <div class="field"><label>${t('age_f')}</label><input type="number" id="f_uage" value="${esc(u.age)}"></div>
+    </div>
+    <div class="field"><label>${t('bio_f')}</label><textarea id="f_ubio">${esc(u.bio)}</textarea></div>
+    <div class="field"><label>${t('mygoals_f')}</label><textarea id="f_ugoals">${esc(u.goalsText)}</textarea></div>
+    <button class="btn primary" onclick="saveProfile()">${t('save')}</button>
+  </div>
+  <div class="card">
+    <div class="sectiontitle">${t('mygame')}</div>
+    <div class="idesc" style="margin-bottom:6px;">${t('mygame_q')}</div>
+    <textarea id="f_mygame" placeholder="${t('mygame_ph')}">${esc(STATE.myGame)}</textarea>
+    <div class="sectiontitle" style="margin-top:16px;">${t('myland')}</div>
+    <div class="idesc" style="margin-bottom:6px;">${t('myland_q')}</div>
+    <textarea id="f_myland" placeholder="${t('myland_ph')}">${esc(STATE.myLand)}</textarea>
+    <button class="btn primary" style="margin-top:12px;" onclick="saveGameLand()">${t('save')}</button>
+  </div>
+  `;
+}
+function saveProfile(){
+  STATE.user.name = document.getElementById('f_uname').value;
+  STATE.user.age = document.getElementById('f_uage').value;
+  STATE.user.bio = document.getElementById('f_ubio').value;
+  STATE.user.goalsText = document.getElementById('f_ugoals').value;
+  saveState(); showToast(t('profile_saved')); renderPage();
+}
+function saveGameLand(){
+  STATE.myGame = document.getElementById('f_mygame').value;
+  STATE.myLand = document.getElementById('f_myland').value;
+  saveState(); showToast(t('save_success'));
+}
+function settingsRules(){
+  return `
+  <div class="card">
+    <div class="sectiontitle">${t('myrules')}</div>
+    ${STATE.rules.map((r,i)=>`
+      <div class="rule-row">
+        <div class="rn">${localizeNum(i+1)}</div>
+        <div style="flex:1;">${esc(r.text)}</div>
+        <button class="btn sm ghost" onclick="editRule('${r.id}')">✎</button>
+        <button class="btn sm danger" onclick="deleteRule('${r.id}')">✕</button>
+      </div>`).join('')}
+    <div style="display:flex; gap:6px; margin-top:12px;">
+      <input type="text" id="newRuleInput" placeholder="${t('rule_ph')}" style="flex:1; background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:9px; border-radius:6px;">
+      <button class="btn primary" onclick="addRule()">${t('add_rule')}</button>
+    </div>
+  </div>`;
+}
+function addRule(){
+  const input = document.getElementById('newRuleInput');
+  const val = input.value.trim(); if(!val) return;
+  STATE.rules.push({id:uid(), text:val});
+  saveState(); renderPage();
+}
+function editRule(id){
+  const r = STATE.rules.find(x=>x.id===id); if(!r) return;
+  openModal(`
+    <h3>${t('edit')}</h3>
+    <div class="field"><textarea id="f_ruleedit">${esc(r.text)}</textarea></div>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal()">${t('cancel')}</button>
+      <button class="btn primary" onclick="saveRuleEdit('${id}')">${t('save')}</button>
+    </div>`);
+}
+function saveRuleEdit(id){
+  const r = STATE.rules.find(x=>x.id===id); if(!r) return;
+  r.text = document.getElementById('f_ruleedit').value;
+  saveState(); closeModal(); renderPage();
+}
+function deleteRule(id){
+  confirmDelete(()=>{ STATE.rules = STATE.rules.filter(x=>x.id!==id); saveState(); renderPage(); });
+}
+
+function settingsGratitude(){
+  const streak = gratitudeStreak();
+  return `
+  <div class="card">
+    <div class="kpi-row">
+      <div class="kpi">${t('gratitude_streak')}<b class="streakflame">🔥 ${localizeNum(streak)}</b></div>
+      <div class="kpi">${t('gratitude_days')}<b>${localizeNum(new Set(STATE.gratitude.map(g=>g.date)).size)}</b></div>
+    </div>
+    <div class="smallnote">${t('gratitude_note')}</div>
+    <div class="hrline"></div>
+    <div class="field"><label>${t('gratitude_ph')}</label><textarea id="f_gtext"></textarea></div>
+    <div class="field-row">
+      <div class="field"><label>${t('category_f')}</label><input id="f_gcat2" placeholder="کار / خانواده / سلامت..."></div>
+      <div class="field"><label>${t('gratitude_feeling')}</label><input id="f_gfeel" placeholder="آرامش / شادی / امید..."></div>
+    </div>
+    <button class="btn primary" onclick="addGratitude()">${t('add')}</button>
+  </div>
+  <div class="card">
+    ${STATE.gratitude.slice().reverse().slice(0,20).map(g=>`
+      <div class="gj-entry">
+        <div class="gdate">${g.date} ${g.category?'· '+esc(g.category):''} ${g.feeling?'· '+esc(g.feeling):''}</div>
+        <div>${esc(g.text)}</div>
+      </div>`).join('') || `<div class="empty-state">${t('no_data')}</div>`}
+  </div>
+  `;
+}
+function addGratitude(){
+  const text = document.getElementById('f_gtext').value.trim(); if(!text) return;
+  const category = document.getElementById('f_gcat2').value;
+  const feeling = document.getElementById('f_gfeel').value;
+  STATE.gratitude.push({id:uid(), text, category, feeling, date:todayISO()});
+  saveState(); showToast(t('save_success')); renderPage();
+}
+
+function settingsWeekly(){
+  const qs = ['wr_q1','wr_q2','wr_q3','wr_q4','wr_q5','wr_q6','wr_q7','wr_q8','wr_q9','wr_q10'];
+  return `
+  <div class="card">
+    <div class="sectiontitle">${t('new_review')}</div>
+    ${qs.map((k,i)=>`<div class="field"><label>${localizeNum(i+1)}. ${t(k)}</label><textarea id="f_wr_${i}"></textarea></div>`).join('')}
+    <button class="btn primary" onclick="saveWeeklyReview()">${t('save')}</button>
+  </div>
+  <div class="card">
+    <div class="sectiontitle">${t('past_reviews')}</div>
+    ${STATE.weeklyReviews.slice().reverse().slice(0,5).map(wr=>`
+      <div class="item-row"><div class="irow-top"><div class="ititle">${wr.date}</div><div class="badge gold">${localizeNum(wr.score)}/100</div></div></div>
+    `).join('') || `<div class="empty-state">${t('no_data')}</div>`}
+  </div>
+  `;
+}
+function saveWeeklyReview(){
+  const answers = [];
+  for(let i=0;i<10;i++){ answers.push(document.getElementById('f_wr_'+i).value); }
+  const filled = answers.filter(a=>a && a.trim()).length;
+  const score = Math.round((filled/10)*100);
+  STATE.weeklyReviews.push({id:uid(), date:todayISO(), answers, score});
+  saveState(); showToast(t('save_success')); renderPage();
+}
+
+function settingsContact(){
+  return `
+  <div class="card">
+    <div class="field"><label>${t('name_f')}</label><input id="f_cname"></div>
+    <div class="field"><label>${t('email_f')}</label><input type="email" id="f_cemail"></div>
+    <div class="field"><label>${t('message_f')}</label><textarea id="f_cmsg"></textarea></div>
+    <button class="btn primary" onclick="sendContact()">${t('send')}</button>
+  </div>`;
+}
+function sendContact(){ showToast(t('message_sent')); document.getElementById('f_cname').value=''; document.getElementById('f_cemail').value=''; document.getElementById('f_cmsg').value=''; }
+
+function settingsPrefs(){
+  return `
+  <div class="card">
+    <div class="sectiontitle">${t('language')}</div>
+    <div class="lang-pick">
+      <button class="btn ${STATE.lang==='fa'?'primary':''}" onclick="setLang('fa')">فارسی</button>
+      <button class="btn ${STATE.lang==='en'?'primary':''}" onclick="setLang('en')">English</button>
+      <button class="btn ${STATE.lang==='ar'?'primary':''}" onclick="setLang('ar')">العربية</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="sectiontitle">${t('theme')}</div>
+    <div class="lang-pick">
+      <button class="btn ${STATE.theme==='dark'?'primary':''}" onclick="setTheme('dark')">${t('theme_dark')}</button>
+      <button class="btn ${STATE.theme==='light'?'primary':''}" onclick="setTheme('light')">${t('theme_light')}</button>
+    </div>
+  </div>`;
+}
+function setLang(l){ STATE.lang=l; saveState(); applyLangDir(); renderNav(); renderHeader(); renderPage(); }
+function setTheme(th){ STATE.theme=th; document.documentElement.setAttribute('data-theme', th); saveState(); renderPage(); }
+
+/* ============ CHARTS ============ */
+function destroyCharts(){
+  Object.values(charts).forEach(c=>{ if(c) c.destroy(); });
+  charts = {};
+}
+const CHART_COLORS = {gold:'#C9A227', green:'#3F9C6D', red:'#C0533B', blue:'#4A7FA6', grid:'rgba(154,163,168,.15)', text:'#9AA3A8'};
+function chartDefaults(){
+  return { plugins:{legend:{labels:{color:CHART_COLORS.text, font:{family:'Vazirmatn'}}}}, scales:{} };
+}
+function renderCharts(){
+  destroyCharts();
+  const lineEl = document.getElementById('chartLine');
+  if(lineEl){
+    // build last 14 days perf trend from checklist items with _date
+    const labels=[]; const data=[];
+    for(let i=13;i>=0;i--){
+      const d = new Date(); d.setDate(d.getDate()-i);
+      const iso = d.toISOString().slice(0,10);
+      labels.push(STATE.lang==='en'? (d.getMonth()+1)+'/'+d.getDate() : faDigits((d.getMonth()+1)+'/'+d.getDate()));
+      const items = allChecklistItems().filter(it=> it._date && it._date.slice(0,10)===iso);
+      let pct=0;
+      if(items.length){ let tw=0,dw=0; items.forEach(c=>{const w=c.score||1; tw+=w; if(c.done) dw+=w;}); pct= tw?Math.round((dw/tw)*100):0; }
+      data.push(pct);
+    }
+    charts.line = new Chart(lineEl, {type:'line', data:{labels, datasets:[{label:t('daily'), data, borderColor:CHART_COLORS.gold, backgroundColor:'rgba(201,162,39,.15)', fill:true, tension:.35, pointRadius:2}]},
+      options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{ticks:{color:CHART_COLORS.text},grid:{color:CHART_COLORS.grid}}, y:{min:0,max:100,ticks:{color:CHART_COLORS.text},grid:{color:CHART_COLORS.grid}}}}});
+  }
+  const donutEl = document.getElementById('chartDonut');
+  if(donutEl){
+    const items = allChecklistItems();
+    const done = items.filter(i=>i.done).length;
+    const total = items.length;
+    const notdone = total-done;
+    charts.donut = new Chart(donutEl, {type:'doughnut', data:{labels:[t('done'), t('notdone')], datasets:[{data:[done, notdone], backgroundColor:[CHART_COLORS.green, CHART_COLORS.red], borderWidth:0}]},
+      options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{color:CHART_COLORS.text}}}}});
+  }
+  const barEl = document.getElementById('chartBar');
+  if(barEl){
+    const labels=[t('challenges'), t('opportunities'), t('threats'), t('goals_title')];
+    const data=[STATE.challenges.length, STATE.opportunities.length, STATE.threats.length, STATE.goals.length];
+    charts.bar = new Chart(barEl, {type:'bar', data:{labels, datasets:[{data, backgroundColor:[CHART_COLORS.red, CHART_COLORS.green, CHART_COLORS.blue, CHART_COLORS.gold]}]},
+      options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{ticks:{color:CHART_COLORS.text},grid:{display:false}}, y:{ticks:{color:CHART_COLORS.text},grid:{color:CHART_COLORS.grid}}}}});
+  }
+  const wfEl = document.getElementById('chartWaterfall');
+  if(wfEl){
+    const startScore = 50;
+    const habitsBonus = Math.round(checklistProgress(STATE.development.flatMap(d=>d.checklist||[]))/10);
+    const oppsBonus = Math.round(countActive(STATE.opportunities.filter(o=>o.status==='done'))*2 + STATE.opportunities.filter(o=>o.status==='done').length*2);
+    const goalsBonus = Math.round(goalsProgressPct()/5);
+    const threatsMalus = -Math.round(STATE.threats.filter(th=>riskLevelFromScore(riskScore(th))==='high'||riskLevelFromScore(riskScore(th))==='critical').length*3);
+    const overdueMalus = -Math.round(allChecklistItems().filter(i=>isOverdue(i._date,i.done)).length*2);
+    const steps = [
+      {l:t('score_f')+' 0', v:startScore},
+      {l:t('development'), v:habitsBonus},
+      {l:t('opportunities'), v:oppsBonus},
+      {l:t('goals_title'), v:goalsBonus},
+      {l:t('threats'), v:threatsMalus},
+      {l:t('filter_overdue'), v:overdueMalus}
+    ];
+    let running=0; const floatData=[]; const labels=[]; const colors=[];
+    steps.forEach(s=>{
+      const from=running; running+=s.v; labels.push(s.l);
+      floatData.push([Math.min(from,running), Math.max(from,running)]);
+      colors.push(s.v>=0?CHART_COLORS.green:CHART_COLORS.red);
+    });
+    labels.push(t('overall_score')); floatData.push([0,Math.max(0,running)]); colors.push(CHART_COLORS.gold);
+    charts.waterfall = new Chart(wfEl, {type:'bar', data:{labels, datasets:[{data:floatData, backgroundColor:colors}]},
+      options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{ticks:{color:CHART_COLORS.text, font:{size:9}},grid:{display:false}}, y:{ticks:{color:CHART_COLORS.text},grid:{color:CHART_COLORS.grid}}}}});
+  }
+}
+function afterRender(){
+  if(CURRENT_PAGE==='dashboard'){ renderCharts(); }
+}
+
+/* ============ INIT ============ */
+function init(){
+  document.documentElement.setAttribute('data-theme', STATE.theme);
+  applyLangDir();
+  renderNav();
+  renderHeader();
+  renderPage();
+  setInterval(()=>{ renderHeader(); }, 60000);
+  setInterval(()=>{ if(CURRENT_PAGE==='dashboard') { renderPage(); } }, 300000);
+}
+init();
+</script>
+</body>
+</html>
