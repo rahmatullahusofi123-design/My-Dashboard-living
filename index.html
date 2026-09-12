@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 <title>بازی من، زمین من، قوانین من</title>
@@ -297,6 +296,7 @@ h1.pagetitle{font-size:20px; font-weight:800; margin-bottom:4px;}
 .tab-settings:hover,.tab-add:hover{color:var(--gold);}
 .tab-add{font-size:21px;min-width:38px;}
 </style>
+<script src="https://telegram.org/js/telegram-web-app.js?63"></script>
 </head>
 <body>
 <div id="app">
@@ -597,8 +597,10 @@ function normalizeState(){
 }
 normalizeState();
 normalizeChecklistFlags();
+try{ if(telegramWebApp()){ telegramWebApp().ready(); telegramWebApp().expand(); } }catch(e){}
 function saveState(){
   localStorage.setItem(STORE_KEY, JSON.stringify(STATE));
+  scheduleOnlineBackup();
 }
 function showToast(msg){
   const root = document.getElementById('toastRoot');
@@ -2345,80 +2347,86 @@ function settingsPrefs(){
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
       <button class="btn primary" onclick="exportBackup()">⬇️ ${t('backup_download')}</button>
       <button class="btn" onclick="document.getElementById('restoreFileInput').click()">⬆️ ${t('backup_upload')}</button>
+      <button class="btn" onclick="saveOnlineBackup()">☁️ ذخیره آنلاین</button>
+      <button class="btn" onclick="restoreOnlineBackup()">☁️ بازیابی آنلاین</button>
       <input type="file" id="restoreFileInput" accept="application/json" style="display:none" onchange="importBackupFile(this)">
     </div>
+    <div id="onlineBackupStatus" class="smallnote" style="margin-top:10px;"></div>
   </div>`;
 }
-function isTelegramWebApp(){
-  return !!(window.Telegram && Telegram.WebApp);
-}
-
-function getBackupJson(){
-  return JSON.stringify(STATE, null, 2);
-}
-
-function downloadBackupJson(){
-  const dataStr = getBackupJson();
+function telegramWebApp(){ return window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null; }
+function inTelegram(){ return !!telegramWebApp(); }
+function setOnlineBackupStatus(msg){ const el=document.getElementById('onlineBackupStatus'); if(el) el.textContent=msg; }
+function exportBackup(){
+  const dataStr = JSON.stringify(STATE, null, 2);
   const blob = new Blob([dataStr], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'zmqm-backup-'+todayISO()+'.json';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(()=>URL.revokeObjectURL(url), 500);
-  showToast(t('save_success'));
-}
-
-function telegramBackup(){
-  if(!isTelegramWebApp()){
-    downloadBackupJson();
+  const fileName = 'zmqm-backup-'+todayISO()+'.json';
+  const tg = telegramWebApp();
+  if(tg && typeof tg.downloadFile === 'function'){
+    // Telegram native download requires a public HTTPS URL; a local Blob URL cannot be downloaded by Telegram.
+    // Therefore the normal browser download remains the offline path, while CloudStorage is the online path.
+    try{
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fileName; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+      showToast('بکاپ آفلاین آماده شد');
+    }catch(e){ showToast('دانلود آفلاین در تلگرام ممکن نشد؛ ذخیره آنلاین را استفاده کنید'); }
     return;
   }
-
-  try{
-    Telegram.WebApp.ready();
-    Telegram.WebApp.expand();
-
-    const payload = JSON.stringify({
-      type:'zmqm_backup',
-      version:15,
-      createdAt:new Date().toISOString(),
-      state:STATE
-    });
-
-    /*
-      Telegram.WebApp.sendData is limited in size by Telegram.
-      We therefore send directly only when the backup fits safely.
-      Larger backups must be received by the bot through a server/API
-      endpoint; the browser JSON download remains available in all cases.
-    */
-    if(payload.length <= 3500){
-      Telegram.WebApp.sendData(payload);
-      showToast('بکاپ به بات تلگرام ارسال شد');
-      return;
-    }
-
-    const msg = 'حجم بکاپ این برنامه برای ارسال مستقیم به بات تلگرام زیاد است ('+
-      Math.round(payload.length/1024)+' KB). از «دانلود بکاپ (JSON)» استفاده کنید؛ '+
-      'برای ذخیره مستقیم در بات، بات باید یک API/سرور دریافت بکاپ داشته باشد.';
-    showToast(msg);
-    if(confirm(msg+'\n\nآیا فایل بکاپ را هم دانلود کنم؟')){
-      downloadBackupJson();
-    }
-  }catch(err){
-    console.error('Telegram backup error:', err);
-    showToast('ارسال بکاپ به تلگرام ناموفق بود؛ فایل JSON را دانلود کنید.');
-  }
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = fileName;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  showToast(t('save_success'));
 }
-
-function exportBackup(){
-  if(isTelegramWebApp()){
-    telegramBackup();
-  }else{
-    downloadBackupJson();
-  }
+const TG_BACKUP_PREFIX='zmqm_backup_v1_';
+const TG_BACKUP_META=TG_BACKUP_PREFIX+'meta';
+const TG_CHUNK_SIZE=3800;
+function cloudStorage(){ const tg=telegramWebApp(); return tg && tg.CloudStorage ? tg.CloudStorage : null; }
+function tgCall(method,...args){ return new Promise((resolve,reject)=>{ const cs=cloudStorage(); if(!cs || typeof cs[method]!=='function') return reject(new Error('Telegram CloudStorage unavailable')); try{ cs[method](...args,(err,val)=>err?reject(err):resolve(val)); }catch(e){reject(e);} }); }
+async function saveOnlineBackup(){
+  const cs=cloudStorage();
+  if(!cs){ showToast('ذخیره آنلاین فقط داخل Telegram Mini App فعال است'); return false; }
+  try{
+    const data=JSON.stringify(STATE);
+    const count=Math.ceil(data.length/TG_CHUNK_SIZE);
+    const oldMeta=await tgCall('getItem',TG_BACKUP_META).catch(()=>null);
+    let oldCount=0; try{oldCount=Number(JSON.parse(oldMeta||'{}').count)||0;}catch(e){}
+    const writes=[];
+    for(let i=0;i<count;i++) writes.push(tgCall('setItem',TG_BACKUP_PREFIX+i,data.slice(i*TG_CHUNK_SIZE,(i+1)*TG_CHUNK_SIZE)));
+    await Promise.all(writes);
+    if(oldCount>count){ const keys=[]; for(let i=count;i<oldCount;i++) keys.push(TG_BACKUP_PREFIX+i); if(keys.length) await tgCall('removeItems',keys); }
+    await tgCall('setItem',TG_BACKUP_META,JSON.stringify({version:1,count,updatedAt:new Date().toISOString()}));
+    setOnlineBackupStatus('☁️ آخرین ذخیره آنلاین: '+new Date().toLocaleString());
+    showToast('بکاپ آنلاین ذخیره شد');
+    return true;
+  }catch(e){ console.error(e); showToast('ذخیره آنلاین ناموفق بود'); setOnlineBackupStatus('خطا در CloudStorage تلگرام'); return false; }
+}
+async function restoreOnlineBackup(){
+  const cs=cloudStorage();
+  if(!cs){ showToast('بازیابی آنلاین فقط داخل Telegram Mini App فعال است'); return false; }
+  try{
+    const metaRaw=await tgCall('getItem',TG_BACKUP_META);
+    if(!metaRaw){ showToast('هنوز بکاپ آنلاین وجود ندارد'); return false; }
+    const meta=JSON.parse(metaRaw); const count=Number(meta.count)||0;
+    if(count<1 || count>1000) throw new Error('invalid backup metadata');
+    const keys=Array.from({length:count},(_,i)=>TG_BACKUP_PREFIX+i);
+    const vals=await tgCall('getItems',keys);
+    const data=keys.map(k=>vals[k]||'').join('');
+    if(!data) throw new Error('empty backup');
+    const parsed=JSON.parse(data);
+    STATE=Object.assign(defaultState(),parsed); normalizeState(); normalizeChecklistFlags(); saveState();
+    OPEN_GOAL_ID=null; QUIZ_SESSION=null; QUIZ_VIEW='home'; PERF_ARCHIVE_VIEW=false;
+    document.documentElement.setAttribute('data-theme',STATE.theme); applyLangDir(); renderNav(); renderHeader(); renderPage();
+    setOnlineBackupStatus('☁️ بکاپ آنلاین بازیابی شد: '+(meta.updatedAt?new Date(meta.updatedAt).toLocaleString():''));
+    showToast('بکاپ آنلاین بازیابی شد');
+    return true;
+  }catch(e){ console.error(e); showToast('بازیابی آنلاین ناموفق بود'); return false; }
+}
+let ONLINE_SAVE_TIMER=null;
+function scheduleOnlineBackup(){
+  if(!cloudStorage()) return;
+  clearTimeout(ONLINE_SAVE_TIMER);
+  ONLINE_SAVE_TIMER=setTimeout(()=>saveOnlineBackup(),1200);
 }
 function importBackupFile(input){
   const file = input.files[0]; if(!file) return;
