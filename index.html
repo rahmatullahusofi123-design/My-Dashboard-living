@@ -105,6 +105,29 @@ main{flex:1; padding:18px 20px 90px; max-width:1400px; width:100%; margin:0 auto
 .summary-card .sv{font-size:22px; font-weight:800;}
 .summary-card .sl{font-size:12px; color:var(--text-dim); margin-top:4px;}
 .summary-card .sicon{font-size:18px; opacity:.7; margin-bottom:6px;}
+.dashboard-summary-section{margin-top:10px;}
+.dashboard-summary-title{font-size:15px;font-weight:800;margin-bottom:8px;}
+.dashboard-summary-section .dashboard-summary-row{margin-top:0;}
+.dashboard-summary-row{display:grid;gap:10px;margin-top:10px;}
+.dashboard-summary-row:first-of-type{margin-top:0;}
+.summary-row-5{grid-template-columns:repeat(5,minmax(0,1fr));}
+.summary-row-4{grid-template-columns:repeat(4,minmax(0,1fr));}
+.summary-row-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+@media(max-width:900px){
+  .summary-row-5{grid-template-columns:repeat(5,minmax(0,1fr));}
+  .summary-row-4{grid-template-columns:repeat(4,minmax(0,1fr));}
+  .summary-row-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media(max-width:560px){
+  .summary-row-5{grid-template-columns:repeat(5,minmax(0,1fr));}
+  .summary-row-4{grid-template-columns:repeat(4,minmax(0,1fr));}
+  .summary-row-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .summary-card{padding:9px 5px;min-width:0;}
+  .summary-card .sv{font-size:16px;}
+  .summary-card .sl{font-size:10px;white-space:nowrap;}
+  .summary-card .sicon{font-size:15px;margin-bottom:4px;}
+}
+
 
 h1.pagetitle{font-size:20px; font-weight:800; margin-bottom:4px;}
 .pagesub{font-size:13px; color:var(--text-dim); margin-bottom:16px;}
@@ -211,6 +234,13 @@ h1.pagetitle{font-size:20px; font-weight:800; margin-bottom:4px;}
 .goal-folder{border:1px dashed var(--border);border-radius:10px;padding:10px;margin:10px 0;}
 .fin-level{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px;}
 .fin-level-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
+.fin-level.closed .fin-level-body{display:none;}
+.fin-level-toggle{border:0;background:transparent;color:var(--text);cursor:pointer;font:inherit;text-align:start;display:flex;align-items:center;gap:7px;padding:0;}
+.fin-check-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.fin-check-row:last-child{border-bottom:0;}
+.fin-check-title{flex:1;min-width:0;}
+.fin-check-actions .action-gear{font-size:13px;}
+.fin-add-check{margin-top:8px;}
 .alloc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:9px;}
 .alloc{font-size:11px;padding:6px 8px;border:1px solid var(--border);border-radius:7px;}
 @media(min-width:700px){.alloc-grid{grid-template-columns:repeat(4,1fr)}}
@@ -299,8 +329,8 @@ fa:{
   weekday_0:'یکشنبه',weekday_1:'دوشنبه',weekday_2:'سه‌شنبه',weekday_3:'چهارشنبه',weekday_4:'پنجشنبه',weekday_5:'جمعه',weekday_6:'شنبه',
   overallStatus:'وضعیت کلی', goalsProgress:'پیشرفت اهداف',
   dash_title:'داشبورد', dash_sub:'امروز آیا واقعاً دارم در بازی خودم بهتر می‌شوم؟',
-  today_perf:'عملکرد امروز', week_perf:'عملکرد این هفته', month_perf:'عملکرد این ماه', goals_pct:'درصد اهداف',
-  active_challenges:'چالش‌های فعال', active_opps:'فرصت‌های فعال', active_threats:'تهدیدهای فعال', tasks_done:'وظایف تکمیل‌شده',
+  today_perf:'عملکرد امروز', week_perf:'عملکرد این هفته', month_perf:'عملکرد این ماه', season_perf:'عملکرد این فصل', year_perf:'عملکرد این سال', goals_pct:'درصد اهداف',
+  active_challenges:'چالش‌های فعال', active_opps:'فرصت‌های فعال', active_threats:'تهدیدهای فعال', active_development:'توسعه فعال', tasks_done:'وظایف تکمیل‌شده',
   quiz_score:'امتیاز آزمون', overall_score:'امتیاز کلی سیستم',
   chart_perf_time:'روند عملکرد', chart_status:'وضعیت کارها', chart_compare:'مقایسه بخش‌ها', chart_waterfall:'تحلیل امتیاز (Waterfall)',
   daily:'روزانه', weekly:'هفتگی', monthly:'ماهانه',
@@ -363,8 +393,8 @@ en:{
   weekday_0:'Sunday',weekday_1:'Monday',weekday_2:'Tuesday',weekday_3:'Wednesday',weekday_4:'Thursday',weekday_5:'Friday',weekday_6:'Saturday',
   overallStatus:'Overall Status', goalsProgress:'Goals Progress',
   dash_title:'Dashboard', dash_sub:'Am I truly getting better at my own game today?',
-  today_perf:'Today', week_perf:'This Week', month_perf:'This Month', goals_pct:'Goals %',
-  active_challenges:'Active Challenges', active_opps:'Active Opportunities', active_threats:'Active Threats', tasks_done:'Tasks Done',
+  today_perf:'Today', week_perf:'This Week', month_perf:'This Month', season_perf:'This Season', year_perf:'This Year', goals_pct:'Goals %',
+  active_challenges:'Active Challenges', active_opps:'Active Opportunities', active_threats:'Active Threats', active_development:'Active Development', tasks_done:'Tasks Done',
   quiz_score:'Quiz Score', overall_score:'Overall Score',
   chart_perf_time:'Performance Trend', chart_status:'Task Status', chart_compare:'Section Comparison', chart_waterfall:'Score Analysis (Waterfall)',
   daily:'Daily', weekly:'Weekly', monthly:'Monthly',
@@ -421,72 +451,6 @@ en:{
   goal_tabs:'Goal Tabs',new_goal_tab:'New Tab',edit_tab:'Edit Tab',delete_tab:'Delete Tab',duplicate_tab:'Duplicate Tab',move_tab:'Move Tab',folders:'Folders',new_folder:'New Folder',edit_folder:'Edit Folder',delete_folder:'Delete Folder',duplicate_folder:'Duplicate Folder',move_folder:'Move Folder',archive_goal:'Archive Goal',archived_goals:'Archived Goals',restore_goal:'Restore Goal',duplicate_goal:'Duplicate Goal',move_goal:'Move Goal',edit_list:'Edit List',duplicate_list:'Duplicate List',move_list:'Move List',edit_check:'Edit Checklist',duplicate_check:'Duplicate Checklist',move_check:'Move Checklist',financial_levels:'Financial Levels',financial_levels_sub:'Reach $18,000 across 25 milestones',level:'Level',threshold:'Financial Milestone',allocations:'Level Allocation',edit_fin_level:'Edit Financial Level',emergency:'Emergency Reserve',online_opportunity:'Online Opportunity',housing:'Housing & Deposit',marriage_home:'Marriage & Home',startup_services:'Startup & Services',skills_tools:'Skills & Tools',family_spending:'Family Spending',line_scroll_hint:'Scroll horizontally to see more days',performance_gauge:'Performance Gauge',goal_gauge:'Goals Gauge',
   header_date_settings:'Header display items', date_afghan:'Afghan Solar Hijri', date_iran:'Iranian Solar Hijri', date_gregorian:'Gregorian', date_hijri:'Hijri', header_clock:'Clock', header_message:'Today message',
   back:'Back', mission_item_ph:'New mission item...'
-},
-ar:{
-  dir:'rtl', brandT1:'لعبتي', brandT2:'لعبتي، أرضي،<br>قواعدي', sideFoot:'الإصدار ١.٠ — تخزين محلي',
-  nav_dashboard:'لوحة التحكم', nav_performance:'الأداء', nav_goals:'الأهداف', nav_quiz:'الاختبارات', nav_settings:'الإعدادات',
-  weekday_0:'الأحد',weekday_1:'الإثنين',weekday_2:'الثلاثاء',weekday_3:'الأربعاء',weekday_4:'الخميس',weekday_5:'الجمعة',weekday_6:'السبت',
-  overallStatus:'الحالة العامة', goalsProgress:'تقدم الأهداف',
-  dash_title:'لوحة التحكم', dash_sub:'هل أتحسن فعلاً في لعبتي اليوم؟',
-  today_perf:'أداء اليوم', week_perf:'أداء الأسبوع', month_perf:'أداء الشهر', goals_pct:'نسبة الأهداف',
-  active_challenges:'التحديات النشطة', active_opps:'الفرص النشطة', active_threats:'التهديدات النشطة', tasks_done:'المهام المنجزة',
-  quiz_score:'نتيجة الاختبار', overall_score:'النتيجة الكلية',
-  chart_perf_time:'اتجاه الأداء', chart_status:'حالة المهام', chart_compare:'مقارنة الأقسام', chart_waterfall:'تحليل النتيجة',
-  daily:'يومي', weekly:'أسبوعي', monthly:'شهري',
-  done:'منجز', inprogress:'قيد التنفيذ', notdone:'غير منجز', canceled:'ملغى',
-  daily_mission:'مهمة اليوم', dm_income:'إجراء واحد للدخل', dm_learning:'إجراء واحد للتعلم', dm_physical:'إجراء بدني واحد',
-  dm_social:'إجراء اجتماعي واحد', dm_discipline:'إجراء انضباط واحد', dm_gratitude:'مورد شكر واحد', dm_prob:'قرار احتمالي واحد',
-  daily_score:'نتيجة اليوم', compound_title:'الأثر المركب — ماذا لو استمررت؟', compound_amount:'المقدار في كل مرة', compound_times:'عدد التكرارات',
-  compound_unit:'الوحدة', compound_calc:'احسب', compound_result:'النتيجة',
-  financial_goal:'الهدف المالي الرئيسي', fg_current:'المبلغ الحالي', fg_remaining:'المتبقي', fg_pct:'نسبة التقدم', fg_avg:'متوسط الدخل',
-  fg_addincome:'إضافة دخل جديد', fg_target:'الهدف', fg_edit:'تعديل الهدف المالي',
-  myrules_title:'لعبتي، أرضي، قواعدي', mygame:'لعبتي', myland:'أرضي', myrules:'قواعدي',
-  mygame_q:'ما هو هدفي الأساسي في الحياة؟', myland_q:'في أي ظروف ألعب؟',
-  add_rule:'إضافة قاعدة', edit:'تعديل', delete:'حذف', save:'حفظ', cancel:'إلغاء', add:'إضافة جديد',
-  performance_title:'الأداء', performance_sub:'التحديات والفرص والتهديدات والتطوير',
-  challenges:'التحديات', opportunities:'الفرص', threats:'التهديدات', development:'التطوير',
-  title_f:'العنوان', desc_f:'الوصف', severity_f:'الشدة', created_f:'تاريخ الإنشاء', followup_f:'تاريخ المتابعة', status_f:'الحالة',
-  score_f:'النتيجة', note_f:'ملاحظة', probability_f:'احتمال النجاح (%)', benefit_f:'الفائدة', cost_f:'التكلفة', risk_f:'الخطر',
-  date_f:'التاريخ', impact_f:'شدة الأثر', risklevel_f:'مستوى الخطر', prevent_f:'إجراء وقائي', category_f:'الفئة', priority_f:'الأولوية',
-  low:'منخفض', medium:'متوسط', high:'مرتفع', critical:'حرج',
-  opp_score:'نتيجة الفرصة', risk_score:'نتيجة الخطر',
-  add_challenge:'تحدٍ جديد', add_opportunity:'فرصة جديدة', add_threat:'تهديد جديد', add_dev:'عنصر تطوير جديد',
-  filter_all:'الكل', filter_today:'اليوم', filter_tomorrow:'غدًا', filter_week:'هذا الأسبوع', filter_month:'هذا الشهر',
-  filter_overdue:'متأخر', filter_done:'منجز', filter_notdone:'غير منجز', search_ph:'بحث...',
-  checklist:'قائمة المهام', add_item:'إضافة عنصر', empty_generic:'لا يوجد شيء بعد.',
-  goals_title:'الأهداف', goals_sub:'إدارة الأهداف طويلة المدى بتقدم حقيقي',
-  new_goal:'هدف جديد', goal_name:'اسم الهدف', goal_deadline:'الموعد النهائي', goal_start:'تاريخ البدء', goal_importance:'الأهمية',
-  goal_progress:'نسبة التقدم', new_list:'قائمة جديدة', list_name:'اسم القائمة',
-  quiz_title:'الاختبارات', quiz_sub:'١٠٠ سؤال متعدد الخيارات لقياس التفكير واتخاذ القرار',
-  start_quiz:'ابدأ الاختبار', quiz_progress:'سؤال', of_word:'من', next:'التالي', finish:'إنهاء الاختبار',
-  quiz_result:'نتيجة الاختبار', category_breakdown:'التفصيل حسب المجال', weak_area:'نقطة الضعف الحالية',
-  suggested_checklist:'قائمة مقترحة', add_to_dev:'أضف إلى التطوير',
-  need_review:'يحتاج مراجعة', weak:'ضعيف', mediumres:'متوسط', good:'جيد', vgood:'جيد جدًا', excellent:'ممتاز',
-  settings_title:'الإعدادات', section_name_f:'اسم القسم', add_section:'إضافة قسم', about_me:'عني', name_f:'الاسم', age_f:'العمر', bio_f:'نبذة قصيرة', mygoals_f:'الأهداف',
-  contact_us:'اتصل بنا', email_f:'البريد الإلكتروني', message_f:'الرسالة', send:'إرسال', message_sent:'تم تسجيل رسالتك (عرض فقط).',
-  language:'اللغة', theme_dark:'داكن', theme_light:'فاتح', theme:'المظهر',
-  weekly_review:'المراجعة الأسبوعية', wr_q1:'ما الذي سار بشكل جيد؟', wr_q2:'ما الذي سار بشكل سيء؟', wr_q3:'ما أكبر فرصة؟',
-  wr_q4:'ما أكبر تهديد؟', wr_q5:'أي عادة كان لها أكبر أثر؟', wr_q6:'أي سلوك يجب إزالته؟',
-  wr_q7:'أي قرار كان خاطئًا؟', wr_q8:'ماذا تعلمت عن الاحتمالات؟', wr_q9:'على ماذا أنا شاكر؟', wr_q10:'ما قاعدة الأسبوع القادم؟',
-  weekly_score:'نتيجة الأسبوع', new_review:'مراجعة جديدة', past_reviews:'مراجعات سابقة',
-  gratitude_title:'دفتر الشكر', gratitude_ph:'على ماذا أنا شاكر اليوم؟', gratitude_feeling:'الشعور',
-  gratitude_streak:'سلسلة الأيام', gratitude_days:'عدد الأيام المسجلة', gratitude_note:'الشكر ليس بديلاً عن الفعل؛ إنه يقف إلى جانب الواقعية واتخاذ القرار.',
-  save_success:'تم الحفظ بنجاح', delete_confirm:'هل أنت متأكد من الحذف؟', deleted:'تم الحذف', undo:'تراجع',
-  yes_delete:'نعم، احذف', close:'إغلاق', no_data:'لا توجد بيانات', complete:'إتمام', uncomplete:'إلغاء الإتمام',
-  duplicate:'نسخ', financial_goal_title:'الوصول إلى ١٨,٠٠٠ دولار قبل سن الثلاثين', income_amount:'مبلغ الدخل', income_desc:'وصف الدخل',
-  loop_title:'حلقة الأداء', loop_sub:'ملاحظة ← تفكير ← تقدير ← فعل ← قياس ← تغذية راجعة ← تصحيح ← تكرار ← تراكم',
-  profile_saved:'تم حفظ الملف الشخصي', rule_ph:'قاعدة شخصية جديدة...', myland_ph:'مثال: الوقت، المال، المهارة، العلاقات...',
-  mygame_ph:'مثال: تحقيق الاستقلال المالي وبناء حياة ذات معنى...',
-  archive:'الأرشيف', active_items:'نشط', restore:'استعادة', folder_view:'عرض الأرشيف', drag_hint:'اسحب لإعادة الترتيب',
-  alarm_time:'وقت التنبيه', countdown:'العد التنازلي', alarm_triggered:'⏰ حان موعد الهدف',
-  d_short:'ي', h_short:'س', m_short:'د', s_short:'ث',
-  question_list:'قائمة الأسئلة', edit_question:'تعديل السؤال', option_f:'خيار', correct_answer_f:'الإجابة الصحيحة',
-  delete_result:'حذف النتيجة', backup_restore:'النسخ الاحتياطي والاستعادة', backup_download:'تنزيل نسخة احتياطية (JSON)',
-  backup_upload:'استعادة من ملف احتياطي', backup_warning:'الاستعادة ستستبدل جميع البيانات الحالية.',
-  goal_tabs:'تبويبات الأهداف',new_goal_tab:'تبويب جديد',edit_tab:'تعديل التبويب',delete_tab:'حذف التبويب',duplicate_tab:'نسخ التبويب',move_tab:'نقل التبويب',folders:'المجلدات',new_folder:'مجلد جديد',edit_folder:'تعديل المجلد',delete_folder:'حذف المجلد',duplicate_folder:'نسخ المجلد',move_folder:'نقل المجلد',archive_goal:'أرشفة الهدف',archived_goals:'الأهداف المؤرشفة',restore_goal:'استعادة الهدف',duplicate_goal:'نسخ الهدف',move_goal:'نقل الهدف',edit_list:'تعديل القائمة',duplicate_list:'نسخ القائمة',move_list:'نقل القائمة',edit_check:'تعديل قائمة المهام',duplicate_check:'نسخ قائمة المهام',move_check:'نقل قائمة المهام',financial_levels:'المستويات المالية',financial_levels_sub:'الوصول إلى ١٨,٠٠٠ دولار عبر ٢٥ مرحلة',level:'المستوى',threshold:'المرحلة المالية',allocations:'تقسيم هذا المستوى',edit_fin_level:'تعديل المستوى المالي',emergency:'الاحتياطي الطارئ',online_opportunity:'الفرصة عبر الإنترنت',housing:'السكن والوديعة',marriage_home:'الزواج ولوازم المنزل',startup_services:'الشركات الناشئة والخدمات',skills_tools:'المهارات والأدوات',family_spending:'إنفاق الأسرة',line_scroll_hint:'مرر أفقيًا لرؤية المزيد من الأيام',performance_gauge:'مقياس الأداء',goal_gauge:'مقياس الأهداف',
-  header_date_settings:'موارد نمایش در هدر', date_afghan:'تاریخ شمسی افغانستان', date_iran:'تاریخ شمسی ایران', date_gregorian:'تاریخ میلادی', date_hijri:'تاریخ قمری', header_clock:'ساعت', header_message:'پیام امروز',
-  header_date_settings:'عناصر العرض در هدر', date_afghan:'تاریخ شمسی افغانستان', date_iran:'تاریخ شمسی ایران', date_gregorian:'تاریخ میلادی', date_hijri:'تاریخ قمری', header_clock:'ساعت', header_message:'پیام امروز',
-  back:'رجوع', mission_item_ph:'عنصر مهمة جديد...'
 }
 };
 function t(k){ return (I18N[STATE.lang] && I18N[STATE.lang][k]) || I18N.fa[k] || k; }
@@ -562,7 +526,9 @@ function loadState(){
     if(!raw) return defaultState();
     const parsed = JSON.parse(raw);
     const def = defaultState();
-    return Object.assign(def, parsed);
+    const merged = Object.assign(def, parsed);
+    if(merged.lang!=='fa' && merged.lang!=='en') merged.lang='fa';
+    return merged;
   }catch(e){ return defaultState(); }
 }
 function initFinancialLevels(){
@@ -574,7 +540,7 @@ function initFinancialLevels(){
     const ratio=i/24;
     const threshold=Math.round(25*Math.pow(18000/25,ratio)*100)/100;
     const allocations={}; cats.forEach(([k,p])=>allocations[k]=p);
-    return {id:'fin_'+(i+1),level:i+1,threshold,startDate:'',deadline:'',allocations,checklist:cats.map(([k])=>({id:uid(),key:k,title:k,done:false,date:todayISO()}))};
+    return {id:'fin_'+(i+1),level:i+1,threshold,startDate:'',deadline:'',allocations,checklist:cats.map(([k])=>({id:uid(),key:k,title:'',done:false,date:todayISO()}))};
   });
 }
 function normalizeChecklistFlags(){
@@ -664,25 +630,24 @@ function arDigits(str){ const ar=['٠','١','٢','٣','٤','٥','٦','٧','٨','
 function formatJalali(date){
   const [jy,jm,jd]=toJalali(date.getFullYear(), date.getMonth()+1, date.getDate());
   const s = `${jy}/${String(jm).padStart(2,'0')}/${String(jd).padStart(2,'0')}`;
-  return STATE.lang==='fa'? faDigits(s):(STATE.lang==='ar'?arDigits(s):s);
+  return STATE.lang==='fa'? faDigits(s):s;
 }
 function formatGregorian(date){
   const s = `${date.getFullYear()}/${String(date.getMonth()+1).padStart(2,'0')}/${String(date.getDate()).padStart(2,'0')}`;
-  return STATE.lang==='fa'?faDigits(s):(STATE.lang==='ar'?arDigits(s):s);
+  return STATE.lang==='fa'?faDigits(s):s;
 }
 function weekdayName(date){ return t('weekday_'+date.getDay()); }
 function localizeNum(n){
   n = Math.round(n*10)/10;
   if(STATE.lang==='fa') return faDigits(n);
-  if(STATE.lang==='ar') return arDigits(n);
   return String(n);
 }
 function fmtClock(date){
   let h=date.getHours(), m=String(date.getMinutes()).padStart(2,'0'), sec=String(date.getSeconds()).padStart(2,'0');
-  const ap=h>=12?(STATE.lang==='fa'?'ب.ظ':(STATE.lang==='ar'?'م':'PM')):(STATE.lang==='fa'?'ق.ظ':(STATE.lang==='ar'?'ص':'AM'));
+  const ap=h>=12?(STATE.lang==='fa'?'ب.ظ':'PM'):(STATE.lang==='fa'?'ق.ظ':'AM');
   h=h%12||12;
   const str=`${String(h).padStart(2,'0')}:${m}:${sec} ${ap}`;
-  return STATE.lang==='fa'?faDigits(str):(STATE.lang==='ar'?arDigits(str):str);
+  return STATE.lang==='fa'?faDigits(str):str;
 }
 function startOfWeek(d){ const dt=new Date(d); const day=dt.getDay(); dt.setDate(dt.getDate()-day); dt.setHours(0,0,0,0); return dt; }
 function isSameDay(d1,d2){ return d1.toDateString()===d2.toDateString(); }
@@ -731,6 +696,20 @@ function overallPerformanceScore(filterFn){
 function todayPerf(){ return overallPerformanceScore(i=> i._date && isToday(i._date)) || overallPerformanceScore(null); }
 function weekPerf(){ return overallPerformanceScore(i=> i._date && isThisWeek(i._date)) || overallPerformanceScore(null); }
 function monthPerf(){ return overallPerformanceScore(i=> i._date && isThisMonth(i._date)) || overallPerformanceScore(null); }
+function isThisSeason(dateStr){
+  if(!dateStr) return false;
+  const d=new Date(dateStr), now=new Date();
+  if(Number.isNaN(d.getTime())) return false;
+  return d.getFullYear()===now.getFullYear() && Math.floor(d.getMonth()/3)===Math.floor(now.getMonth()/3);
+}
+function isThisYear(dateStr){
+  if(!dateStr) return false;
+  const d=new Date(dateStr), now=new Date();
+  if(Number.isNaN(d.getTime())) return false;
+  return d.getFullYear()===now.getFullYear();
+}
+function seasonPerf(){ return overallPerformanceScore(i=> i._date && isThisSeason(i._date)) || overallPerformanceScore(null); }
+function yearPerf(){ return overallPerformanceScore(i=> i._date && isThisYear(i._date)) || overallPerformanceScore(null); }
 function goalsProgressPct(){
   if(!STATE.goals.length) return 0;
   const pcts = STATE.goals.map(g=>goalProgress(g));
@@ -1194,8 +1173,8 @@ function navigate(page){
 }
 const TODAY_MESSAGES_FA=['امروز یک اقدام کوچک اما واقعی انجام بده.','پیشرفت از تکرار تصمیم‌های درست ساخته می‌شود.','اولویت امروز: یک کار درآمدزا را تمام کن.','شکرگزاری خوب است؛ اقدام امروز را هم انجام بده.','هر تصمیم امروز، بخشی از آینده تو را می‌سازد.','کم شروع کن، اما متوقف نشو.','آنچه اندازه‌گیری می‌کنی، قابل بهبود است.','امروز به جای فکر بیشتر، یک قدم اجرا کن.','ریسک را کوچک نگه دار و یادگیری را بزرگ کن.','یک فرصت را پیدا کن، بررسی کن و اقدام کن.'];
 function getTodayMessage(){const list=(STATE.headerMessages||[]).filter(x=>x&&String(x.text||'').trim());if(!list.length)return '';return String(list[STATE.activeHeaderMessageIndex%list.length].text);}
-function calendarNumeric(date,locale,calendar){try{const parts=new Intl.DateTimeFormat(locale+'-u-ca-'+calendar,{year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);const o={};parts.forEach(p=>{if(['year','month','day'].includes(p.type))o[p.type]=p.value;});const raw=`${o.year}/${o.month}/${o.day}`;return STATE.lang==='fa'?faDigits(raw):(STATE.lang==='ar'?arDigits(raw):raw);}catch(e){return formatGregorian(date);}}
-function headerDateItems(now){const h=STATE.headerItems||{};const a=[];if(h.afghan)a.push(`<span class="dchip">🇦🇫 ${calendarNumeric(now,'fa-AF','persian')}</span>`);if(h.iran)a.push(`<span class="dchip">🇮🇷 ${calendarNumeric(now,'fa-IR','persian')}</span>`);if(h.gregorian)a.push(`<span class="dchip">${formatGregorian(now)}</span>`);if(h.hijri)a.push(`<span class="dchip">☪️ ${calendarNumeric(now,STATE.lang==='ar'?'ar-SA':'fa-AF','islamic')}</span>`);if(h.clock)a.push(`<span class="clock" id="liveClock">${fmtClock(now)}</span>`);return a.join('');}
+function calendarNumeric(date,locale,calendar){try{const parts=new Intl.DateTimeFormat(locale+'-u-ca-'+calendar,{year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);const o={};parts.forEach(p=>{if(['year','month','day'].includes(p.type))o[p.type]=p.value;});const raw=`${o.year}/${o.month}/${o.day}`;return STATE.lang==='fa'?faDigits(raw):raw;}catch(e){return formatGregorian(date);}}
+function headerDateItems(now){const h=STATE.headerItems||{};const a=[];if(h.afghan)a.push(`<span class="dchip">🇦🇫 ${calendarNumeric(now,'fa-AF','persian')}</span>`);if(h.iran)a.push(`<span class="dchip">🇮🇷 ${calendarNumeric(now,'fa-IR','persian')}</span>`);if(h.gregorian)a.push(`<span class="dchip">${formatGregorian(now)}</span>`);if(h.hijri)a.push(`<span class="dchip">☪️ ${calendarNumeric(now,'fa-AF','islamic')}</span>`);if(h.clock)a.push(`<span class="clock" id="liveClock">${fmtClock(now)}</span>`);return a.join('');}
 function updateTopHeaderHeight(){const h=document.getElementById('topheader'); if(h) document.documentElement.style.setProperty('--topheader-height', h.offsetHeight+'px');}
 function renderHeader(){const now=new Date(),db=document.getElementById('dateblock'),h=STATE.headerItems||{};db.innerHTML=`${h.message?`<div class="today-message"><span>💬</span>${esc(getTodayMessage())}</div>`:''}<div class="weekdayline">${weekdayName(now)}</div><div class="datechips">${headerDateItems(now)}</div>`;const sb=document.getElementById('statusblock'),overall=overallSystemScore(),gp=goalsProgressPct(),fp=financialProgressPct(),fc=Math.max(0,Number(STATE.financial.current)||0),ft=Math.max(1,Number(STATE.financial.target)||18000);sb.innerHTML=`<div class="ministat"><div class="v" style="color:var(--gold)">${localizeNum(overall)}%</div><div class="l">${t('overallStatus')}</div></div><div class="ministat"><div class="v" style="color:var(--green)">${localizeNum(gp)}%</div><div class="l">${t('goalsProgress')}</div></div><div class="ministat"><div class="v" style="color:var(--gold)">${localizeNum(fp)}%</div><div class="l">پیشرفت مالی · $${localizeNum(fc)} / $${localizeNum(ft)}</div></div>`;document.getElementById('themeToggle').textContent=STATE.theme==='dark'?'🌙':'☀️'; updateTopHeaderHeight();}
 setInterval(()=>{ const el=document.getElementById('liveClock'); if(el) el.textContent = fmtClock(new Date()); if(CURRENT_PAGE==='goals') updateGoalCountdowns(); if(CURRENT_PAGE==='goals') updateFinancialLevelCountdowns(); }, 1000);
@@ -1208,9 +1187,9 @@ document.getElementById('themeToggle').addEventListener('click', ()=>{
 });
 
 function applyLangDir(){
-  const dir = I18N[STATE.lang].dir;
+  const dir = (I18N[STATE.lang]||I18N.fa).dir;
   document.documentElement.setAttribute('dir', dir);
-  document.documentElement.setAttribute('lang', STATE.lang);
+  document.documentElement.setAttribute('lang', STATE.lang==='en'?'en':'fa');
   document.body.setAttribute('dir', dir);
 }
 function renderPage(){
@@ -1225,17 +1204,25 @@ function renderPage(){
 
 /* ============ DASHBOARD PAGE ============ */
 function pageDashboard(){
-  const summary = [
-    {icon:'📆', v:localizeNum(todayPerf())+'%', l:t('today_perf')},
-    {icon:'📅', v:localizeNum(weekPerf())+'%', l:t('week_perf')},
-    {icon:'🗓️', v:localizeNum(monthPerf())+'%', l:t('month_perf')},
-    {icon:'🏁', v:localizeNum(goalsProgressPct())+'%', l:t('goals_pct')},
-    {icon:'⚔️', v:localizeNum(countActive(STATE.challenges)), l:t('active_challenges')},
-    {icon:'💡', v:localizeNum(countActive(STATE.opportunities)), l:t('active_opps')},
-    {icon:'⚠️', v:localizeNum(countActive(STATE.threats)), l:t('active_threats')},
-    {icon:'✅', v:localizeNum(countTasksDone()), l:t('tasks_done')},
-    {icon:'🧠', v:localizeNum(lastQuizScore())+'%', l:t('quiz_score')},
-    {icon:'⭐', v:localizeNum(overallSystemScore())+'%', l:t('overall_score')}
+  const summaryRows = [
+    [
+      {icon:'📆', v:localizeNum(todayPerf())+'%', l:'روز'},
+      {icon:'📅', v:localizeNum(weekPerf())+'%', l:'هفته'},
+      {icon:'🗓️', v:localizeNum(monthPerf())+'%', l:'ماه'},
+      {icon:'🏁', v:localizeNum(seasonPerf())+'%', l:'فصل'},
+      {icon:'📊', v:localizeNum(yearPerf())+'%', l:'سال'}
+    ],
+    [
+      {icon:'⚔️', v:localizeNum(countActive(STATE.challenges)), l:'چالش فعال'},
+      {icon:'💡', v:localizeNum(countActive(STATE.opportunities)), l:'فرصت فعال'},
+      {icon:'⚠️', v:localizeNum(countActive(STATE.threats)), l:'تهدید فعال'},
+      {icon:'🌱', v:localizeNum(countActive(STATE.development)), l:'توسعه فعال'}
+    ],
+    [
+      {icon:'✅', v:localizeNum(countTasksDone()), l:t('tasks_done')},
+      {icon:'🧠', v:localizeNum(lastQuizScore())+'%', l:t('quiz_score')},
+      {icon:'⭐', v:localizeNum(overallSystemScore())+'%', l:t('overall_score')}
+    ]
   ];
   const missionList = getDailyMissionList(todayISO());
   const dailyScorePct = missionList.length ? Math.round((missionList.filter(i=>i.done).length/missionList.length)*100) : 0;
@@ -1248,8 +1235,17 @@ function pageDashboard(){
   <h1 class="pagetitle">${t('dash_title')}</h1>
   <div class="pagesub">${t('dash_sub')}</div>
 
-  <div class="grid cols-4">
-    ${summary.map(s=>`<div class="summary-card"><div class="sicon">${s.icon}</div><div class="sv">${s.v}</div><div class="sl">${s.l}</div></div>`).join('')}
+  <div class="dashboard-summary-section">
+    <div class="dashboard-summary-title">عملکرد</div>
+    <div class="dashboard-summary-row summary-row-5">
+      ${summaryRows[0].map(s=>`<div class="summary-card"><div class="sicon">${s.icon}</div><div class="sv">${s.v}</div><div class="sl">${s.l}</div></div>`).join('')}
+    </div>
+  </div>
+  <div class="dashboard-summary-row summary-row-4">
+    ${summaryRows[1].map(s=>`<div class="summary-card"><div class="sicon">${s.icon}</div><div class="sv">${s.v}</div><div class="sl">${s.l}</div></div>`).join('')}
+  </div>
+  <div class="dashboard-summary-row summary-row-3">
+    ${summaryRows[2].map(s=>`<div class="summary-card"><div class="sicon">${s.icon}</div><div class="sv">${s.v}</div><div class="sl">${s.l}</div></div>`).join('')}
   </div>
 
   <div class="card" style="margin-top:14px;">
@@ -1756,6 +1752,7 @@ function saveItemModal(tab, id){
 let OPEN_GOAL_ID = null;
 let GOAL_VIEW = 'active';
 let GOAL_TAB_ID = null;
+let FIN_OPEN_LEVEL = 1;
 function ensureGoalTab(){ if(!GOAL_TAB_ID || !STATE.goalTabs.some(x=>x.id===GOAL_TAB_ID)) GOAL_TAB_ID=STATE.activeGoalTab||STATE.goalTabs[0].id; }
 function pageGoals(){
   ensureGoalTab();
@@ -1837,8 +1834,93 @@ function financialLevelCountdown(x){
   return {days:Math.ceil(diff/86400000),past:diff<0};
 }
 function toggleFinancialLevelChecklist(level,cid){const x=STATE.financialLevels.find(v=>v.level===level);if(!x)return;const c=(x.checklist||[]).find(v=>v.id===cid);if(!c)return;c.done=!c.done;c.date=todayISO();saveState();renderPage();renderHeader();}
-function updateFinancialLevelCountdowns(){document.querySelectorAll('[data-fin-countdown]').forEach(el=>{const x=STATE.financialLevels.find(v=>String(v.level)===String(el.dataset.finCountdown));const cd=financialLevelCountdown(x);if(x&&cd)el.textContent=cd.past?'گذشته':localizeNum(Math.max(0,cd.days))+' روز';});}
-function renderFinancialLevels(){const overallTarget=Math.max(1,Number(STATE.financial.target)||18000);const current=Math.max(0,Number(STATE.financial.current)||0);return (STATE.financialLevels||[]).map(x=>{const cl=x.checklist||[];const done=cl.filter(c=>c.done).length;const effort=Math.round(done/Math.max(1,cl.length)*100);const threshold=Math.max(0.01,Number(x.threshold)||0.01);const assetPct=Math.min(100,Math.max(0,current/threshold*100));const share=Math.min(100,Math.max(0,Number(x.threshold||0)/overallTarget*100));const reached=current>=Number(x.threshold||0);const cd=financialLevelCountdown(x);const barWidth=effort;return `<div class="fin-level"><div class="fin-level-head"><b>${t('level')} ${localizeNum(x.level)} — $${Number(x.threshold).toLocaleString()}</b><button class="action-gear" onclick="openFinancialLevelActions(${x.level})">⚙️</button></div><div class="fin-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${effort}"><div style="width:${barWidth.toFixed(2)}%;"></div></div><div class="fin-progress-label">${localizeNum(effort)}%</div><div class="smallnote fin-level-stats" style="margin-top:4px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;"><span><b>دارایی سطح:</b> ${localizeNum(assetPct,2)}%</span><span><b>سهم از 18,000 دالر:</b> ${localizeNum(share,2)}%</span><span><b>تلاش چک‌لیست:</b> ${localizeNum(effort)}% — ${localizeNum(done)}/${localizeNum(cl.length)}</span>${x.startDate?`<span><b>تاریخ شروع:</b> ${esc(x.startDate)}</span>`:''}${x.deadline?`<span><b>تاریخ هدف:</b> ${esc(x.deadline)}</span><span><b>روز شمار:</b> <span data-fin-countdown="${x.level}">${cd?(cd.past?'گذشته':localizeNum(Math.max(0,cd.days))+' روز'):''}</span></span>`:''}${reached?`<span class="badge gold">✓ رسید</span>`:''}</div><div style="margin-top:6px;">${cl.map(c=>{const v=Number(x.allocations[c.key]||0);return `<div class="fin-check-row"><input type="checkbox" ${c.done?'checked':''} onchange="toggleFinancialLevelChecklist(${x.level},'${c.id}')"><span>${t(c.key)}</span><span class="badge">${localizeNum(v)}%</span><span>$${Math.round(x.threshold*v/100).toLocaleString()}</span></div>`}).join('')}</div></div>`}).join('');}
+function toggleFinancialLevelOpen(level){FIN_OPEN_LEVEL=Number(level)||1;renderPage();}
+function ensureFinancialOpenLevel(){if(!FIN_OPEN_LEVEL || !(STATE.financialLevels||[]).some(x=>Number(x.level)===Number(FIN_OPEN_LEVEL))) FIN_OPEN_LEVEL=Number((STATE.financialLevels||[])[0]?.level)||1;}
+function renderFinancialLevels(){
+  ensureFinancialOpenLevel();
+  const overallTarget=Math.max(1,Number(STATE.financial.target)||18000);
+  const current=Math.max(0,Number(STATE.financial.current)||0);
+  return (STATE.financialLevels||[]).map(x=>{
+    const cl=x.checklist||[];
+    const done=cl.filter(c=>c.done).length;
+    const effort=Math.round(done/Math.max(1,cl.length)*100);
+    const threshold=Math.max(0.01,Number(x.threshold)||0.01);
+    const assetPct=Math.min(100,Math.max(0,current/threshold*100));
+    const share=Math.min(100,Math.max(0,Number(x.threshold||0)/overallTarget*100));
+    const reached=current>=Number(x.threshold||0);
+    const cd=financialLevelCountdown(x);
+    const isOpen=Number(FIN_OPEN_LEVEL)===Number(x.level);
+    return `<div class="fin-level ${isOpen?'open':'closed'}">
+      <div class="fin-level-head">
+        <button class="fin-level-toggle" onclick="toggleFinancialLevelOpen(${x.level})" aria-expanded="${isOpen}">
+          <span>${isOpen?'▾':'▸'}</span><b>${t('level')} ${localizeNum(x.level)} — $${Number(x.threshold).toLocaleString()}</b>
+        </button>
+        <button class="action-gear" onclick="event.stopPropagation();openFinancialLevelActions(${x.level})">⚙️</button>
+      </div>
+      <div class="fin-level-body">
+        <div class="fin-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${effort}"><div style="width:${effort.toFixed(2)}%;"></div></div>
+        <div class="fin-progress-label">${localizeNum(effort)}%</div>
+        <div class="smallnote fin-level-stats" style="margin-top:4px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;">
+          <span><b>دارایی سطح:</b> ${localizeNum(assetPct,2)}%</span>
+          <span><b>سهم از 18,000 دالر:</b> ${localizeNum(share,2)}%</span>
+          <span><b>تلاش چک‌لیست:</b> ${localizeNum(effort)}% — ${localizeNum(done)}/${localizeNum(cl.length)}</span>
+          ${x.startDate?`<span><b>تاریخ شروع:</b> ${esc(x.startDate)}</span>`:''}
+          ${x.deadline?`<span><b>تاریخ هدف:</b> ${esc(x.deadline)}</span><span><b>روز شمار:</b> <span data-fin-countdown="${x.level}">${cd?(cd.past?'گذشته':localizeNum(Math.max(0,cd.days))+' روز'):''}</span></span>`:''}
+          ${reached?`<span class="badge gold">✓ رسید</span>`:''}
+        </div>
+        <div style="margin-top:6px;">
+          ${cl.map(c=>{const v=Number(x.allocations[c.key]||0);return `<div class="fin-check-row">
+            <input type="checkbox" ${c.done?'checked':''} onchange="toggleFinancialLevelChecklist(${x.level},'${c.id}')">
+            <span class="fin-check-title">${esc((c.key && I18N[STATE.lang] && I18N[STATE.lang][c.key]) ? t(c.key) : (c.title||t(c.key)))}</span>
+            <span class="badge">${localizeNum(v)}%</span>
+            <span>$${Math.round(x.threshold*v/100).toLocaleString()}</span>
+            <span class="fin-check-actions"><button class="action-gear" onclick="openFinancialChecklistActions(${x.level},'${c.id}')">⚙️</button></span>
+          </div>`}).join('')}
+          <button class="btn sm ghost fin-add-check" onclick="openFinancialChecklistModal(${x.level})">+ ایجاد چک‌لیست جدید</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function findFinancialLevel(level){return (STATE.financialLevels||[]).find(v=>Number(v.level)===Number(level));}
+function openFinancialChecklistActions(level,cid){
+  const x=findFinancialLevel(level),c=x&&(x.checklist||[]).find(v=>v.id===cid);if(!c)return;
+  openModal(`<h3>⚙️ تنظیمات چک‌لیست سطح ${localizeNum(level)}</h3><div class="goal-action-grid">
+    <button class="btn" onclick="closeModal();openFinancialChecklistModal(${level},'${cid}')">✎ ${t('edit')}</button>
+    <button class="btn" onclick="closeModal();duplicateFinancialChecklistItem(${level},'${cid}')">⧉ ${t('duplicate')}</button>
+    <button class="btn" onclick="closeModal();moveFinancialChecklistItem(${level},'${cid}',-1)">↑ ${t('move_up')}</button>
+    <button class="btn" onclick="closeModal();moveFinancialChecklistItem(${level},'${cid}',1)">↓ ${t('move_down')}</button>
+    <button class="btn danger" onclick="closeModal();deleteFinancialChecklistItem(${level},'${cid}')">✕ ${t('delete')}</button>
+    <button class="btn primary" onclick="closeModal();openFinancialChecklistModal(${level})">＋ ایجاد جدید</button>
+  </div>`);
+}
+function openFinancialChecklistModal(level,cid){
+  const x=findFinancialLevel(level),c=cid&&x&&(x.checklist||[]).find(v=>v.id===cid);if(!x)return;
+  openModal(`<h3>${cid?t('edit_check'):'ایجاد چک‌لیست جدید'} — سطح ${localizeNum(level)}</h3>
+    <div class="field"><label>عنوان چک‌لیست</label><input id="f_fincltitle" value="${esc(c?.title||'')}" placeholder="عنوان..."></div>
+    <div class="field-row"><div class="field"><label>${t('date_f')}</label><input type="date" id="f_fincldate" value="${c?.date||todayISO()}"></div>
+    <div class="field"><label>${t('score_f')}</label><input type="number" id="f_finclscore" value="${c?.score||5}"></div></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveFinancialChecklistItem(${level},'${cid||''}')">${t('save')}</button></div>`);
+}
+function saveFinancialChecklistItem(level,cid){
+  const x=findFinancialLevel(level);if(!x)return;
+  const title=document.getElementById('f_fincltitle').value.trim();if(!title)return;
+  if(!x.checklist)x.checklist=[];
+  if(cid){const c=x.checklist.find(v=>v.id===cid);if(c){c.title=title;c.date=document.getElementById('f_fincldate').value;c.score=Number(document.getElementById('f_finclscore').value)||1;}}
+  else x.checklist.push({id:uid(),key:'custom',title,done:false,date:document.getElementById('f_fincldate').value,score:Number(document.getElementById('f_finclscore').value)||1});
+  saveState();closeModal();renderPage();
+}
+function deleteFinancialChecklistItem(level,cid){
+  const x=findFinancialLevel(level);if(!x)return;
+  confirmDelete(()=>{x.checklist=(x.checklist||[]).filter(c=>c.id!==cid);saveState();renderPage();});
+}
+function duplicateFinancialChecklistItem(level,cid){
+  const x=findFinancialLevel(level),c=x&&(x.checklist||[]).find(v=>v.id===cid);if(!c)return;
+  const copy=JSON.parse(JSON.stringify(c));copy.id=uid();copy.title=c.title+' (copy)';copy.done=false;x.checklist.push(copy);saveState();renderPage();
+}
+function moveFinancialChecklistItem(level,cid,dir){
+  const x=findFinancialLevel(level),a=x&&x.checklist;if(!a)return;const i=a.findIndex(v=>v.id===cid),j=i+dir;if(i<0||j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];saveState();renderPage();
+}
 function openGoalArchiveActions(id){openModal(`<h3>⚙️ ${t('archived_goals')}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();restoreGoal('${id}')">↩ ${t('restore_goal')}</button><button class="btn" onclick="closeModal();duplicateGoal('${id}')">⧉ ${t('duplicate')}</button><button class="btn danger" onclick="closeModal();deleteGoal('${id}')">✕ ${t('delete')}</button></div>`);}
 function openGoalActions(id){openModal(`<h3>⚙️ ${t('settings')}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();openGoalModal('${id}')">✎ ${t('edit')}</button><button class="btn" onclick="closeModal();duplicateGoal('${id}')">⧉ ${t('duplicate')}</button><button class="btn" onclick="closeModal();moveGoal('${id}',-1)">↑ ${t('move_up')}</button><button class="btn" onclick="closeModal();moveGoal('${id}',1)">↓ ${t('move_down')}</button><button class="btn" onclick="closeModal();archiveGoal('${id}')">📦 ${t('archive_goal')}</button><button class="btn danger" onclick="closeModal();deleteGoal('${id}')">✕ ${t('delete')}</button></div>`);}
 function openFolderActions(id){openModal(`<h3>⚙️ ${t('folders')}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();openFolderModal('${id}')">✎ ${t('edit')}</button><button class="btn" onclick="closeModal();duplicateFolder('${id}')">⧉ ${t('duplicate')}</button><button class="btn" onclick="closeModal();moveFolder('${id}',-1)">↑ ${t('move_up')}</button><button class="btn" onclick="closeModal();moveFolder('${id}',1)">↓ ${t('move_down')}</button><button class="btn danger" onclick="closeModal();deleteFolder('${id}')">✕ ${t('delete')}</button></div>`);}
@@ -2230,7 +2312,6 @@ function settingsPrefs(){
     <div class="lang-pick">
       <button class="btn ${STATE.lang==='fa'?'primary':''}" onclick="setLang('fa')">فارسی</button>
       <button class="btn ${STATE.lang==='en'?'primary':''}" onclick="setLang('en')">English</button>
-      <button class="btn ${STATE.lang==='ar'?'primary':''}" onclick="setLang('ar')">العربية</button>
     </div>
   </div>
   <div class="card">
@@ -2302,7 +2383,7 @@ function editHeaderMessage(id,text){const m=STATE.headerMessages.find(x=>x.id===
 function deleteHeaderMessage(id){if(STATE.headerMessages.length<=1){showToast('حداقل یک پیام نگه داشته شود');return;}STATE.headerMessages=STATE.headerMessages.filter(x=>x.id!==id);STATE.activeHeaderMessageIndex%=STATE.headerMessages.length;saveState();renderPage();renderHeader();}
 function rotateHeaderMessage(){if(!STATE.headerMessages?.length)return;let next=Math.floor(Math.random()*STATE.headerMessages.length);if(STATE.headerMessages.length>1&&next===STATE.activeHeaderMessageIndex)next=(next+1)%STATE.headerMessages.length;STATE.activeHeaderMessageIndex=next;saveState();if(STATE.headerItems.message)renderHeader();}
 let HEADER_MESSAGE_TIMER=null;function startHeaderMessageTimer(){if(HEADER_MESSAGE_TIMER)clearInterval(HEADER_MESSAGE_TIMER);HEADER_MESSAGE_TIMER=setInterval(rotateHeaderMessage,Math.max(1,Number(STATE.headerMessageInterval)||5)*60000);}
-function setLang(l){ STATE.lang=l; saveState(); applyLangDir(); renderNav(); renderHeader(); renderPage(); }
+function setLang(l){ STATE.lang=(l==='en'?'en':'fa'); saveState(); applyLangDir(); renderNav(); renderHeader(); renderPage(); }
 function setTheme(th){ STATE.theme=th; document.documentElement.setAttribute('data-theme', th); saveState(); renderPage(); }
 
 /* ============ CHARTS ============ */
