@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 <title>بازی من، زمین من، قوانین من</title>
@@ -2348,15 +2349,76 @@ function settingsPrefs(){
     </div>
   </div>`;
 }
-function exportBackup(){
-  const dataStr = JSON.stringify(STATE, null, 2);
+function isTelegramWebApp(){
+  return !!(window.Telegram && Telegram.WebApp);
+}
+
+function getBackupJson(){
+  return JSON.stringify(STATE, null, 2);
+}
+
+function downloadBackupJson(){
+  const dataStr = getBackupJson();
   const blob = new Blob([dataStr], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'zmqm-backup-'+todayISO()+'.json';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  a.href = url;
+  a.download = 'zmqm-backup-'+todayISO()+'.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url), 500);
   showToast(t('save_success'));
+}
+
+function telegramBackup(){
+  if(!isTelegramWebApp()){
+    downloadBackupJson();
+    return;
+  }
+
+  try{
+    Telegram.WebApp.ready();
+    Telegram.WebApp.expand();
+
+    const payload = JSON.stringify({
+      type:'zmqm_backup',
+      version:15,
+      createdAt:new Date().toISOString(),
+      state:STATE
+    });
+
+    /*
+      Telegram.WebApp.sendData is limited in size by Telegram.
+      We therefore send directly only when the backup fits safely.
+      Larger backups must be received by the bot through a server/API
+      endpoint; the browser JSON download remains available in all cases.
+    */
+    if(payload.length <= 3500){
+      Telegram.WebApp.sendData(payload);
+      showToast('بکاپ به بات تلگرام ارسال شد');
+      return;
+    }
+
+    const msg = 'حجم بکاپ این برنامه برای ارسال مستقیم به بات تلگرام زیاد است ('+
+      Math.round(payload.length/1024)+' KB). از «دانلود بکاپ (JSON)» استفاده کنید؛ '+
+      'برای ذخیره مستقیم در بات، بات باید یک API/سرور دریافت بکاپ داشته باشد.';
+    showToast(msg);
+    if(confirm(msg+'\n\nآیا فایل بکاپ را هم دانلود کنم؟')){
+      downloadBackupJson();
+    }
+  }catch(err){
+    console.error('Telegram backup error:', err);
+    showToast('ارسال بکاپ به تلگرام ناموفق بود؛ فایل JSON را دانلود کنید.');
+  }
+}
+
+function exportBackup(){
+  if(isTelegramWebApp()){
+    telegramBackup();
+  }else{
+    downloadBackupJson();
+  }
 }
 function importBackupFile(input){
   const file = input.files[0]; if(!file) return;
