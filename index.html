@@ -63,10 +63,24 @@ input,select,textarea{font-family:inherit;}
   position:sticky; top:0; z-index:20; background:var(--surface); border-bottom:1px solid var(--border);
   padding:12px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
 }
-#topheader .dateblock{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+#topheader .dateblock{display:flex; flex-direction:column; align-items:flex-start; gap:5px; flex-wrap:wrap;}
+.today-message{font-size:12.5px;color:var(--text-dim);max-width:760px;margin-bottom:4px;display:flex;gap:7px;align-items:center;}
+#topheader .weekdayline{font-size:13px; font-weight:700; color:var(--text); line-height:1.2;}
+#topheader .datechips{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+#topheader .dchip{background:transparent; border:0; padding:0; border-radius:0;}
+.action-gear{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--border);background:var(--surface2);color:var(--text);border-radius:8px;cursor:pointer;font-size:16px;}
+.goal-tab-wrap{display:inline-flex;align-items:center;gap:4px;margin-inline-end:5px;}
+.goal-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+.goal-action-grid .btn{width:100%;}
+.fin-check-row{display:grid;grid-template-columns:auto 1fr auto auto;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:12.5px;}
+.fin-check-row:last-child{border-bottom:0;}
+.fin-check-row input{accent-color:var(--green);}
+.fin-progress{height:10px;background:var(--border);border-radius:99px;overflow:hidden;margin-top:10px;display:block;width:100%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);}
+.fin-progress>div{height:100%;min-width:0;background:var(--green);border-radius:99px;display:block;transition:width .25s ease;}
+.fin-progress-label{font-size:11px;color:var(--text-dim);margin-top:4px;text-align:left;direction:ltr;}
 #topheader .dchip{font-size:12.5px; color:var(--text-dim); background:var(--surface2); border:1px solid var(--border); padding:6px 10px; border-radius:999px; display:flex; gap:6px; align-items:center;}
 #topheader .clock{font-weight:800; font-size:16px; color:var(--gold); font-variant-numeric: tabular-nums;}
-#topheader .statusblock{display:flex; align-items:center; gap:12px;}
+#topheader .statusblock{display:flex; align-items:center; gap:12px;}\n@media(max-width:700px){#topheader .statusblock{gap:7px;flex-wrap:wrap;justify-content:flex-end}.ministat .v{font-size:13px}.ministat .l{font-size:9px;}}\n.fin-level-stats{line-height:1.9;}
 .ministat{text-align:center;}
 .ministat .v{font-weight:800; font-size:15px;}
 .ministat .l{font-size:10.5px; color:var(--text-faint);}
@@ -106,9 +120,28 @@ h1.pagetitle{font-size:20px; font-weight:800; margin-bottom:4px;}
 .btn:disabled{opacity:.4; cursor:not-allowed;}
 
 /* TABS/FILTER */
-.tabbar{display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; margin-bottom:14px;}
-.tabbtn{white-space:nowrap; padding:8px 14px; border-radius:999px; border:1px solid var(--border); background:var(--surface); font-size:13px; color:var(--text-dim); font-weight:600;}
-.tabbtn.active{background:var(--gold); color:#141414; border-color:var(--gold);}
+.tabbar{
+  display:flex; gap:2px; overflow-x:auto; overflow-y:hidden;
+  padding:0 2px; margin:0 -2px 14px;
+  position:sticky; top:72px; z-index:15;
+  background:var(--bg); border-bottom:2px solid var(--border);
+  box-shadow:0 3px 8px rgba(0,0,0,.08);
+  scrollbar-width:none;
+}
+.tabbar::-webkit-scrollbar{display:none;}
+.tabbtn{
+  position:relative; white-space:nowrap; padding:12px 16px 11px;
+  border:0; border-radius:0; background:transparent;
+  font-size:13.5px; color:var(--text-dim); font-weight:700;
+  flex:0 0 auto;
+}
+.tabbtn::after{
+  content:''; position:absolute; left:14px; right:14px; bottom:-2px;
+  height:3px; border-radius:3px 3px 0 0; background:transparent;
+}
+.tabbtn.active{background:transparent; color:var(--gold);}
+.tabbtn.active::after{background:var(--gold);}
+@media(max-width:899px){.tabbar{top:112px;}}
 .filterrow{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; align-items:center;}
 .filterrow select, .filterrow input[type=text]{background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:8px 10px; border-radius:var(--radius-sm); font-size:13px;}
 
@@ -165,6 +198,24 @@ h1.pagetitle{font-size:20px; font-weight:800; margin-bottom:4px;}
 @media(max-width:899px){ #sidebar{display:none;} main{padding-bottom:80px;} }
 
 .chart-wrap{position:relative; height:220px;}
+.chart-scroll{overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; padding-bottom:6px;}
+.chart-scroll-inner{min-width:1100px; height:260px; position:relative;}
+.gauge-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.gauge-wrap{height:230px;position:relative;}
+.goal-tools{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+.goal-tabbar-wrap{position:sticky;top:var(--topheader-height,0px);z-index:15;background:var(--bg);padding:4px 0 0;border-bottom:1px solid var(--border);margin-bottom:12px;}
+.goal-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:7px;margin:0;position:static !important;top:auto !important;z-index:auto !important;scrollbar-width:none;}
+.goal-tabs::-webkit-scrollbar{display:none;}
+.goal-tab{white-space:nowrap;padding:8px 12px;border:1px solid var(--border);background:var(--surface);border-radius:999px;color:var(--text-dim);font-weight:700;font-size:12.5px;}
+.goal-tab.active{background:var(--gold);color:#141414;border-color:var(--gold);}
+.goal-folder{border:1px dashed var(--border);border-radius:10px;padding:10px;margin:10px 0;}
+.fin-level{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px;}
+.fin-level-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
+.alloc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:9px;}
+.alloc{font-size:11px;padding:6px 8px;border:1px solid var(--border);border-radius:7px;}
+@media(min-width:700px){.alloc-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:600px){.gauge-grid{grid-template-columns:1fr}.chart-scroll-inner{min-width:900px}}
+
 .progressbar-lg{height:16px; background:var(--border); border-radius:999px; overflow:hidden; margin:10px 0;}
 .progressbar-lg > div{height:100%; background:linear-gradient(90deg,var(--gold-dim),var(--gold));}
 
@@ -187,6 +238,16 @@ h1.pagetitle{font-size:20px; font-weight:800; margin-bottom:4px;}
 .dailymission-item:last-child{border-bottom:none;}
 .dailymission-item .dmic{font-size:17px; width:24px; text-align:center;}
 .dailymission-item .dmlabel{flex:1; font-size:13.5px; font-weight:600;}
+.dailymission-item .dmlabel.done-text{text-decoration:line-through; color:var(--text-faint);}
+.folder-toggle{display:flex; align-items:center; gap:6px;}
+.item-row[draggable="true"]{cursor:grab;}
+.item-row.drag-over{border-color:var(--gold); border-style:dashed;}
+.goal-accordion-header{cursor:pointer; display:flex; align-items:center; justify-content:space-between;}
+.goal-collapsed .goal-body{display:none;}
+.countdown-box{display:flex; gap:6px; margin-top:8px;}
+.countdown-box .cbox{background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:6px 10px; text-align:center; min-width:46px;}
+.countdown-box .cbox b{display:block; font-size:15px;}
+.countdown-box .cbox span{font-size:10px; color:var(--text-faint);}
 
 .avatar-circle{width:56px; height:56px; border-radius:50%; background:var(--surface2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; color:var(--gold);}
 .hrline{border:none; border-top:1px solid var(--border); margin:14px 0;}
@@ -194,6 +255,16 @@ h1.pagetitle{font-size:20px; font-weight:800; margin-bottom:4px;}
 .kpi-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;}
 .kpi-row .kpi{background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:8px 12px; font-size:12px; flex:1; min-width:100px; text-align:center;}
 .kpi-row .kpi b{display:block; font-size:16px; margin-top:2px;}
+
+.perf-tabbar-wrap{position:sticky;top:var(--topheader-height,0px);z-index:15;background:var(--bg);padding:4px 0 0;border-bottom:1px solid var(--border);margin-bottom:12px;}
+.perf-tabbar{position:static !important; top:auto !important; z-index:auto !important;}
+.perf-tabbar{display:flex;align-items:stretch;gap:4px;overflow-x:auto;scrollbar-width:thin;border-bottom:none;margin:0;}
+.perf-tab-item{display:flex;align-items:center;position:relative;flex:0 0 auto;}
+.perf-tab-item .tabbtn{padding-inline:12px 7px;white-space:nowrap;}
+.perf-tab-item.active:after{content:'';position:absolute;left:8px;right:8px;bottom:0;height:3px;background:var(--gold);border-radius:3px 3px 0 0;}
+.tab-settings,.tab-add{border:0;background:transparent;color:var(--text-dim);padding:0 7px;cursor:pointer;font-size:14px;}
+.tab-settings:hover,.tab-add:hover{color:var(--gold);}
+.tab-add{font-size:21px;min-width:38px;}
 </style>
 </head>
 <body>
@@ -262,7 +333,7 @@ fa:{
   quiz_result:'نتیجه آزمون', category_breakdown:'تفکیک بر اساس حوزه', weak_area:'ضعف اصلی فعلی',
   suggested_checklist:'چک‌لیست پیشنهادی', add_to_dev:'افزودن به توسعه',
   need_review:'نیازمند بازنگری', weak:'ضعیف', mediumres:'متوسط', good:'خوب', vgood:'بسیار خوب', excellent:'عالی',
-  settings_title:'تنظیمات', about_me:'درباره من', name_f:'نام', age_f:'سن', bio_f:'توضیح کوتاه', mygoals_f:'اهداف',
+  settings_title:'تنظیمات', section_name_f:'نام بخش', add_section:'افزودن بخش', about_me:'درباره من', name_f:'نام', age_f:'سن', bio_f:'توضیح کوتاه', mygoals_f:'اهداف',
   contact_us:'ارتباط با ما', email_f:'ایمیل', message_f:'پیام', send:'ارسال', message_sent:'پیام شما ثبت شد (فقط نمایشی).',
   language:'زبان', theme_dark:'تیره', theme_light:'روشن', theme:'پوسته',
   weekly_review:'مرور هفتگی', wr_q1:'چه چیزی خوب پیش رفت؟', wr_q2:'چه چیزی بد پیش رفت؟', wr_q3:'بزرگ‌ترین فرصت چه بود؟',
@@ -276,7 +347,15 @@ fa:{
   duplicate:'کپی', financial_goal_title:'رسیدن به ۱۸,۰۰۰ دلار قبل از ۳۰ سالگی', income_amount:'مبلغ درآمد', income_desc:'شرح درآمد',
   loop_title:'حلقهٔ عملکرد', loop_sub:'مشاهده ← فکر ← تخمین ← اقدام ← اندازه‌گیری ← بازخورد ← اصلاح ← تکرار ← اثر مرکب',
   profile_saved:'پروفایل ذخیره شد', rule_ph:'قانون شخصی جدید...', myland_ph:'مثلاً: زمان، پول، مهارت، روابط، محدودیت‌ها...',
-  mygame_ph:'مثلاً: رسیدن به استقلال مالی و ساختن یک زندگی معنادار...'
+  mygame_ph:'مثلاً: رسیدن به استقلال مالی و ساختن یک زندگی معنادار...',
+  archive:'آرشیو', active_items:'فعال', restore:'بازگردانی', folder_view:'نمایش پوشه', drag_hint:'برای جابجایی بکش',
+  alarm_time:'زمان هشدار', countdown:'زمان‌شمار', alarm_triggered:'⏰ زمان هدف فرارسید',
+  d_short:'روز', h_short:'ساعت', m_short:'دقیقه', s_short:'ثانیه',
+  question_list:'لیست سؤالات', edit_question:'ویرایش سؤال', option_f:'گزینه', correct_answer_f:'پاسخ صحیح',
+  delete_result:'حذف نتیجه', backup_restore:'پشتیبان‌گیری و بازیابی', backup_download:'دانلود بکاپ (JSON)',
+  backup_upload:'بازیابی از فایل بکاپ', backup_warning:'بازیابی، تمام اطلاعات فعلی را جایگزین می‌کند.',
+  goal_tabs:'تب‌های اهداف',new_goal_tab:'تب جدید',edit_tab:'ویرایش تب',delete_tab:'حذف تب',duplicate_tab:'کپی تب',move_tab:'جابجایی تب',folders:'پوشه‌ها',new_folder:'پوشه جدید',edit_folder:'ویرایش پوشه',delete_folder:'حذف پوشه',duplicate_folder:'کپی پوشه',move_folder:'جابجایی پوشه',archive_goal:'آرشیو هدف',archived_goals:'اهداف آرشیو شده',restore_goal:'بازگردانی هدف',duplicate_goal:'کپی هدف',move_goal:'جابجایی هدف',edit_list:'ویرایش لیست',duplicate_list:'کپی لیست',move_list:'جابجایی لیست',edit_check:'ویرایش چک‌لیست',duplicate_check:'کپی چک‌لیست',move_check:'جابجایی چک‌لیست',financial_levels:'سطوح مالی',financial_levels_sub:'رسیدن به ۱۸,۰۰۰ دلار در ۲۵ مرز',level:'سطح',threshold:'مرز مالی',allocations:'تقسیم‌بندی این سطح',edit_fin_level:'ویرایش سطح مالی',emergency:'ذخیره اضطراری',online_opportunity:'فرصت آنلاین',housing:'مسکن و گروی حویلی',marriage_home:'ازدواج و لوازم خانه',startup_services:'استارت‌آپ و خدمات',skills_tools:'کسب مهارت و ابزار',family_spending:'مصرف خانواده',line_scroll_hint:'برای دیدن روزهای بیشتر افقی اسکرول کنید',performance_gauge:'Gauge عملکرد',goal_gauge:'Gauge اهداف',
+  back:'بازگشت', mission_item_ph:'مورد مأموریت جدید...'
 },
 en:{
   dir:'ltr', brandT1:'MY GAME', brandT2:'My Game, My Land,<br>My Rules', sideFoot:'v1.0 — Local Storage',
@@ -318,7 +397,7 @@ en:{
   quiz_result:'Quiz Result', category_breakdown:'Category Breakdown', weak_area:'Current Weak Area',
   suggested_checklist:'Suggested Checklist', add_to_dev:'Add to Development',
   need_review:'Needs Review', weak:'Weak', mediumres:'Medium', good:'Good', vgood:'Very Good', excellent:'Excellent',
-  settings_title:'Settings', about_me:'About Me', name_f:'Name', age_f:'Age', bio_f:'Short Bio', mygoals_f:'Goals',
+  settings_title:'Settings', section_name_f:'Section name', add_section:'Add section', about_me:'About Me', name_f:'Name', age_f:'Age', bio_f:'Short Bio', mygoals_f:'Goals',
   contact_us:'Contact Us', email_f:'Email', message_f:'Message', send:'Send', message_sent:'Your message was recorded (demo only).',
   language:'Language', theme_dark:'Dark', theme_light:'Light', theme:'Theme',
   weekly_review:'Weekly Review', wr_q1:'What went well?', wr_q2:'What went badly?', wr_q3:'Biggest opportunity?',
@@ -332,7 +411,16 @@ en:{
   duplicate:'Duplicate', financial_goal_title:'Reach $18,000 before turning 30', income_amount:'Income Amount', income_desc:'Income Description',
   loop_title:'Performance Loop', loop_sub:'Observe → Think → Estimate → Act → Measure → Feedback → Correct → Repeat → Compound',
   profile_saved:'Profile saved', rule_ph:'New personal rule...', myland_ph:'e.g. time, money, skill, relationships, constraints...',
-  mygame_ph:'e.g. reach financial independence and build a meaningful life...'
+  mygame_ph:'e.g. reach financial independence and build a meaningful life...',
+  archive:'Archive', active_items:'Active', restore:'Restore', folder_view:'Folder View', drag_hint:'Drag to reorder',
+  alarm_time:'Alarm Time', countdown:'Countdown', alarm_triggered:'⏰ Goal deadline reached',
+  d_short:'d', h_short:'h', m_short:'m', s_short:'s',
+  question_list:'Question List', edit_question:'Edit Question', option_f:'Option', correct_answer_f:'Correct Answer',
+  delete_result:'Delete Result', backup_restore:'Backup & Restore', backup_download:'Download Backup (JSON)',
+  backup_upload:'Restore from Backup File', backup_warning:'Restoring will replace all current data.',
+  goal_tabs:'Goal Tabs',new_goal_tab:'New Tab',edit_tab:'Edit Tab',delete_tab:'Delete Tab',duplicate_tab:'Duplicate Tab',move_tab:'Move Tab',folders:'Folders',new_folder:'New Folder',edit_folder:'Edit Folder',delete_folder:'Delete Folder',duplicate_folder:'Duplicate Folder',move_folder:'Move Folder',archive_goal:'Archive Goal',archived_goals:'Archived Goals',restore_goal:'Restore Goal',duplicate_goal:'Duplicate Goal',move_goal:'Move Goal',edit_list:'Edit List',duplicate_list:'Duplicate List',move_list:'Move List',edit_check:'Edit Checklist',duplicate_check:'Duplicate Checklist',move_check:'Move Checklist',financial_levels:'Financial Levels',financial_levels_sub:'Reach $18,000 across 25 milestones',level:'Level',threshold:'Financial Milestone',allocations:'Level Allocation',edit_fin_level:'Edit Financial Level',emergency:'Emergency Reserve',online_opportunity:'Online Opportunity',housing:'Housing & Deposit',marriage_home:'Marriage & Home',startup_services:'Startup & Services',skills_tools:'Skills & Tools',family_spending:'Family Spending',line_scroll_hint:'Scroll horizontally to see more days',performance_gauge:'Performance Gauge',goal_gauge:'Goals Gauge',
+  header_date_settings:'Header display items', date_afghan:'Afghan Solar Hijri', date_iran:'Iranian Solar Hijri', date_gregorian:'Gregorian', date_hijri:'Hijri', header_clock:'Clock', header_message:'Today message',
+  back:'Back', mission_item_ph:'New mission item...'
 },
 ar:{
   dir:'rtl', brandT1:'لعبتي', brandT2:'لعبتي، أرضي،<br>قواعدي', sideFoot:'الإصدار ١.٠ — تخزين محلي',
@@ -374,7 +462,7 @@ ar:{
   quiz_result:'نتيجة الاختبار', category_breakdown:'التفصيل حسب المجال', weak_area:'نقطة الضعف الحالية',
   suggested_checklist:'قائمة مقترحة', add_to_dev:'أضف إلى التطوير',
   need_review:'يحتاج مراجعة', weak:'ضعيف', mediumres:'متوسط', good:'جيد', vgood:'جيد جدًا', excellent:'ممتاز',
-  settings_title:'الإعدادات', about_me:'عني', name_f:'الاسم', age_f:'العمر', bio_f:'نبذة قصيرة', mygoals_f:'الأهداف',
+  settings_title:'الإعدادات', section_name_f:'اسم القسم', add_section:'إضافة قسم', about_me:'عني', name_f:'الاسم', age_f:'العمر', bio_f:'نبذة قصيرة', mygoals_f:'الأهداف',
   contact_us:'اتصل بنا', email_f:'البريد الإلكتروني', message_f:'الرسالة', send:'إرسال', message_sent:'تم تسجيل رسالتك (عرض فقط).',
   language:'اللغة', theme_dark:'داكن', theme_light:'فاتح', theme:'المظهر',
   weekly_review:'المراجعة الأسبوعية', wr_q1:'ما الذي سار بشكل جيد؟', wr_q2:'ما الذي سار بشكل سيء؟', wr_q3:'ما أكبر فرصة؟',
@@ -388,7 +476,17 @@ ar:{
   duplicate:'نسخ', financial_goal_title:'الوصول إلى ١٨,٠٠٠ دولار قبل سن الثلاثين', income_amount:'مبلغ الدخل', income_desc:'وصف الدخل',
   loop_title:'حلقة الأداء', loop_sub:'ملاحظة ← تفكير ← تقدير ← فعل ← قياس ← تغذية راجعة ← تصحيح ← تكرار ← تراكم',
   profile_saved:'تم حفظ الملف الشخصي', rule_ph:'قاعدة شخصية جديدة...', myland_ph:'مثال: الوقت، المال، المهارة، العلاقات...',
-  mygame_ph:'مثال: تحقيق الاستقلال المالي وبناء حياة ذات معنى...'
+  mygame_ph:'مثال: تحقيق الاستقلال المالي وبناء حياة ذات معنى...',
+  archive:'الأرشيف', active_items:'نشط', restore:'استعادة', folder_view:'عرض الأرشيف', drag_hint:'اسحب لإعادة الترتيب',
+  alarm_time:'وقت التنبيه', countdown:'العد التنازلي', alarm_triggered:'⏰ حان موعد الهدف',
+  d_short:'ي', h_short:'س', m_short:'د', s_short:'ث',
+  question_list:'قائمة الأسئلة', edit_question:'تعديل السؤال', option_f:'خيار', correct_answer_f:'الإجابة الصحيحة',
+  delete_result:'حذف النتيجة', backup_restore:'النسخ الاحتياطي والاستعادة', backup_download:'تنزيل نسخة احتياطية (JSON)',
+  backup_upload:'استعادة من ملف احتياطي', backup_warning:'الاستعادة ستستبدل جميع البيانات الحالية.',
+  goal_tabs:'تبويبات الأهداف',new_goal_tab:'تبويب جديد',edit_tab:'تعديل التبويب',delete_tab:'حذف التبويب',duplicate_tab:'نسخ التبويب',move_tab:'نقل التبويب',folders:'المجلدات',new_folder:'مجلد جديد',edit_folder:'تعديل المجلد',delete_folder:'حذف المجلد',duplicate_folder:'نسخ المجلد',move_folder:'نقل المجلد',archive_goal:'أرشفة الهدف',archived_goals:'الأهداف المؤرشفة',restore_goal:'استعادة الهدف',duplicate_goal:'نسخ الهدف',move_goal:'نقل الهدف',edit_list:'تعديل القائمة',duplicate_list:'نسخ القائمة',move_list:'نقل القائمة',edit_check:'تعديل قائمة المهام',duplicate_check:'نسخ قائمة المهام',move_check:'نقل قائمة المهام',financial_levels:'المستويات المالية',financial_levels_sub:'الوصول إلى ١٨,٠٠٠ دولار عبر ٢٥ مرحلة',level:'المستوى',threshold:'المرحلة المالية',allocations:'تقسيم هذا المستوى',edit_fin_level:'تعديل المستوى المالي',emergency:'الاحتياطي الطارئ',online_opportunity:'الفرصة عبر الإنترنت',housing:'السكن والوديعة',marriage_home:'الزواج ولوازم المنزل',startup_services:'الشركات الناشئة والخدمات',skills_tools:'المهارات والأدوات',family_spending:'إنفاق الأسرة',line_scroll_hint:'مرر أفقيًا لرؤية المزيد من الأيام',performance_gauge:'مقياس الأداء',goal_gauge:'مقياس الأهداف',
+  header_date_settings:'موارد نمایش در هدر', date_afghan:'تاریخ شمسی افغانستان', date_iran:'تاریخ شمسی ایران', date_gregorian:'تاریخ میلادی', date_hijri:'تاریخ قمری', header_clock:'ساعت', header_message:'پیام امروز',
+  header_date_settings:'عناصر العرض در هدر', date_afghan:'تاریخ شمسی افغانستان', date_iran:'تاریخ شمسی ایران', date_gregorian:'تاریخ میلادی', date_hijri:'تاریخ قمری', header_clock:'ساعت', header_message:'پیام امروز',
+  back:'رجوع', mission_item_ph:'عنصر مهمة جديد...'
 }
 };
 function t(k){ return (I18N[STATE.lang] && I18N[STATE.lang][k]) || I18N.fa[k] || k; }
@@ -400,7 +498,17 @@ function todayISO(){ const d=new Date(); return d.toISOString().slice(0,10); }
 function defaultState(){
   return {
     lang:'fa', theme:'dark',
+    headerItems:{afghan:false, iran:false, gregorian:false, hijri:false, clock:true, message:true},
+    headerMessages:[{id:uid(),text:'امروز یک قدم واقعی بردار؛ کوچک باشد اما قابل اندازه‌گیری.'},{id:uid(),text:'به جای کامل بودن، روی ادامه دادن تمرکز کن.'},{id:uid(),text:'هر چک‌لیست انجام‌شده، یک رأی به آینده توست.'}],
+    headerMessageInterval:5,
+    activeHeaderMessageIndex:0,
     user:{name:'', age:'', bio:'', goalsText:''},
+    performanceSections:[
+      {key:'challenges',name:'چالش‌ها'},
+      {key:'opportunities',name:'فرصت‌ها'},
+      {key:'threats',name:'تهدیدها'},
+      {key:'development',name:'توسعه'}
+    ],
     challenges:[], opportunities:[], threats:[], development:[],
     goals:[
       {id:uid(), name:'رسیدن به $18,000 قبل از 30 سالگی', description:'هدف مالی پیش‌فرض سیستم', startDate:todayISO(), deadline:'', category:'مالی', importance:'high', status:'inprogress', isFinancial:true,
@@ -437,10 +545,14 @@ function defaultState(){
     gratitude:[],
     quizResults:[],
     weeklyReviews:[],
-    dailyMissions:{}, // date -> {income:false,...}
+    dailyMissions:{}, // date -> [{id,title,done,score}, ...]  (editable)
     dailyScores:{}, // date -> score
     perfHistory:{}, // date -> {score}
-    devFromQuiz:[]
+    devFromQuiz:[],
+    goalTabs:[{id:'tab_main',name:'اصلی',order:0},{id:'tab_fin',name:'سطوح مالی',order:1,isSystem:true}],
+    activeGoalTab:'tab_main', goalFolders:[], goalArchive:[],
+    financialLevels:[],
+    quizBank:null // populated on init from QUIZ_BANK, then user-editable
   };
 }
 let STATE = loadState();
@@ -453,6 +565,71 @@ function loadState(){
     return Object.assign(def, parsed);
   }catch(e){ return defaultState(); }
 }
+function initFinancialLevels(){
+  const cats=[
+    ['emergency',22.2],['online_opportunity',13.9],['housing',13.9],['marriage_home',27.8],
+    ['startup_services',8.3],['skills_tools',8.3],['family_spending',5.6]
+  ];
+  return Array.from({length:25},(_,i)=>{
+    const ratio=i/24;
+    const threshold=Math.round(25*Math.pow(18000/25,ratio)*100)/100;
+    const allocations={}; cats.forEach(([k,p])=>allocations[k]=p);
+    return {id:'fin_'+(i+1),level:i+1,threshold,startDate:'',deadline:'',allocations,checklist:cats.map(([k])=>({id:uid(),key:k,title:k,done:false,date:todayISO()}))};
+  });
+}
+function normalizeChecklistFlags(){
+  (STATE.goals||[]).forEach(g=>(g.lists||[]).forEach(l=>(l.checklist||[]).forEach(c=>{c.done = c.done === true;})));
+  (STATE.financialLevels||[]).forEach(l=>(l.checklist||[]).forEach(c=>{c.done = c.done === true;}));
+  (STATE.challenges||[]).forEach(x=>(x.checklist||[]).forEach(c=>{c.done = c.done === true;}));
+  (STATE.opportunities||[]).forEach(x=>(x.checklist||[]).forEach(c=>{c.done = c.done === true;}));
+  (STATE.threats||[]).forEach(x=>(x.checklist||[]).forEach(c=>{c.done = c.done === true;}));
+  (STATE.development||[]).forEach(x=>(x.checklist||[]).forEach(c=>{c.done = c.done === true;}));
+}
+function normalizePerformanceSections(){
+  const defaults=[
+    {key:'challenges',name:'چالش‌ها'},
+    {key:'opportunities',name:'فرصت‌ها'},
+    {key:'threats',name:'تهدیدها'},
+    {key:'development',name:'توسعه'}
+  ];
+  if(!Array.isArray(STATE.performanceSections)||!STATE.performanceSections.length){
+    STATE.performanceSections=defaults.map(x=>({...x}));
+  } else {
+    STATE.performanceSections=STATE.performanceSections.filter(x=>x&&x.key&&x.name);
+    defaults.forEach(d=>{
+      if(!STATE.performanceSections.some(x=>x.key===d.key)){ STATE.performanceSections.push({...d}); }
+    });
+  }
+  STATE.performanceSections.forEach(sec=>{ if(!Array.isArray(STATE[sec.key])) STATE[sec.key]=[]; });
+}
+function perfSections(){ normalizePerformanceSections(); return STATE.performanceSections; }
+function perfSectionByKey(key){ return perfSections().find(x=>x.key===key); }
+function perfSectionName(key){ const sec=perfSectionByKey(key); return sec?sec.name:key; }
+
+function normalizeState(){
+  normalizePerformanceSections();
+  if(!STATE.headerItems) STATE.headerItems={afghan:false,iran:false,gregorian:false,hijri:false,clock:true,message:true}; else STATE.headerItems=Object.assign({afghan:false,iran:false,gregorian:false,hijri:false,clock:true,message:true},STATE.headerItems);
+  if(!Array.isArray(STATE.headerMessages)||!STATE.headerMessages.length) STATE.headerMessages=[{id:uid(),text:'امروز یک قدم واقعی بردار؛ کوچک باشد اما قابل اندازه‌گیری.'}];
+  STATE.headerMessages=STATE.headerMessages.filter(x=>x&&String(x.text||'').trim());
+  if(!STATE.headerMessages.length) STATE.headerMessages=[{id:uid(),text:'امروز یک قدم واقعی بردار؛ کوچک باشد اما قابل اندازه‌گیری.'}];
+  STATE.headerMessageInterval=Math.max(1,Math.min(1440,Number(STATE.headerMessageInterval)||5));
+  STATE.activeHeaderMessageIndex=Math.max(0,Number(STATE.activeHeaderMessageIndex)||0)%STATE.headerMessages.length;
+  if(!Array.isArray(STATE.goalTabs)||!STATE.goalTabs.length) STATE.goalTabs=[{id:'tab_main',name:'اصلی',order:0},{id:'tab_fin',name:'سطوح مالی',order:1,isSystem:true}]; if(STATE.goalTabs.some(x=>x.id==='tab_fin')){const ft=STATE.goalTabs.find(x=>x.id==='tab_fin');ft.isSystem=true;if(!ft.name||ft.name==='مالی')ft.name='سطوح مالی';}
+  if(!Array.isArray(STATE.goalFolders)) STATE.goalFolders=[];
+  if(!Array.isArray(STATE.goalArchive)) STATE.goalArchive=[];
+  if(!Array.isArray(STATE.financialLevels)||STATE.financialLevels.length!==25) STATE.financialLevels=initFinancialLevels();
+  STATE.financialLevels.forEach(x=>{
+    if(x.firstTickAt) delete x.firstTickAt;
+    if(x.startDate==null) x.startDate='';
+    if(x.deadline==null) x.deadline='';
+    const keys=['emergency','online_opportunity','housing','marriage_home','startup_services','skills_tools','family_spending'];
+    if(!Array.isArray(x.checklist)) x.checklist=keys.map(k=>({id:uid(),key:k,title:k,done:false,date:todayISO()}));
+    x.checklist=keys.map(k=>x.checklist.find(c=>c.key===k)||({id:uid(),key:k,title:k,done:false,date:todayISO()}));
+  });
+  STATE.goals.forEach(g=>{ if(!g.tabId) g.tabId=g.isFinancial?'tab_fin':'tab_main'; if(g.archived==null) g.archived=false; if(!Array.isArray(g.lists)) g.lists=[]; g.lists.forEach(l=>{if(!Array.isArray(l.checklist))l.checklist=[];}); });
+}
+normalizeState();
+normalizeChecklistFlags();
 function saveState(){
   localStorage.setItem(STORE_KEY, JSON.stringify(STATE));
 }
@@ -486,18 +663,14 @@ function faDigits(str){ const fa=['۰','۱','۲','۳','۴','۵','۶','۷','۸','
 function arDigits(str){ const ar=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩']; return String(str).replace(/[0-9]/g,d=>ar[d]); }
 function formatJalali(date){
   const [jy,jm,jd]=toJalali(date.getFullYear(), date.getMonth()+1, date.getDate());
-  const s = `${jd} ${JMONTHS[jm-1]} ${jy}`;
-  return STATE.lang==='fa'? faDigits(s): s;
+  const s = `${jy}/${String(jm).padStart(2,'0')}/${String(jd).padStart(2,'0')}`;
+  return STATE.lang==='fa'? faDigits(s):(STATE.lang==='ar'?arDigits(s):s);
 }
 function formatGregorian(date){
-  if(STATE.lang==='en') return `${GMONTHS_EN[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-  const s = `${date.getDate()} ${GMONTHS_EN[date.getMonth()]} ${date.getFullYear()}`;
-  return STATE.lang==='ar'? arDigits(s): faDigits(s);
+  const s = `${date.getFullYear()}/${String(date.getMonth()+1).padStart(2,'0')}/${String(date.getDate()).padStart(2,'0')}`;
+  return STATE.lang==='fa'?faDigits(s):(STATE.lang==='ar'?arDigits(s):s);
 }
-function weekdayName(date){
-  const idx=date.getDay();
-  return t('weekday_'+idx);
-}
+function weekdayName(date){ return t('weekday_'+date.getDay()); }
 function localizeNum(n){
   n = Math.round(n*10)/10;
   if(STATE.lang==='fa') return faDigits(n);
@@ -505,8 +678,10 @@ function localizeNum(n){
   return String(n);
 }
 function fmtClock(date){
-  const h=String(date.getHours()).padStart(2,'0'), m=String(date.getMinutes()).padStart(2,'0'), s=String(date.getSeconds()).padStart(2,'0');
-  const str = `${h}:${m}:${s}`;
+  let h=date.getHours(), m=String(date.getMinutes()).padStart(2,'0'), sec=String(date.getSeconds()).padStart(2,'0');
+  const ap=h>=12?(STATE.lang==='fa'?'ب.ظ':(STATE.lang==='ar'?'م':'PM')):(STATE.lang==='fa'?'ق.ظ':(STATE.lang==='ar'?'ص':'AM'));
+  h=h%12||12;
+  const str=`${String(h).padStart(2,'0')}:${m}:${sec} ${ap}`;
   return STATE.lang==='fa'?faDigits(str):(STATE.lang==='ar'?arDigits(str):str);
 }
 function startOfWeek(d){ const dt=new Date(d); const day=dt.getDay(); dt.setDate(dt.getDate()-day); dt.setHours(0,0,0,0); return dt; }
@@ -520,7 +695,7 @@ function isOverdue(dateStr, done){ if(!dateStr || done) return false; return new
 /* ============ SCORE HELPERS ============ */
 function checklistProgress(list){
   if(!list || !list.length) return 0;
-  const done = list.filter(i=>i.done).length;
+  const done = list.filter(i=>i.done === true).length;
   return Math.round((done/list.length)*100);
 }
 function weightedPerf(items, getChecklist){
@@ -958,7 +1133,7 @@ function renderMiniChecklist(containerId, list, scope, ids){
       <input type="checkbox" ${item.done?'checked':''} onchange="${toggleCall(item.id)}">
       <span class="cltext">${esc(item.title)}</span>
       <span class="badge">${item.score||1}</span>
-      <button class="btn sm ghost" onclick="${deleteCallPrefix(item.id)}">✕</button>
+      ${scope==='goal'?`<button class="action-gear" onclick="event.stopPropagation();openGoalChecklistActions('${ids.goalId}','${ids.listId}','${item.id}')" title="${t('settings')}">⚙️</button>`:`<button class="action-gear" onclick="event.stopPropagation();openPerfChecklistActions('${ids.itemId}','${item.id}')" title="${t('settings')}">⚙️</button>`}
     </div>`;
   });
   html += `<div class="chk-progress"><div style="width:${pct}%"></div></div>`;
@@ -1017,25 +1192,14 @@ function navigate(page){
   renderPage();
   window.scrollTo(0,0);
 }
-function renderHeader(){
-  const now = new Date();
-  const db = document.getElementById('dateblock');
-  db.innerHTML = `
-    <div class="clock" id="liveClock">${fmtClock(now)}</div>
-    <div class="dchip">📅 ${weekdayName(now)}</div>
-    <div class="dchip">🗓️ ${formatJalali(now)}</div>
-    <div class="dchip">🌍 ${formatGregorian(now)}</div>
-  `;
-  const sb = document.getElementById('statusblock');
-  const overall = overallSystemScore();
-  const gp = goalsProgressPct();
-  sb.innerHTML = `
-    <div class="ministat"><div class="v" style="color:var(--gold)">${localizeNum(overall)}%</div><div class="l">${t('overallStatus')}</div></div>
-    <div class="ministat"><div class="v" style="color:var(--green)">${localizeNum(gp)}%</div><div class="l">${t('goalsProgress')}</div></div>
-  `;
-  document.getElementById('themeToggle').textContent = STATE.theme==='dark' ? '🌙' : '☀️';
-}
-setInterval(()=>{ const el=document.getElementById('liveClock'); if(el) el.textContent = fmtClock(new Date()); }, 1000);
+const TODAY_MESSAGES_FA=['امروز یک اقدام کوچک اما واقعی انجام بده.','پیشرفت از تکرار تصمیم‌های درست ساخته می‌شود.','اولویت امروز: یک کار درآمدزا را تمام کن.','شکرگزاری خوب است؛ اقدام امروز را هم انجام بده.','هر تصمیم امروز، بخشی از آینده تو را می‌سازد.','کم شروع کن، اما متوقف نشو.','آنچه اندازه‌گیری می‌کنی، قابل بهبود است.','امروز به جای فکر بیشتر، یک قدم اجرا کن.','ریسک را کوچک نگه دار و یادگیری را بزرگ کن.','یک فرصت را پیدا کن، بررسی کن و اقدام کن.'];
+function getTodayMessage(){const list=(STATE.headerMessages||[]).filter(x=>x&&String(x.text||'').trim());if(!list.length)return '';return String(list[STATE.activeHeaderMessageIndex%list.length].text);}
+function calendarNumeric(date,locale,calendar){try{const parts=new Intl.DateTimeFormat(locale+'-u-ca-'+calendar,{year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);const o={};parts.forEach(p=>{if(['year','month','day'].includes(p.type))o[p.type]=p.value;});const raw=`${o.year}/${o.month}/${o.day}`;return STATE.lang==='fa'?faDigits(raw):(STATE.lang==='ar'?arDigits(raw):raw);}catch(e){return formatGregorian(date);}}
+function headerDateItems(now){const h=STATE.headerItems||{};const a=[];if(h.afghan)a.push(`<span class="dchip">🇦🇫 ${calendarNumeric(now,'fa-AF','persian')}</span>`);if(h.iran)a.push(`<span class="dchip">🇮🇷 ${calendarNumeric(now,'fa-IR','persian')}</span>`);if(h.gregorian)a.push(`<span class="dchip">${formatGregorian(now)}</span>`);if(h.hijri)a.push(`<span class="dchip">☪️ ${calendarNumeric(now,STATE.lang==='ar'?'ar-SA':'fa-AF','islamic')}</span>`);if(h.clock)a.push(`<span class="clock" id="liveClock">${fmtClock(now)}</span>`);return a.join('');}
+function updateTopHeaderHeight(){const h=document.getElementById('topheader'); if(h) document.documentElement.style.setProperty('--topheader-height', h.offsetHeight+'px');}
+function renderHeader(){const now=new Date(),db=document.getElementById('dateblock'),h=STATE.headerItems||{};db.innerHTML=`${h.message?`<div class="today-message"><span>💬</span>${esc(getTodayMessage())}</div>`:''}<div class="weekdayline">${weekdayName(now)}</div><div class="datechips">${headerDateItems(now)}</div>`;const sb=document.getElementById('statusblock'),overall=overallSystemScore(),gp=goalsProgressPct(),fp=financialProgressPct(),fc=Math.max(0,Number(STATE.financial.current)||0),ft=Math.max(1,Number(STATE.financial.target)||18000);sb.innerHTML=`<div class="ministat"><div class="v" style="color:var(--gold)">${localizeNum(overall)}%</div><div class="l">${t('overallStatus')}</div></div><div class="ministat"><div class="v" style="color:var(--green)">${localizeNum(gp)}%</div><div class="l">${t('goalsProgress')}</div></div><div class="ministat"><div class="v" style="color:var(--gold)">${localizeNum(fp)}%</div><div class="l">پیشرفت مالی · $${localizeNum(fc)} / $${localizeNum(ft)}</div></div>`;document.getElementById('themeToggle').textContent=STATE.theme==='dark'?'🌙':'☀️'; updateTopHeaderHeight();}
+setInterval(()=>{ const el=document.getElementById('liveClock'); if(el) el.textContent = fmtClock(new Date()); if(CURRENT_PAGE==='goals') updateGoalCountdowns(); if(CURRENT_PAGE==='goals') updateFinancialLevelCountdowns(); }, 1000);
+setInterval(()=>{ checkGoalAlarms(); }, 15000);
 
 document.getElementById('themeToggle').addEventListener('click', ()=>{
   STATE.theme = STATE.theme==='dark' ? 'light' : 'dark';
@@ -1073,12 +1237,8 @@ function pageDashboard(){
     {icon:'🧠', v:localizeNum(lastQuizScore())+'%', l:t('quiz_score')},
     {icon:'⭐', v:localizeNum(overallSystemScore())+'%', l:t('overall_score')}
   ];
-  const dateKey = todayISO();
-  const dm = STATE.dailyMissions[dateKey] || {income:false,learning:false,physical:false,social:false,discipline:false,gratitude:false,prob:false};
-  const dmKeys = ['income','learning','physical','social','discipline','gratitude','prob'];
-  const dmIcons = {income:'💰',learning:'📚',physical:'🏃',social:'🤝',discipline:'📏',gratitude:'🙏',prob:'🎲'};
-  const dmDone = dmKeys.filter(k=>dm[k]).length;
-  const dailyScorePct = Math.round((dmDone/dmKeys.length)*100);
+  const missionList = getDailyMissionList(todayISO());
+  const dailyScorePct = missionList.length ? Math.round((missionList.filter(i=>i.done).length/missionList.length)*100) : 0;
 
   const fg = STATE.financial;
   const fgPct = fg.target? Math.min(100, Math.round((fg.current/fg.target)*100)) : 0;
@@ -1092,34 +1252,36 @@ function pageDashboard(){
     ${summary.map(s=>`<div class="summary-card"><div class="sicon">${s.icon}</div><div class="sv">${s.v}</div><div class="sl">${s.l}</div></div>`).join('')}
   </div>
 
+  <div class="card" style="margin-top:14px;">
+    <div class="sectiontitle">${t('chart_perf_time')} <span class="badge gold">${t('line_scroll_hint')}</span></div>
+    <div class="chart-scroll"><div class="chart-scroll-inner"><canvas id="chartLine"></canvas></div></div>
+  </div>
+  <div class="gauge-grid" style="margin-top:14px;">
+    <div class="card"><div class="sectiontitle">${t('goal_gauge')}</div><div class="gauge-wrap"><canvas id="chartGoalGauge"></canvas></div></div>
+    <div class="card"><div class="sectiontitle">${t('performance_gauge')}</div><div class="gauge-wrap"><canvas id="chartPerfGauge"></canvas></div></div>
+    <div class="card"><div class="sectiontitle">💰 ${t('financial_levels')}</div><div class="gauge-wrap"><canvas id="chartFinancialGauge"></canvas></div><div class="smallnote" style="text-align:center;margin-top:4px;">$${localizeNum(STATE.financial.current)} / $${localizeNum(STATE.financial.target)} · ${localizeNum(Math.min(100,Math.round(STATE.financial.current/Math.max(1,STATE.financial.target)*100)))}%</div></div>
+  </div>
   <div class="grid cols-2" style="margin-top:14px;">
-    <div class="card">
-      <div class="sectiontitle">${t('chart_perf_time')}</div>
-      <div class="chart-wrap"><canvas id="chartLine"></canvas></div>
-    </div>
     <div class="card">
       <div class="sectiontitle">${t('chart_status')}</div>
       <div class="chart-wrap"><canvas id="chartDonut"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="sectiontitle">${t('chart_compare')}</div>
-      <div class="chart-wrap"><canvas id="chartBar"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="sectiontitle">${t('chart_waterfall')}</div>
-      <div class="chart-wrap"><canvas id="chartWaterfall"></canvas></div>
     </div>
   </div>
 
   <div class="grid cols-2" style="margin-top:14px;">
     <div class="card">
       <div class="sectiontitle">${t('daily_mission')} <span class="badge gold">${localizeNum(dailyScorePct)}/100</span></div>
-      ${dmKeys.map(k=>`
+      ${missionList.map(item=>`
         <div class="dailymission-item">
-          <span class="dmic">${dmIcons[k]}</span>
-          <span class="dmlabel">${t('dm_'+k)}</span>
-          <input type="checkbox" ${dm[k]?'checked':''} onchange="toggleDailyMission('${k}')">
-        </div>`).join('')}
+          <input type="checkbox" ${item.done?'checked':''} onchange="toggleDailyMissionItem('${item.id}')">
+          <span class="dmlabel ${item.done?'done-text':''}">${esc(item.title)}</span>
+          <button class="btn sm ghost" onclick="editDailyMissionItem('${item.id}')">✎</button>
+          <button class="btn sm ghost" onclick="deleteDailyMissionItem('${item.id}')">✕</button>
+        </div>`).join('') || `<div class="empty-state">${t('no_data')}</div>`}
+      <div style="display:flex; gap:6px; margin-top:10px;">
+        <input type="text" id="newMissionItemInput" placeholder="${t('mission_item_ph')}" style="flex:1; background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:8px; border-radius:6px; font-size:12.5px;">
+        <button class="btn sm primary" onclick="addDailyMissionItem()">+</button>
+      </div>
       <div class="progressbar-lg"><div style="width:${dailyScorePct}%"></div></div>
     </div>
 
@@ -1158,12 +1320,52 @@ function pageDashboard(){
   </div>
   `;
 }
-function toggleDailyMission(k){
-  const dateKey = todayISO();
-  if(!STATE.dailyMissions[dateKey]) STATE.dailyMissions[dateKey] = {income:false,learning:false,physical:false,social:false,discipline:false,gratitude:false,prob:false};
-  STATE.dailyMissions[dateKey][k] = !STATE.dailyMissions[dateKey][k];
-  saveState();
-  renderPage(); renderHeader();
+function defaultDailyMissionItems(){
+  return ['dm_income','dm_learning','dm_physical','dm_social','dm_discipline','dm_gratitude','dm_prob'].map(k=>({id:uid(), title:t(k), done:false, score:1}));
+}
+function getDailyMissionList(dateKey){
+  if(!STATE.dailyMissions[dateKey] || !Array.isArray(STATE.dailyMissions[dateKey])){
+    STATE.dailyMissions[dateKey] = defaultDailyMissionItems();
+    saveState();
+  }
+  return STATE.dailyMissions[dateKey];
+}
+function toggleDailyMissionItem(id){
+  const list = getDailyMissionList(todayISO());
+  const item = list.find(i=>i.id===id); if(!item) return;
+  item.done = !item.done;
+  saveState(); renderPage(); renderHeader();
+}
+function addDailyMissionItem(){
+  const input = document.getElementById('newMissionItemInput');
+  const val = input.value.trim(); if(!val) return;
+  const list = getDailyMissionList(todayISO());
+  list.push({id:uid(), title:val, done:false, score:1});
+  saveState(); renderPage();
+}
+function deleteDailyMissionItem(id){
+  confirmDelete(()=>{
+    const list = getDailyMissionList(todayISO());
+    STATE.dailyMissions[todayISO()] = list.filter(i=>i.id!==id);
+    saveState(); renderPage(); renderHeader();
+  });
+}
+function editDailyMissionItem(id){
+  const list = getDailyMissionList(todayISO());
+  const item = list.find(i=>i.id===id); if(!item) return;
+  openModal(`
+    <h3>${t('edit')}</h3>
+    <div class="field"><input id="f_missionedit" value="${esc(item.title)}"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal()">${t('cancel')}</button>
+      <button class="btn primary" onclick="saveMissionEdit('${id}')">${t('save')}</button>
+    </div>`);
+}
+function saveMissionEdit(id){
+  const list = getDailyMissionList(todayISO());
+  const item = list.find(i=>i.id===id); if(!item) return;
+  item.title = document.getElementById('f_missionedit').value;
+  saveState(); closeModal(); renderPage();
 }
 function calcCompound(){
   const amount = parseFloat(document.getElementById('compAmount').value)||0;
@@ -1194,14 +1396,19 @@ function saveIncome(){
 /* ============ PERFORMANCE PAGE ============ */
 let PERF_FILTER = 'all';
 let PERF_SEARCH = '';
+let PERF_ARCHIVE_VIEW = false;
 
 function pagePerformance(){
-  const tabs = ['challenges','opportunities','threats','development'];
+  const tabs = perfSections();
+  const archiveCount = (STATE[PERF_TAB]||[]).filter(o=>o.status==='done').length;
   return `
   <h1 class="pagetitle">${t('performance_title')}</h1>
   <div class="pagesub">${t('performance_sub')}</div>
-  <div class="tabbar">
-    ${tabs.map(tb=>`<button class="tabbtn ${PERF_TAB===tb?'active':''}" onclick="setPerfTab('${tb}')">${t(tb)}</button>`).join('')}
+  <div class="perf-tabbar-wrap">
+    <div class="tabbar perf-tabbar">
+      ${tabs.map(sec=>`<div class="perf-tab-item ${PERF_TAB===sec.key?'active':''}"><button class="tabbtn ${PERF_TAB===sec.key?'active':''}" onclick="setPerfTab('${sec.key}')">${esc(sec.name)}</button><button class="tab-settings" onclick="event.stopPropagation();openPerfSectionActions('${sec.key}')" title="${t('settings')}">⚙️</button></div>`).join('')}
+      <button class="tab-add" onclick="addPerfSection()">＋</button>
+    </div>
   </div>
   <div class="filterrow">
     <input type="text" placeholder="${t('search_ph')}" value="${esc(PERF_SEARCH)}" oninput="PERF_SEARCH=this.value; renderPage();">
@@ -1212,25 +1419,31 @@ function pagePerformance(){
       <option value="week" ${PERF_FILTER==='week'?'selected':''}>${t('filter_week')}</option>
       <option value="month" ${PERF_FILTER==='month'?'selected':''}>${t('filter_month')}</option>
       <option value="overdue" ${PERF_FILTER==='overdue'?'selected':''}>${t('filter_overdue')}</option>
-      <option value="done" ${PERF_FILTER==='done'?'selected':''}>${t('filter_done')}</option>
-      <option value="notdone" ${PERF_FILTER==='notdone'?'selected':''}>${t('filter_notdone')}</option>
     </select>
-    <button class="btn primary" onclick="openItemModal('${PERF_TAB}')">+ ${t('add_'+(PERF_TAB==='challenges'?'challenge':PERF_TAB==='opportunities'?'opportunity':PERF_TAB==='threats'?'threat':'dev'))}</button>
+    <button class="btn ${PERF_ARCHIVE_VIEW?'primary':''}" onclick="togglePerfArchive()">📁 ${t('archive')} (${localizeNum(archiveCount)})</button>
+    <button class="btn primary" onclick="openItemModal('${PERF_TAB}')">+ ${esc(perfAddLabel(PERF_TAB))}</button>
   </div>
+  ${PERF_ARCHIVE_VIEW ? `<div class="smallnote" style="margin-bottom:10px;">📁 ${t('folder_view')}</div>` : `<div class="smallnote" style="margin-bottom:10px;">🔀 ${t('drag_hint')}</div>`}
   <div id="perfList">${renderPerfList()}</div>
   `;
 }
-function setPerfTab(tb){ PERF_TAB=tb; PERF_FILTER='all'; PERF_SEARCH=''; renderPage(); }
-function matchesFilter(dateVal, status){
-  const done = status==='done';
+function perfAddLabel(key){
+  if(key==='challenges') return t('add_challenge');
+  if(key==='opportunities') return t('add_opportunity');
+  if(key==='threats') return t('add_threat');
+  if(key==='development') return t('add_dev');
+  return `مورد جدید در ${perfSectionName(key)}`;
+}
+function togglePerfArchive(){ PERF_ARCHIVE_VIEW = !PERF_ARCHIVE_VIEW; renderPage(); }
+function setPerfTab(tb){ if(!perfSectionByKey(tb)) return; PERF_TAB=tb; PERF_FILTER='all'; PERF_SEARCH=''; PERF_ARCHIVE_VIEW=false; renderPage(); }
+
+function matchesFilter(dateVal){
   switch(PERF_FILTER){
     case 'today': return isToday(dateVal);
     case 'tomorrow': return isTomorrow(dateVal);
     case 'week': return isThisWeek(dateVal);
     case 'month': return isThisMonth(dateVal);
-    case 'overdue': return isOverdue(dateVal, done);
-    case 'done': return done;
-    case 'notdone': return !done;
+    case 'overdue': return isOverdue(dateVal, false);
     default: return true;
   }
 }
@@ -1240,8 +1453,13 @@ function matchesSearch(obj){
   return (obj.title||'').toLowerCase().includes(s) || (obj.description||'').toLowerCase().includes(s);
 }
 function renderPerfList(){
-  const arr = STATE[PERF_TAB];
-  const filtered = arr.filter(o=> matchesFilter(o.date||o.followUpDate||o.createdDate, o.status) && matchesSearch(o));
+  const arr = STATE[PERF_TAB]||[];
+  let filtered;
+  if(PERF_ARCHIVE_VIEW){
+    filtered = arr.filter(o=> o.status==='done' && matchesSearch(o));
+  } else {
+    filtered = arr.filter(o=> o.status!=='done' && matchesFilter(o.date||o.followUpDate||o.createdDate) && matchesSearch(o));
+  }
   if(!filtered.length) return `<div class="empty-state"><div class="eicon">🗂️</div>${t('empty_generic')}</div>`;
   return filtered.map(o=>renderPerfItem(o)).join('');
 }
@@ -1257,17 +1475,16 @@ function renderPerfItem(o){
     scoreLine = `<span class="badge">${t('score_f')}: ${localizeNum(o.score||0)}</span>`;
   }
   const dateStr = o.date||o.followUpDate||o.createdDate||'';
+  const dragAttrs = PERF_ARCHIVE_VIEW ? '' : `draggable="true" data-id="${o.id}" ondragstart="perfDragStart(event)" ondragover="perfDragOver(event)" ondrop="perfDrop(event)" ondragend="perfDragEnd(event)"`;
   return `
-  <div class="item-row">
+  <div class="item-row" ${dragAttrs}>
     <div class="irow-top">
       <div>
-        <div class="ititle">${esc(o.title)}</div>
+        <div class="ititle">${PERF_ARCHIVE_VIEW?'':'⠿ '}${esc(o.title)}</div>
         ${o.description?`<div class="idesc">${esc(o.description)}</div>`:''}
       </div>
       <div class="item-actions">
-        <button class="btn sm ghost" onclick="openItemModal('${PERF_TAB}','${o.id}')">✎</button>
-        <button class="btn sm ghost" onclick="duplicateItem('${PERF_TAB}','${o.id}')">⧉</button>
-        <button class="btn sm danger" onclick="deletePerfItem('${o.id}')">✕</button>
+        ${PERF_ARCHIVE_VIEW?`<button class="btn sm ghost" onclick="restorePerfItem('${o.id}')">↩ ${t('restore')}</button>`:`<button class="action-gear" onclick="event.stopPropagation();openPerfListActions('${o.id}')" title="${t('settings')}">⚙️</button>`}
       </div>
     </div>
     <div class="imeta">
@@ -1279,7 +1496,7 @@ function renderPerfItem(o){
     ${renderMiniChecklist('cl_'+o.id, o.checklist, 'perf', {itemId:o.id})}
   </div>`;
 }
-function findPerfItem(id){ return STATE[PERF_TAB].find(x=>x.id===id); }
+function findPerfItem(id){ return (STATE[PERF_TAB]||[]).find(x=>x.id===id); }
 function toggleChecklistItem(itemId, clId){
   const o = findPerfItem(itemId); if(!o) return;
   const c = (o.checklist||[]).find(x=>x.id===clId); if(!c) return;
@@ -1308,11 +1525,136 @@ function deleteChecklistItem(itemId, clId){
   updateParentStatusFromChecklist(o);
   saveState(); renderPage(); renderHeader();
 }
+function restorePerfItem(id){
+  const o = STATE[PERF_TAB].find(x=>x.id===id); if(!o) return;
+  o.status = 'notdone';
+  if(o.checklist) o.checklist.forEach(c=>c.done=false);
+  saveState(); showToast(t('save_success')); renderPage(); renderHeader();
+}
+let PERF_DRAG_ID = null;
+function perfDragStart(e){
+  PERF_DRAG_ID = e.currentTarget.dataset.id;
+  e.dataTransfer.effectAllowed = 'move';
+  try{ e.dataTransfer.setData('text/plain', PERF_DRAG_ID); }catch(err){}
+}
+function perfDragOver(e){
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+}
+function perfDragEnd(e){
+  document.querySelectorAll('.item-row.drag-over').forEach(el=>el.classList.remove('drag-over'));
+}
+function perfDrop(e){
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  const targetId = e.currentTarget.dataset.id;
+  const sourceId = PERF_DRAG_ID;
+  if(!sourceId || sourceId===targetId) return;
+  const arr = STATE[PERF_TAB];
+  const fromIdx = arr.findIndex(x=>x.id===sourceId);
+  const toIdx = arr.findIndex(x=>x.id===targetId);
+  if(fromIdx<0||toIdx<0) return;
+  const [moved] = arr.splice(fromIdx,1);
+  arr.splice(toIdx,0,moved);
+  saveState();
+  document.getElementById('perfList').innerHTML = renderPerfList();
+}
 function deletePerfItem(id){
   confirmDelete(()=>{
     STATE[PERF_TAB] = STATE[PERF_TAB].filter(x=>x.id!==id);
     saveState(); showToast(t('deleted')); renderPage(); renderHeader();
   });
+}
+function openPerfSectionActions(key){
+  const sec=perfSectionByKey(key); if(!sec) return;
+  openModal(`<h3>⚙️ ${esc(sec.name)}</h3><div class="goal-action-grid">
+    <button class="btn" onclick="closeModal();editPerfSection('${key}')">✎ ${t('edit')}</button>
+    <button class="btn" onclick="closeModal();duplicatePerfSection('${key}')">⧉ ${t('duplicate')}</button>
+    <button class="btn" onclick="closeModal();movePerfSection('${key}',-1)">↑ ${t('move_up')}</button>
+    <button class="btn" onclick="closeModal();movePerfSection('${key}',1)">↓ ${t('move_down')}</button>
+    <button class="btn danger" onclick="closeModal();deletePerfSection('${key}')">✕ ${t('delete')}</button>
+  </div>`);
+}
+function editPerfSection(key){
+  const sec=perfSectionByKey(key); if(!sec) return;
+  openModal(`<h3>${t('edit')} — ${esc(sec.name)}</h3><div class="field"><label>${t('section_name_f')}</label><input id="perfSectionNameInput" value="${esc(sec.name)}"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="savePerfSectionName('${key}')">${t('save')}</button></div>`);
+}
+function savePerfSectionName(key){
+  const sec=perfSectionByKey(key); const input=document.getElementById('perfSectionNameInput'); if(!sec||!input) return;
+  const name=input.value.trim(); if(!name) return;
+  sec.name=name; saveState(); closeModal(); renderPage(); renderHeader();
+}
+function addPerfSection(){
+  openModal(`<h3>＋ ${t('add_section')}</h3><div class="field"><label>${t('section_name_f')}</label><input id="newPerfSectionName" placeholder="مثلاً: یادگیری"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveNewPerfSection()">${t('add')}</button></div>`);
+}
+function saveNewPerfSection(){
+  const input=document.getElementById('newPerfSectionName'); const name=input&&input.value.trim(); if(!name) return;
+  const key='perf_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7);
+  STATE.performanceSections.push({key,name}); STATE[key]=[]; PERF_TAB=key; PERF_FILTER='all'; PERF_SEARCH=''; PERF_ARCHIVE_VIEW=false; saveState(); closeModal(); renderPage(); renderHeader();
+}
+function duplicatePerfSection(key){
+  const sec=perfSectionByKey(key); if(!sec) return;
+  const newKey='perf_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7);
+  STATE.performanceSections.push({key:newKey,name:sec.name+' (کپی)'});
+  STATE[newKey]=JSON.parse(JSON.stringify(STATE[key]||[]));
+  STATE[newKey].forEach(item=>{ item.id=uid(); (item.checklist||[]).forEach(c=>c.id=uid()); });
+  PERF_TAB=newKey; PERF_FILTER='all'; PERF_SEARCH=''; PERF_ARCHIVE_VIEW=false; saveState(); renderPage(); renderHeader();
+}
+function movePerfSection(key,dir){
+  const arr=perfSections(); const i=arr.findIndex(x=>x.key===key), j=i+dir; if(i<0||j<0||j>=arr.length) return;
+  [arr[i],arr[j]]=[arr[j],arr[i]]; saveState(); renderPage();
+}
+function deletePerfSection(key){
+  const arr=perfSections(); if(arr.length<=1) return showToast('حداقل یک بخش عملکرد باید باقی بماند.');
+  const sec=perfSectionByKey(key); if(!sec) return;
+  confirmDelete(()=>{
+    const i=arr.findIndex(x=>x.key===key); arr.splice(i,1); delete STATE[key];
+    if(PERF_TAB===key) PERF_TAB=arr[Math.max(0,Math.min(i,arr.length-1))].key;
+    PERF_FILTER='all'; PERF_SEARCH=''; PERF_ARCHIVE_VIEW=false; saveState(); renderPage(); renderHeader();
+  });
+}
+
+function openPerfListActions(id){
+  const o=findPerfItem(id); if(!o) return;
+  openModal(`<h3>⚙️ ${esc(o.title)}</h3><div class="goal-action-grid">
+    <button class="btn" onclick="closeModal();openItemModal('${PERF_TAB}','${id}')">✎ ${t('edit')}</button>
+    <button class="btn" onclick="closeModal();duplicateItem('${PERF_TAB}','${id}')">⧉ ${t('duplicate')}</button>
+    <button class="btn" onclick="closeModal();movePerfItem('${id}',-1)">↑ ${t('move_up')}</button>
+    <button class="btn" onclick="closeModal();movePerfItem('${id}',1)">↓ ${t('move_down')}</button>
+    <button class="btn danger" onclick="closeModal();deletePerfItem('${id}')">✕ ${t('delete')}</button>
+  </div>`);
+}
+function movePerfItem(id,dir){
+  const arr=STATE[PERF_TAB]; const i=arr.findIndex(x=>x.id===id), j=i+dir;
+  if(i<0||j<0||j>=arr.length) return;
+  [arr[i],arr[j]]=[arr[j],arr[i]]; saveState(); renderPage();
+}
+function openPerfChecklistActions(itemId,clId){
+  const o=findPerfItem(itemId); const c=o&&(o.checklist||[]).find(x=>x.id===clId); if(!c) return;
+  openModal(`<h3>⚙️ ${t('edit_check')}</h3><div class="goal-action-grid">
+    <button class="btn" onclick="closeModal();editPerfChecklistItem('${itemId}','${clId}')">✎ ${t('edit')}</button>
+    <button class="btn" onclick="closeModal();duplicatePerfChecklistItem('${itemId}','${clId}')">⧉ ${t('duplicate')}</button>
+    <button class="btn" onclick="closeModal();movePerfChecklistItem('${itemId}','${clId}',-1)">↑ ${t('move_up')}</button>
+    <button class="btn" onclick="closeModal();movePerfChecklistItem('${itemId}','${clId}',1)">↓ ${t('move_down')}</button>
+    <button class="btn danger" onclick="closeModal();deleteChecklistItem('${itemId}','${clId}')">✕ ${t('delete')}</button>
+  </div>`);
+}
+function editPerfChecklistItem(itemId,clId){
+  const o=findPerfItem(itemId); const c=o&&(o.checklist||[]).find(x=>x.id===clId); if(!c) return;
+  openModal(`<h3>${t('edit_check')}</h3><div class="field"><label>${t('title_f')}</label><input id="f_perf_cltitle" value="${esc(c.title)}"></div><div class="field"><label>${t('date_f')}</label><input type="date" id="f_perf_cldate" value="${c.date||''}"></div><div class="field"><label>${t('score_f')}</label><input type="number" id="f_perf_clscore" value="${c.score??5}"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="savePerfChecklistEdit('${itemId}','${clId}')">${t('save')}</button></div>`);
+}
+function savePerfChecklistEdit(itemId,clId){
+  const o=findPerfItem(itemId); const c=o&&(o.checklist||[]).find(x=>x.id===clId); if(!c) return;
+  c.title=document.getElementById('f_perf_cltitle').value.trim()||c.title; c.date=document.getElementById('f_perf_cldate').value; c.score=Number(document.getElementById('f_perf_clscore').value)||1;
+  saveState(); closeModal(); renderPage(); renderHeader();
+}
+function duplicatePerfChecklistItem(itemId,clId){
+  const o=findPerfItem(itemId); if(!o) return; const a=o.checklist||[], i=a.findIndex(x=>x.id===clId); if(i<0) return;
+  const copy=JSON.parse(JSON.stringify(a[i])); copy.id=uid(); copy.title=copy.title+' (copy)'; copy.done=false; a.splice(i+1,0,copy); saveState(); renderPage();
+}
+function movePerfChecklistItem(itemId,clId,dir){
+  const o=findPerfItem(itemId); if(!o) return; const a=o.checklist||[], i=a.findIndex(x=>x.id===clId), j=i+dir;
+  if(i<0||j<0||j>=a.length) return; [a[i],a[j]]=[a[j],a[i]]; saveState(); renderPage();
 }
 function duplicateItem(tab, id){
   const o = STATE[tab].find(x=>x.id===id); if(!o) return;
@@ -1411,170 +1753,200 @@ function saveItemModal(tab, id){
 }
 
 /* ============ GOALS PAGE ============ */
+let OPEN_GOAL_ID = null;
+let GOAL_VIEW = 'active';
+let GOAL_TAB_ID = null;
+function ensureGoalTab(){ if(!GOAL_TAB_ID || !STATE.goalTabs.some(x=>x.id===GOAL_TAB_ID)) GOAL_TAB_ID=STATE.activeGoalTab||STATE.goalTabs[0].id; }
 function pageGoals(){
+  ensureGoalTab();
+  const tabs=STATE.goalTabs.slice().sort((a,b)=>(a.order||0)-(b.order||0));
+  const goals=STATE.goals.filter(g=> (g.tabId||'tab_main')===GOAL_TAB_ID && !g.archived);
+  const archived=STATE.goals.filter(g=>g.archived);
   return `
-  <h1 class="pagetitle">${t('goals_title')}</h1>
-  <div class="pagesub">${t('goals_sub')}</div>
-  <div style="margin-bottom:14px;"><button class="btn primary" onclick="openGoalModal()">+ ${t('new_goal')}</button></div>
-  ${STATE.goals.length? STATE.goals.map(g=>renderGoalCard(g)).join('') : `<div class="empty-state"><div class="eicon">🏁</div>${t('empty_generic')}</div>`}
-  `;
+  <h1 class="pagetitle">${t('goals_title')}</h1><div class="pagesub">${t('goals_sub')}</div>
+  <div class="goal-tabbar-wrap"><div class="goal-tabs">${tabs.map(tb=>`<span class="goal-tab-wrap"><button class="goal-tab ${tb.id===GOAL_TAB_ID?'active':''}" onclick="setGoalTab('${tb.id}')">${esc(tb.name)}</button><button class="action-gear" onclick="event.stopPropagation();openGoalTabActions('${tb.id}')">⚙️</button></span>`).join('')}
+    <button class="goal-tab" onclick="openGoalTabModal()">+ ${t('new_goal_tab')}</button>
+  </div></div>
+  <div class="goal-tools">
+    <button class="btn primary" onclick="openGoalModal()">+ ${t('new_goal')}</button>
+    <button class="btn" onclick="openFolderModal()">📁 ${t('new_folder')}</button>
+    <button class="btn" onclick="GOAL_VIEW=GOAL_VIEW==='archive'?'active':'archive';renderPage()">📦 ${t('archived_goals')} (${localizeNum(archived.length)})</button>
+  </div>
+  ${GOAL_VIEW==='archive'?renderGoalArchive():(GOAL_TAB_ID==='tab_fin'?renderFinancialLevelPage():renderGoalWorkspace(goals))}`;
 }
+function setGoalTab(id){GOAL_TAB_ID=id;STATE.activeGoalTab=id;saveState();renderPage();}
+function renderFinancialLevelPage(){return `<div class="card"><div class="sectiontitle">💰 ${t('financial_levels')}</div><div class="smallnote">${t('financial_levels_sub')}</div><div style="margin-top:12px;">${renderFinancialLevels()}</div></div>`;}
+function renderGoalWorkspace(goals){
+  const folders=STATE.goalFolders.filter(f=>f.tabId===GOAL_TAB_ID);
+  let html='';
+  folders.forEach(f=>{const gs=goals.filter(g=>g.folderId===f.id);html+=`<div class="goal-folder" draggable="true" ondragover="goalDragOver(event)" ondrop="dropGoalToFolder(event,'${f.id}')"><div class="irow-top"><b>📁 ${esc(f.name)}</b><span><button class="action-gear" onclick="event.stopPropagation();openFolderActions('${f.id}')">⚙️</button></span></div>${gs.map(g=>renderGoalCard(g)).join('')||`<div class="smallnote">${t('empty_generic')}</div>`}</div>`});
+  const loose=goals.filter(g=>!g.folderId); html+=loose.map(g=>renderGoalCard(g)).join('');
+  return html || `<div class="empty-state"><div class="eicon">🏁</div>${t('empty_generic')}</div>`;
+}
+function renderGoalArchive(){return STATE.goals.filter(g=>g.archived).map(g=>`<div class="item-row"><div class="irow-top"><div><div class="ititle">📦 ${esc(g.name)}</div><div class="idesc">${g.deadline||''}</div></div><div class="item-actions"><button class="action-gear" onclick="openGoalArchiveActions('${g.id}')">⚙️</button></div></div></div>`).join('')||`<div class="empty-state">${t('empty_generic')}</div>`;}
 function renderGoalCard(g){
-  const pct = goalProgress(g);
-  return `
-  <div class="card">
-    <div class="irow-top">
-      <div>
-        <div class="ititle" style="font-size:16px;">${esc(g.name)} ${g.isFinancial?'💰':''}</div>
-        ${g.description?`<div class="idesc">${esc(g.description)}</div>`:''}
-      </div>
-      <div class="item-actions">
-        <button class="btn sm ghost" onclick="openGoalModal('${g.id}')">✎</button>
-        ${g.isFinancial?'':`<button class="btn sm danger" onclick="deleteGoal('${g.id}')">✕</button>`}
-      </div>
-    </div>
-    <div class="imeta">
-      ${g.deadline?`<span class="badge">⏳ ${g.deadline}</span>`:''}
-      ${g.importance?`<span class="badge ${levelBadgeClass(g.importance)}">${t('goal_importance')}: ${levelLabel(g.importance)}</span>`:''}
-      <span class="badge gold">${t('goal_progress')}: ${localizeNum(pct)}%</span>
-    </div>
-    <div class="progressbar-lg"><div style="width:${pct}%"></div></div>
-    <div style="margin-top:10px;">
-      ${(g.lists||[]).map(l=>renderGoalList(g,l)).join('')}
-      <button class="btn sm ghost" onclick="openGoalListModal('${g.id}')">+ ${t('new_list')}</button>
-    </div>
-  </div>`;
+  const pct=goalProgress(g),isOpen=OPEN_GOAL_ID===g.id,cd=formatCountdown(g.alarmDateTime||g.deadline);
+  return `<div class="card ${isOpen?'':'goal-collapsed'}" draggable="true" data-goalid="${g.id}" ondragover="goalDragOver(event)" ondrop="dropGoal(event,'${g.id}')">
+    <div class="goal-accordion-header" onclick="toggleGoalOpen('${g.id}')"><div><div class="ititle" style="font-size:16px;">${isOpen?'▾':'▸'} ${esc(g.name)} ${g.isFinancial?'💰':''}</div>${g.description?`<div class="idesc">${esc(g.description)}</div>`:''}</div>
+    <div class="item-actions" onclick="event.stopPropagation();"><button class="action-gear" onclick="openGoalActions('${g.id}')">⚙️</button></div></div>
+    <div class="imeta">${g.deadline?`<span class="badge">⏳ ${g.deadline}</span>`:''}<span class="badge gold">${t('goal_progress')}: ${localizeNum(pct)}%</span></div><div class="progressbar-lg"><div style="width:${pct}%"></div></div>
+    ${cd?`<div class="countdown-box goal-countdown" data-goal="${g.id}" data-target="${esc(g.alarmDateTime||g.deadline)}"><div class="cbox"><b class="cd-d">${localizeNum(cd.d)}</b><span>${t('d_short')}</span></div><div class="cbox"><b class="cd-h">${localizeNum(cd.h)}</b><span>${t('h_short')}</span></div><div class="cbox"><b class="cd-m">${localizeNum(cd.m)}</b><span>${t('m_short')}</span></div><div class="cbox"><b class="cd-s">${localizeNum(cd.s)}</b><span>${t('s_short')}</span></div></div>`:''}
+    <div class="goal-body" style="margin-top:10px;">${(g.lists||[]).map(l=>renderGoalList(g,l)).join('')}<button class="btn sm ghost" onclick="openGoalListModal('${g.id}')">+ ${t('new_list')}</button></div></div>`;
 }
-function renderGoalList(g,l){
-  const pct = checklistProgress(l.checklist);
-  return `
-  <div class="item-row">
-    <div class="irow-top">
-      <div class="ititle">${esc(l.name)}</div>
-      <div class="item-actions"><button class="btn sm danger" onclick="deleteGoalList('${g.id}','${l.id}')">✕</button></div>
-    </div>
-    ${renderMiniChecklist('gl_'+l.id, l.checklist, 'goal', {goalId:g.id, listId:l.id})}
-  </div>`;
+function renderGoalList(g,l){const pct=checklistProgress(l.checklist);return `<div class="item-row" draggable="true" data-listid="${l.id}" ondragstart="event.dataTransfer.setData('text/plain','${l.id}')" ondragover="goalDragOver(event)" ondrop="dropGoalList(event,'${g.id}','${l.id}')"><div class="irow-top"><div class="ititle">☷ ${esc(l.name)} <span class="badge gold">${localizeNum(pct)}%</span></div><div class="item-actions"><button class="action-gear" onclick="openGoalListActions('${g.id}','${l.id}')">⚙️</button></div></div>${renderMiniChecklist('gl_'+l.id,l.checklist,'goal',{goalId:g.id,listId:l.id})}</div>`;}
+function findGoal(id){return STATE.goals.find(x=>x.id===id);}
+function toggleGoalOpen(gid){OPEN_GOAL_ID=gid;renderPage();}
+function toggleGoalChecklistItem(gid,lid,clId){const g=findGoal(gid);if(!g)return;const l=(g.lists||[]).find(x=>x.id===lid);if(!l)return;const c=(l.checklist||[]).find(x=>x.id===clId);if(!c)return;c.done=!c.done;const pct=goalProgress(g);if(pct===100)g.status='done';else if(pct>0)g.status='inprogress';saveState();renderPage();renderHeader();}
+function addGoalChecklistItem(gid,lid,containerId){const g=findGoal(gid);if(!g)return;const l=(g.lists||[]).find(x=>x.id===lid);if(!l)return;const input=document.getElementById(containerId+'_newitem');const val=input.value.trim();if(!val)return;if(!l.checklist)l.checklist=[];l.checklist.push({id:uid(),title:val,done:false,score:5,date:todayISO()});saveState();renderPage();}
+function editGoalChecklistItem(gid,lid,cid){const g=findGoal(gid),l=g&&g.lists.find(x=>x.id===lid),c=l&&l.checklist.find(x=>x.id===cid);if(!c)return;openModal(`<h3>${t('edit_check')}</h3><div class="field"><input id="f_cltitle" value="${esc(c.title)}"></div><div class="field"><label>${t('date_f')}</label><input type="date" id="f_cldate" value="${c.date||''}"></div><div class="field"><label>${t('score_f')}</label><input type="number" id="f_clscore" value="${c.score||5}"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveGoalChecklistEdit('${gid}','${lid}','${cid}')">${t('save')}</button></div>`);}
+function saveGoalChecklistEdit(gid,lid,cid){const g=findGoal(gid),l=g&&g.lists.find(x=>x.id===lid),c=l&&l.checklist.find(x=>x.id===cid);if(!c)return;c.title=document.getElementById('f_cltitle').value;c.date=document.getElementById('f_cldate').value;c.score=Number(document.getElementById('f_clscore').value)||1;saveState();closeModal();renderPage();}
+function deleteGoalChecklistItem(gid,lid,clId){const g=findGoal(gid);if(!g)return;const l=(g.lists||[]).find(x=>x.id===lid);if(!l)return;l.checklist=(l.checklist||[]).filter(x=>x.id!==clId);saveState();renderPage();}
+function duplicateGoalChecklistItem(gid,lid,cid){const g=findGoal(gid),l=g&&g.lists.find(x=>x.id===lid),c=l&&l.checklist.find(x=>x.id===cid);if(!c)return;const copy={...JSON.parse(JSON.stringify(c)),id:uid(),title:c.title+' (copy)',done:false};l.checklist.push(copy);saveState();renderPage();}
+function moveGoalChecklistItem(gid,lid,cid,dir){const g=findGoal(gid),l=g&&g.lists.find(x=>x.id===lid);if(!l)return;const a=l.checklist,i=a.findIndex(x=>x.id===cid),j=i+dir;if(i<0||j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];saveState();renderPage();}
+function deleteGoalList(gid,lid){confirmDelete(()=>{const g=findGoal(gid);if(!g)return;g.lists=(g.lists||[]).filter(x=>x.id!==lid);saveState();renderPage();});}
+function openGoalListModal(gid,lid){const g=findGoal(gid),l=lid&&g&&g.lists.find(x=>x.id===lid);openModal(`<h3>${lid?t('edit_list'):t('new_list')}</h3><div class="field"><label>${t('list_name')}</label><input id="f_listname" value="${esc(l?.name||'')}"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveGoalList('${gid}','${lid||''}')">${t('save')}</button></div>`);}
+function saveGoalList(gid,lid){const name=document.getElementById('f_listname').value.trim();if(!name)return;const g=findGoal(gid);if(!g)return;if(lid){const l=g.lists.find(x=>x.id===lid);if(l)l.name=name;}else g.lists.push({id:uid(),name,checklist:[]});saveState();closeModal();renderPage();}
+function duplicateGoalList(gid,lid){const g=findGoal(gid),l=g&&g.lists.find(x=>x.id===lid);if(!l)return;const copy=JSON.parse(JSON.stringify(l));copy.id=uid();copy.name=l.name+' (copy)';copy.checklist=(copy.checklist||[]).map(c=>({...c,id:uid(),done:false}));g.lists.push(copy);saveState();renderPage();}
+function moveGoalList(gid,lid,dir){const g=findGoal(gid),a=g&&g.lists;if(!a)return;const i=a.findIndex(x=>x.id===lid),j=i+dir;if(i<0||j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];saveState();renderPage();}
+function openGoalTabModal(id){const tb=id&&STATE.goalTabs.find(x=>x.id===id);openModal(`<h3>${id?t('edit_tab'):t('new_goal_tab')}</h3><div class="field"><input id="f_tabname" value="${esc(tb?.name||'')}"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveGoalTab('${id||''}')">${t('save')}</button></div>`);}
+function saveGoalTab(id){const n=document.getElementById('f_tabname').value.trim();if(!n)return;if(id){const x=STATE.goalTabs.find(t=>t.id===id);if(x)x.name=n;}else{const x={id:uid(),name:n,order:STATE.goalTabs.length};STATE.goalTabs.push(x);GOAL_TAB_ID=x.id;}saveState();closeModal();renderPage();}
+function duplicateGoalTab(id){const tb=STATE.goalTabs.find(x=>x.id===id);if(!tb)return;const n={...tb,id:uid(),name:tb.name+' (copy)',order:STATE.goalTabs.length};STATE.goalTabs.push(n);GOAL_TAB_ID=n.id;STATE.goals.filter(g=>(g.tabId||'tab_main')===id).forEach(g=>{const c=JSON.parse(JSON.stringify(g));c.id=uid();c.tabId=n.id;c.name=g.name+' (copy)';STATE.goals.push(c);});saveState();renderPage();}
+function deleteGoalTab(id){if(STATE.goalTabs.find(x=>x.id===id)?.isSystem)return;if(STATE.goalTabs.length<=1)return;confirmDelete(()=>{STATE.goalTabs=STATE.goalTabs.filter(x=>x.id!==id);STATE.goals=STATE.goals.filter(g=>(g.tabId||'tab_main')!==id);GOAL_TAB_ID=STATE.goalTabs[0].id;saveState();renderPage();});}
+function moveGoalTab(id,dir){const a=STATE.goalTabs,i=a.findIndex(x=>x.id===id),j=i+dir;if(i<0||j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];a.forEach((x,k)=>x.order=k);saveState();renderPage();}
+function moveFolder(id,dir){const same=STATE.goalFolders.filter(x=>x.tabId===GOAL_TAB_ID),i=same.findIndex(x=>x.id===id),j=i+dir;if(i<0||j<0||j>=same.length)return;const a=STATE.goalFolders,ai=a.findIndex(x=>x.id===same[i].id),aj=a.findIndex(x=>x.id===same[j].id);[a[ai],a[aj]]=[a[aj],a[ai]];a.forEach((x,k)=>x.order=k);saveState();renderPage();}
+function moveGoal(id,dir){const a=STATE.goals.filter(g=>(g.tabId||'tab_main')===GOAL_TAB_ID&&!g.archived),i=a.findIndex(x=>x.id===id),j=i+dir;if(i<0||j<0||j>=a.length)return;const all=STATE.goals,ai=all.findIndex(x=>x.id===a[i].id),aj=all.findIndex(x=>x.id===a[j].id);[all[ai],all[aj]]=[all[aj],all[ai]];saveState();renderPage();}
+function openFolderModal(id){const f=id&&STATE.goalFolders.find(x=>x.id===id);openModal(`<h3>${id?t('edit_folder'):t('new_folder')}</h3><div class="field"><input id="f_foldername" value="${esc(f?.name||'')}"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveFolder('${id||''}')">${t('save')}</button></div>`);}
+function saveFolder(id){const n=document.getElementById('f_foldername').value.trim();if(!n)return;if(id){const f=STATE.goalFolders.find(x=>x.id===id);if(f)f.name=n;}else STATE.goalFolders.push({id:uid(),name:n,tabId:GOAL_TAB_ID,order:STATE.goalFolders.length});saveState();closeModal();renderPage();}
+function duplicateFolder(id){const f=STATE.goalFolders.find(x=>x.id===id);if(!f)return;const c={...f,id:uid(),name:f.name+' (copy)',order:STATE.goalFolders.length};STATE.goalFolders.push(c);saveState();renderPage();}
+function deleteFolder(id){confirmDelete(()=>{STATE.goalFolders=STATE.goalFolders.filter(x=>x.id!==id);STATE.goals.forEach(g=>{if(g.folderId===id)g.folderId=null;});saveState();renderPage();});}
+function archiveGoal(id){const g=findGoal(id);if(!g)return;g.archived=true;saveState();renderPage();}
+function restoreGoal(id){const g=findGoal(id);if(!g)return;g.archived=false;saveState();renderPage();}
+function duplicateGoal(id){const g=findGoal(id);if(!g)return;const c=JSON.parse(JSON.stringify(g));c.id=uid();c.name=g.name+' (copy)';c.archived=false;c.lists=(c.lists||[]).map(l=>({...l,id:uid(),checklist:(l.checklist||[]).map(x=>({...x,id:uid(),done:false}))}));STATE.goals.push(c);saveState();renderPage();}
+function deleteGoal(gid){confirmDelete(()=>{STATE.goals=STATE.goals.filter(x=>x.id!==gid);saveState();showToast(t('deleted'));renderPage();renderHeader();});}
+let GOAL_DRAG_ID=null;function goalDragOver(e){e.preventDefault();e.currentTarget.classList.add('drag-over');}
+function dropGoal(e,targetId){e.preventDefault();const src=e.currentTarget.dataset.goalid;if(!src||src===targetId)return;const a=STATE.goals,i=a.findIndex(x=>x.id===src),j=a.findIndex(x=>x.id===targetId);if(i<0||j<0)return;[a[i],a[j]]=[a[j],a[i]];saveState();renderPage();}
+function dropGoalToFolder(e,fid){e.preventDefault();const id=e.dataTransfer?.getData('text/plain');if(id){const g=findGoal(id);if(g)g.folderId=fid;}saveState();renderPage();}
+function dropGoalList(e,gid,targetId){e.preventDefault();const l=e.currentTarget;const id=l.dataset.listid;if(!id||id===targetId)return;const g=findGoal(gid);if(!g)return;const a=g.lists,i=a.findIndex(x=>x.id===id),j=a.findIndex(x=>x.id===targetId);if(i>=0&&j>=0){[a[i],a[j]]=[a[j],a[i]];saveState();renderPage();}}
+function financialProgressPct(){const target=Math.max(1,Number(STATE.financial.target)||18000);const current=Math.max(0,Number(STATE.financial.current)||0);return Math.round(Math.min(100,current/target*100)*100)/100;}
+function financialGaugeColors(){const reds=[];const greens=[];for(let i=0;i<12;i++){const light=18+i*5.2;reds.push(`hsl(8, ${82-i*2.5}%, ${Math.min(78,light)}%)`);}for(let i=0;i<13;i++){const light=78-i*4.6;greens.push(`hsl(145, ${48+i*2.5}%, ${Math.max(25,light)}%)`);}return reds.concat(greens);}
+function financialLevelCountdown(x){
+  if(!x || !x.deadline) return null;
+  const target=new Date(x.deadline+'T23:59:59');
+  const now=new Date();
+  const diff=target-now;
+  return {days:Math.ceil(diff/86400000),past:diff<0};
 }
-function findGoal(id){ return STATE.goals.find(x=>x.id===id); }
-function toggleGoalChecklistItem(gid,lid,clId){
-  const g=findGoal(gid); if(!g) return;
-  const l=(g.lists||[]).find(x=>x.id===lid); if(!l) return;
-  const c=(l.checklist||[]).find(x=>x.id===clId); if(!c) return;
-  c.done=!c.done;
-  if(g.isFinancial){} // financial goal progress derives from checklist automatically
-  const pct = goalProgress(g);
-  if(pct===100) g.status='done'; else if(pct>0) g.status='inprogress';
-  saveState(); renderPage(); renderHeader();
-}
-function addGoalChecklistItem(gid,lid,containerId){
-  const g=findGoal(gid); if(!g) return;
-  const l=(g.lists||[]).find(x=>x.id===lid); if(!l) return;
-  const input = document.getElementById(containerId+'_newitem');
-  const val = input.value.trim(); if(!val) return;
-  if(!l.checklist) l.checklist=[];
-  l.checklist.push({id:uid(), title:val, done:false, score:5});
-  saveState(); renderPage(); renderHeader();
-}
-function deleteGoalChecklistItem(gid,lid,clId){
-  const g=findGoal(gid); if(!g) return;
-  const l=(g.lists||[]).find(x=>x.id===lid); if(!l) return;
-  l.checklist = (l.checklist||[]).filter(x=>x.id!==clId);
-  saveState(); renderPage(); renderHeader();
-}
-function deleteGoalList(gid,lid){
-  confirmDelete(()=>{
-    const g=findGoal(gid); if(!g) return;
-    g.lists = (g.lists||[]).filter(x=>x.id!==lid);
-    saveState(); renderPage();
-  });
-}
-function deleteGoal(gid){
-  confirmDelete(()=>{
-    STATE.goals = STATE.goals.filter(x=>x.id!==gid);
-    saveState(); showToast(t('deleted')); renderPage(); renderHeader();
-  });
-}
-function openGoalListModal(gid){
-  openModal(`
-    <h3>${t('new_list')}</h3>
-    <div class="field"><label>${t('list_name')}</label><input id="f_listname"></div>
-    <div class="modal-actions">
-      <button class="btn ghost" onclick="closeModal()">${t('cancel')}</button>
-      <button class="btn primary" onclick="saveGoalList('${gid}')">${t('save')}</button>
-    </div>`);
-}
-function saveGoalList(gid){
-  const name = document.getElementById('f_listname').value.trim();
-  if(!name) return;
-  const g = findGoal(gid); if(!g) return;
-  if(!g.lists) g.lists=[];
-  g.lists.push({id:uid(), name:name, checklist:[]});
-  saveState(); closeModal(); renderPage();
-}
-function openGoalModal(id){
-  const isEdit=!!id;
-  const g = isEdit ? findGoal(id) : null;
-  openModal(`
-    <h3>${isEdit?t('edit'):t('new_goal')}</h3>
-    <div class="field"><label>${t('goal_name')}</label><input id="f_gname" value="${esc(g?.name||'')}"></div>
-    <div class="field"><label>${t('desc_f')}</label><textarea id="f_gdesc">${esc(g?.description||'')}</textarea></div>
-    <div class="field-row">
-      <div class="field"><label>${t('goal_start')}</label><input type="date" id="f_gstart" value="${g?.startDate||todayISO()}"></div>
-      <div class="field"><label>${t('goal_deadline')}</label><input type="date" id="f_gdeadline" value="${g?.deadline||''}"></div>
-    </div>
-    <div class="field-row">
-      <div class="field"><label>${t('category_f')}</label><input id="f_gcat" value="${esc(g?.category||'')}"></div>
-      <div class="field"><label>${t('goal_importance')}</label><select id="f_gimportance">
-        ${['low','medium','high','critical'].map(l=>`<option value="${l}" ${g?.importance===l?'selected':''}>${t(l)}</option>`).join('')}
-      </select></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn ghost" onclick="closeModal()">${t('cancel')}</button>
-      <button class="btn primary" onclick="saveGoalModal('${id||''}')">${t('save')}</button>
-    </div>`);
-}
-function saveGoalModal(id){
-  const name = document.getElementById('f_gname').value.trim();
-  if(!name) return;
-  let g = id ? findGoal(id) : null;
-  if(!g){ g = {id:uid(), status:'notdone', lists:[]}; STATE.goals.push(g); }
-  g.name=name;
-  g.description=document.getElementById('f_gdesc').value;
-  g.startDate=document.getElementById('f_gstart').value;
-  g.deadline=document.getElementById('f_gdeadline').value;
-  g.category=document.getElementById('f_gcat').value;
-  g.importance=document.getElementById('f_gimportance').value;
-  saveState(); closeModal(); showToast(t('save_success')); renderPage(); renderHeader();
-}
-
+function toggleFinancialLevelChecklist(level,cid){const x=STATE.financialLevels.find(v=>v.level===level);if(!x)return;const c=(x.checklist||[]).find(v=>v.id===cid);if(!c)return;c.done=!c.done;c.date=todayISO();saveState();renderPage();renderHeader();}
+function updateFinancialLevelCountdowns(){document.querySelectorAll('[data-fin-countdown]').forEach(el=>{const x=STATE.financialLevels.find(v=>String(v.level)===String(el.dataset.finCountdown));const cd=financialLevelCountdown(x);if(x&&cd)el.textContent=cd.past?'گذشته':localizeNum(Math.max(0,cd.days))+' روز';});}
+function renderFinancialLevels(){const overallTarget=Math.max(1,Number(STATE.financial.target)||18000);const current=Math.max(0,Number(STATE.financial.current)||0);return (STATE.financialLevels||[]).map(x=>{const cl=x.checklist||[];const done=cl.filter(c=>c.done).length;const effort=Math.round(done/Math.max(1,cl.length)*100);const threshold=Math.max(0.01,Number(x.threshold)||0.01);const assetPct=Math.min(100,Math.max(0,current/threshold*100));const share=Math.min(100,Math.max(0,Number(x.threshold||0)/overallTarget*100));const reached=current>=Number(x.threshold||0);const cd=financialLevelCountdown(x);const barWidth=effort;return `<div class="fin-level"><div class="fin-level-head"><b>${t('level')} ${localizeNum(x.level)} — $${Number(x.threshold).toLocaleString()}</b><button class="action-gear" onclick="openFinancialLevelActions(${x.level})">⚙️</button></div><div class="fin-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${effort}"><div style="width:${barWidth.toFixed(2)}%;"></div></div><div class="fin-progress-label">${localizeNum(effort)}%</div><div class="smallnote fin-level-stats" style="margin-top:4px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;"><span><b>دارایی سطح:</b> ${localizeNum(assetPct,2)}%</span><span><b>سهم از 18,000 دالر:</b> ${localizeNum(share,2)}%</span><span><b>تلاش چک‌لیست:</b> ${localizeNum(effort)}% — ${localizeNum(done)}/${localizeNum(cl.length)}</span>${x.startDate?`<span><b>تاریخ شروع:</b> ${esc(x.startDate)}</span>`:''}${x.deadline?`<span><b>تاریخ هدف:</b> ${esc(x.deadline)}</span><span><b>روز شمار:</b> <span data-fin-countdown="${x.level}">${cd?(cd.past?'گذشته':localizeNum(Math.max(0,cd.days))+' روز'):''}</span></span>`:''}${reached?`<span class="badge gold">✓ رسید</span>`:''}</div><div style="margin-top:6px;">${cl.map(c=>{const v=Number(x.allocations[c.key]||0);return `<div class="fin-check-row"><input type="checkbox" ${c.done?'checked':''} onchange="toggleFinancialLevelChecklist(${x.level},'${c.id}')"><span>${t(c.key)}</span><span class="badge">${localizeNum(v)}%</span><span>$${Math.round(x.threshold*v/100).toLocaleString()}</span></div>`}).join('')}</div></div>`}).join('');}
+function openGoalArchiveActions(id){openModal(`<h3>⚙️ ${t('archived_goals')}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();restoreGoal('${id}')">↩ ${t('restore_goal')}</button><button class="btn" onclick="closeModal();duplicateGoal('${id}')">⧉ ${t('duplicate')}</button><button class="btn danger" onclick="closeModal();deleteGoal('${id}')">✕ ${t('delete')}</button></div>`);}
+function openGoalActions(id){openModal(`<h3>⚙️ ${t('settings')}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();openGoalModal('${id}')">✎ ${t('edit')}</button><button class="btn" onclick="closeModal();duplicateGoal('${id}')">⧉ ${t('duplicate')}</button><button class="btn" onclick="closeModal();moveGoal('${id}',-1)">↑ ${t('move_up')}</button><button class="btn" onclick="closeModal();moveGoal('${id}',1)">↓ ${t('move_down')}</button><button class="btn" onclick="closeModal();archiveGoal('${id}')">📦 ${t('archive_goal')}</button><button class="btn danger" onclick="closeModal();deleteGoal('${id}')">✕ ${t('delete')}</button></div>`);}
+function openFolderActions(id){openModal(`<h3>⚙️ ${t('folders')}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();openFolderModal('${id}')">✎ ${t('edit')}</button><button class="btn" onclick="closeModal();duplicateFolder('${id}')">⧉ ${t('duplicate')}</button><button class="btn" onclick="closeModal();moveFolder('${id}',-1)">↑ ${t('move_up')}</button><button class="btn" onclick="closeModal();moveFolder('${id}',1)">↓ ${t('move_down')}</button><button class="btn danger" onclick="closeModal();deleteFolder('${id}')">✕ ${t('delete')}</button></div>`);}
+function openGoalListActions(gid,lid){openModal(`<h3>⚙️ ${t('edit_list')}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();openGoalListModal('${gid}','${lid}')">✎ ${t('edit')}</button><button class="btn" onclick="closeModal();duplicateGoalList('${gid}','${lid}')">⧉ ${t('duplicate')}</button><button class="btn" onclick="closeModal();moveGoalList('${gid}','${lid}',-1)">↑ ${t('move_up')}</button><button class="btn" onclick="closeModal();moveGoalList('${gid}','${lid}',1)">↓ ${t('move_down')}</button><button class="btn danger" onclick="closeModal();deleteGoalList('${gid}','${lid}')">✕ ${t('delete')}</button></div>`);}
+function openGoalChecklistActions(gid,lid,cid){openModal(`<h3>⚙️ ${t('edit_check')}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();editGoalChecklistItem('${gid}','${lid}','${cid}')">✎ ${t('edit')}</button><button class="btn" onclick="closeModal();duplicateGoalChecklistItem('${gid}','${lid}','${cid}')">⧉ ${t('duplicate')}</button><button class="btn" onclick="closeModal();moveGoalChecklistItem('${gid}','${lid}','${cid}',-1)">↑ ${t('move_up')}</button><button class="btn" onclick="closeModal();moveGoalChecklistItem('${gid}','${lid}','${cid}',1)">↓ ${t('move_down')}</button><button class="btn danger" onclick="closeModal();deleteGoalChecklistItem('${gid}','${lid}','${cid}')">✕ ${t('delete')}</button></div>`);}
+function openGoalTabActions(id){const tb=STATE.goalTabs.find(x=>x.id===id);if(!tb)return;openModal(`<h3>⚙️ ${t('goal_tabs')}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();openGoalTabModal('${id}')">✎ ${t('edit')}</button><button class="btn" onclick="closeModal();duplicateGoalTab('${id}')">⧉ ${t('duplicate')}</button><button class="btn" onclick="closeModal();moveGoalTab('${id}',-1)">↑ ${t('move_up')}</button><button class="btn" onclick="closeModal();moveGoalTab('${id}',1)">↓ ${t('move_down')}</button>${tb.isSystem?'':`<button class="btn danger" onclick="closeModal();deleteGoalTab('${id}')">✕ ${t('delete')}</button>`}</div>`);}
+function openFinancialLevelActions(level){openModal(`<h3>⚙️ ${t('edit_fin_level')} ${level}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();editFinancialLevel(${level})">✎ ${t('edit')}</button></div>`);}
+function editFinancialLevel(level){const x=STATE.financialLevels.find(v=>v.level===level);if(!x)return;openModal(`<h3>${t('edit_fin_level')} ${level}</h3><div class="field"><label>${t('threshold')}</label><input type="number" id="f_finthreshold" value="${x.threshold}"></div><div class="field-row"><div class="field"><label>تاریخ شروع سطح</label><input type="date" id="f_finstart" value="${x.startDate||''}"></div><div class="field"><label>تاریخ هدف / پایان</label><input type="date" id="f_findeadline" value="${x.deadline||''}"></div></div>${Object.entries(x.allocations).map(([k,v])=>`<div class="field"><label>${t(k)} (%)</label><input type="number" step="0.1" id="f_fin_${k}" value="${v}"></div>`).join('')}<div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveFinancialLevel(${level})">${t('save')}</button></div>`);}
+function saveFinancialLevel(level){const x=STATE.financialLevels.find(v=>v.level===level);if(!x)return;x.threshold=Number(document.getElementById('f_finthreshold').value)||x.threshold;x.startDate=document.getElementById('f_finstart')?.value||'';x.deadline=document.getElementById('f_findeadline')?.value||'';Object.keys(x.allocations).forEach(k=>x.allocations[k]=Number(document.getElementById('f_fin_'+k).value)||0);const total=Object.values(x.allocations).reduce((a,b)=>a+b,0);if(Math.abs(total-100)>0.01){showToast('Allocation must equal 100%');return;}saveState();closeModal();renderPage();}
+function formatCountdown(targetIso){if(!targetIso)return null;const target=new Date(targetIso),now=new Date();let diff=target-now;const past=diff<0;diff=Math.abs(diff);return {d:Math.floor(diff/86400000),h:Math.floor(diff%86400000/3600000),m:Math.floor(diff%3600000/60000),s:Math.floor(diff%60000/1000),past};}
+function checkGoalAlarms(){const now=new Date();let changed=false;STATE.goals.forEach(g=>{const target=g.alarmDateTime||null;if(target&&!g.alarmFired&&new Date(target)<=now){g.alarmFired=true;changed=true;showToast(`${t('alarm_triggered')}: ${g.name}`);}});if(changed)saveState();}
+function updateGoalCountdowns(){document.querySelectorAll('.goal-countdown').forEach(el=>{const cd=formatCountdown(el.dataset.target);if(!cd)return;el.querySelector('.cd-d').textContent=localizeNum(cd.d);el.querySelector('.cd-h').textContent=localizeNum(cd.h);el.querySelector('.cd-m').textContent=localizeNum(cd.m);el.querySelector('.cd-s').textContent=localizeNum(cd.s);});}
+function openGoalModal(id){const isEdit=!!id,g=isEdit?findGoal(id):null;openModal(`<h3>${isEdit?t('edit'):t('new_goal')}</h3><div class="field"><label>${t('goal_name')}</label><input id="f_gname" value="${esc(g?.name||'')}"></div><div class="field"><label>${t('desc_f')}</label><textarea id="f_gdesc">${esc(g?.description||'')}</textarea></div><div class="field-row"><div class="field"><label>${t('goal_start')}</label><input type="date" id="f_gstart" value="${g?.startDate||todayISO()}"></div><div class="field"><label>${t('goal_deadline')}</label><input type="date" id="f_gdeadline" value="${g?.deadline||''}"></div></div><div class="field-row"><div class="field"><label>${t('category_f')}</label><input id="f_gcat" value="${esc(g?.category||'')}"></div><div class="field"><label>${t('goal_importance')}</label><select id="f_gimportance">${['low','medium','high','critical'].map(l=>`<option value="${l}" ${g?.importance===l?'selected':''}>${t(l)}</option>`).join('')}</select></div></div><div class="field"><label>Tab</label><select id="f_gtab">${STATE.goalTabs.map(x=>`<option value="${x.id}" ${(g?.tabId||GOAL_TAB_ID)===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div><div class="field"><label>${t('folders')}</label><select id="f_gfolder"><option value="">—</option>${STATE.goalFolders.filter(f=>f.tabId===GOAL_TAB_ID).map(x=>`<option value="${x.id}" ${g?.folderId===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div><div class="field"><label>${t('alarm_time')}</label><input type="datetime-local" id="f_galarm" value="${g?.alarmDateTime||''}"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveGoalModal('${id||''}')">${t('save')}</button></div>`);}
+function saveGoalModal(id){const name=document.getElementById('f_gname').value.trim();if(!name)return;let g=id?findGoal(id):null;const isNew=!g;if(!g){g={id:uid(),status:'notdone',lists:[]};STATE.goals.push(g);}g.name=name;g.description=document.getElementById('f_gdesc').value;g.startDate=document.getElementById('f_gstart').value;g.deadline=document.getElementById('f_gdeadline').value;g.category=document.getElementById('f_gcat').value;g.importance=document.getElementById('f_gimportance').value;g.tabId=document.getElementById('f_gtab').value;g.folderId=document.getElementById('f_gfolder').value||null;const na=document.getElementById('f_galarm').value;if(na!==g.alarmDateTime)g.alarmFired=false;g.alarmDateTime=na;if(isNew)OPEN_GOAL_ID=g.id;saveState();closeModal();showToast(t('save_success'));renderPage();renderHeader();}
 /* ============ QUIZ PAGE ============ */
 let QUIZ_SESSION = null; // {questions:[], index:0, answers:[], selected:null}
+let QUIZ_VIEW = 'home'; // 'home' | 'list'
 
+function getQuizBank(){
+  if(!STATE.quizBank){
+    STATE.quizBank = JSON.parse(JSON.stringify(QUIZ_BANK));
+    saveState();
+  }
+  return STATE.quizBank;
+}
 function pageQuiz(){
   if(QUIZ_SESSION && !QUIZ_SESSION.finished) return renderQuizQuestion();
   if(QUIZ_SESSION && QUIZ_SESSION.finished) return renderQuizResult(QUIZ_SESSION.result);
+  if(QUIZ_VIEW==='list') return renderQuizList();
+  const bank = getQuizBank();
   return `
   <h1 class="pagetitle">${t('quiz_title')}</h1>
   <div class="pagesub">${t('quiz_sub')}</div>
   <div class="card">
     <div class="sectiontitle">${t('category_breakdown')}</div>
     <div class="grid cols-3">
-      ${CATS.map(c=>`<div class="summary-card"><div class="sicon">📌</div><div class="sv" style="font-size:14px;">${CAT_LABELS[c][STATE.lang]||CAT_LABELS[c].fa}</div><div class="sl">${QUIZ_BANK.filter(q=>q.category===c).length} ${t('quiz_progress')==='Question'?'Qs':'سؤال'}</div></div>`).join('')}
+      ${CATS.map(c=>`<div class="summary-card"><div class="sicon">📌</div><div class="sv" style="font-size:14px;">${CAT_LABELS[c][STATE.lang]||CAT_LABELS[c].fa}</div><div class="sl">${bank.filter(q=>q.category===c).length}</div></div>`).join('')}
     </div>
-    <button class="btn primary" style="margin-top:16px;" onclick="startQuiz()">${t('start_quiz')} (100)</button>
+    <div style="display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;">
+      <button class="btn primary" onclick="startQuiz()">${t('start_quiz')} (${bank.length})</button>
+      <button class="btn ghost" onclick="QUIZ_VIEW='list'; renderPage();">📋 ${t('question_list')}</button>
+    </div>
   </div>
   ${STATE.quizResults.length? `
   <div class="card">
-    <div class="sectiontitle">${t('past_reviews')||''} ${t('quiz_result')}</div>
-    ${STATE.quizResults.slice().reverse().slice(0,5).map(r=>`
-      <div class="item-row"><div class="irow-top"><div class="ititle">${r.date}</div><div class="badge gold">${localizeNum(r.scorePct)}%</div></div>
-      <div class="idesc">${scoreLabel(r.scorePct)}</div></div>`).join('')}
+    <div class="sectiontitle">${t('quiz_result')}</div>
+    ${STATE.quizResults.slice().reverse().slice(0,8).map(r=>`
+      <div class="item-row"><div class="irow-top">
+        <div><div class="ititle">${r.date}</div><div class="idesc">${scoreLabel(r.scorePct)}</div></div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div class="badge gold">${localizeNum(r.scorePct)}%</div>
+          <button class="btn sm danger" onclick="deleteQuizResult('${r.id}')">✕</button>
+        </div>
+      </div></div>`).join('')}
   </div>`:''}
   `;
 }
+function deleteQuizResult(id){
+  confirmDelete(()=>{
+    STATE.quizResults = STATE.quizResults.filter(r=>r.id!==id);
+    saveState(); showToast(t('deleted')); renderPage(); renderHeader();
+  });
+}
+function renderQuizList(){
+  const bank = getQuizBank();
+  return `
+  <h1 class="pagetitle">${t('question_list')}</h1>
+  <button class="btn ghost" style="margin-bottom:12px;" onclick="QUIZ_VIEW='home'; renderPage();">← ${t('back')}</button>
+  ${bank.map((q,idx)=>`
+    <div class="item-row">
+      <div class="irow-top">
+        <div style="flex:1;">
+          <span class="badge gold">${CAT_LABELS[q.category][STATE.lang]||CAT_LABELS[q.category].fa}</span>
+          <div class="ititle" style="margin-top:6px;">${localizeNum(idx+1)}. ${esc(q.question)}</div>
+        </div>
+        <div class="item-actions"><button class="btn sm ghost" onclick="editQuizQuestion('${q.id}')">✎</button></div>
+      </div>
+    </div>`).join('')}
+  `;
+}
+function editQuizQuestion(qid){
+  const bank = getQuizBank();
+  const q = bank.find(x=>x.id===qid); if(!q) return;
+  openModal(`
+    <h3>${t('edit_question')}</h3>
+    <div class="field"><label>${t('title_f')}</label><textarea id="f_qtext">${esc(q.question)}</textarea></div>
+    ${q.options.map((opt,i)=>`<div class="field"><label>${t('option_f')} ${localizeNum(i+1)}</label><input id="f_qopt${i}" value="${esc(opt)}"></div>`).join('')}
+    <div class="field"><label>${t('correct_answer_f')}</label><select id="f_qcorrect">
+      ${q.options.map((opt,i)=>`<option value="${i}" ${q.correct===i?'selected':''}>${localizeNum(i+1)}. ${esc(opt).slice(0,30)}</option>`).join('')}
+    </select></div>
+    <div class="field"><label>${t('explanation_f')}</label><textarea id="f_qexp">${esc(q.explanation)}</textarea></div>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal()">${t('cancel')}</button>
+      <button class="btn primary" onclick="saveQuizQuestionEdit('${qid}')">${t('save')}</button>
+    </div>`);
+}
+function saveQuizQuestionEdit(qid){
+  const bank = getQuizBank();
+  const q = bank.find(x=>x.id===qid); if(!q) return;
+  q.question = document.getElementById('f_qtext').value;
+  q.options = q.options.map((opt,i)=>document.getElementById('f_qopt'+i).value);
+  q.correct = Number(document.getElementById('f_qcorrect').value);
+  q.explanation = document.getElementById('f_qexp').value;
+  saveState(); closeModal(); showToast(t('save_success')); renderPage();
+}
 function startQuiz(){
-  const shuffled = QUIZ_BANK.slice().sort(()=>Math.random()-0.5);
+  const bank = getQuizBank();
+  const shuffled = bank.slice().sort(()=>Math.random()-0.5);
   QUIZ_SESSION = {questions:shuffled, index:0, answers:[], finished:false, selected:null};
   renderPage();
 }
@@ -1626,7 +1998,7 @@ function finishQuiz(){
   });
   let weakCat = null, weakVal = 101;
   Object.keys(byCat).forEach(c=>{ if(byCat[c]!==null && byCat[c]<weakVal){ weakVal=byCat[c]; weakCat=c; } });
-  const result = {scorePct, byCat, weakCat, weakVal, date:todayISO()};
+  const result = {id:uid(), scorePct, byCat, weakCat, weakVal, date:todayISO()};
   STATE.quizResults.push(result);
   saveState();
   QUIZ_SESSION.finished = true;
@@ -1684,8 +2056,6 @@ function pageSettings(){
   const tabs = [
     {k:'profile', l:t('about_me')},
     {k:'rules', l:t('myrules_title')},
-    {k:'gratitude', l:t('gratitude_title')},
-    {k:'weekly', l:t('weekly_review')},
     {k:'contact', l:t('contact_us')},
     {k:'prefs', l:t('language')+' / '+t('theme')}
   ];
@@ -1698,8 +2068,6 @@ function pageSettings(){
 function renderSettingsTab(){
   if(SETTINGS_TAB==='profile') return settingsProfile();
   if(SETTINGS_TAB==='rules') return settingsRules();
-  if(SETTINGS_TAB==='gratitude') return settingsGratitude();
-  if(SETTINGS_TAB==='weekly') return settingsWeekly();
   if(SETTINGS_TAB==='contact') return settingsContact();
   if(SETTINGS_TAB==='prefs') return settingsPrefs();
   return '';
@@ -1871,8 +2239,69 @@ function settingsPrefs(){
       <button class="btn ${STATE.theme==='dark'?'primary':''}" onclick="setTheme('dark')">${t('theme_dark')}</button>
       <button class="btn ${STATE.theme==='light'?'primary':''}" onclick="setTheme('light')">${t('theme_light')}</button>
     </div>
+  </div>
+  <div class="card">
+    <div class="sectiontitle">${t('header_date_settings')}</div>
+    <div class="smallnote" style="margin-bottom:10px;">مواردی را که می‌خواهی در هدر صفحه دیده شود فعال یا غیرفعال کن.</div>
+    <div class="goal-action-grid">${[['afghan','date_afghan'],['iran','date_iran'],['gregorian','date_gregorian'],['hijri','date_hijri'],['clock','header_clock'],['message','header_message']].map(([k,l])=>`<label style="display:flex;align-items:center;gap:8px;padding:10px;border:1px solid var(--border);border-radius:10px;cursor:pointer;"><input type="checkbox" ${STATE.headerItems[k]?'checked':''} onchange="toggleHeaderItem('${k}',this.checked)"><span>${t(l)}</span></label>`).join('')}</div>
+  </div>
+  <div class="card">
+    <div class="sectiontitle">💬 مدیریت پیام‌های هدر</div>
+    <div class="smallnote" style="margin-bottom:10px;">چند پیام بساز؛ برنامه آن‌ها را به‌صورت تصادفی در هدر نمایش می‌دهد.</div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px;">
+      <label class="smallnote">فاصله تغییر پیام (دقیقه): <input class="input" type="number" min="1" max="1440" value="${STATE.headerMessageInterval||5}" onchange="setHeaderMessageInterval(this.value)" style="width:90px;display:inline-block;margin-inline-start:6px;"></label>
+      <button class="btn primary sm" onclick="addHeaderMessage()">＋ افزودن پیام</button>
+    </div>
+    <div>${(STATE.headerMessages||[]).map((m,i)=>`<div class="card" style="padding:10px;margin:8px 0;display:flex;gap:8px;align-items:center;">
+      <input class="input" value="${esc(m.text)}" onchange="editHeaderMessage('${m.id}',this.value)" style="flex:1;">
+      <button class="btn sm ghost" onclick="deleteHeaderMessage('${m.id}')">🗑️</button>
+    </div>`).join('')}</div>
+  </div>
+  <div class="card">
+    <div class="sectiontitle">${t('backup_restore')}</div>
+    <div class="smallnote" style="margin-bottom:10px;">${t('backup_warning')}</div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button class="btn primary" onclick="exportBackup()">⬇️ ${t('backup_download')}</button>
+      <button class="btn" onclick="document.getElementById('restoreFileInput').click()">⬆️ ${t('backup_upload')}</button>
+      <input type="file" id="restoreFileInput" accept="application/json" style="display:none" onchange="importBackupFile(this)">
+    </div>
   </div>`;
 }
+function exportBackup(){
+  const dataStr = JSON.stringify(STATE, null, 2);
+  const blob = new Blob([dataStr], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'zmqm-backup-'+todayISO()+'.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast(t('save_success'));
+}
+function importBackupFile(input){
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    try{
+      const parsed = JSON.parse(e.target.result);
+      STATE = Object.assign(defaultState(), parsed);
+      normalizeState();
+      saveState();
+      OPEN_GOAL_ID = null; QUIZ_SESSION=null; QUIZ_VIEW='home'; PERF_ARCHIVE_VIEW=false;
+      document.documentElement.setAttribute('data-theme', STATE.theme);
+      applyLangDir(); renderNav(); renderHeader(); renderPage();
+      showToast(t('save_success'));
+    }catch(err){ showToast('Error: invalid file'); }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+function toggleHeaderItem(key,val){STATE.headerItems[key]=!!val;saveState();renderHeader();renderPage();}
+function setHeaderMessageInterval(v){STATE.headerMessageInterval=Math.max(1,Math.min(1440,Number(v)||5));saveState();startHeaderMessageTimer();}
+function addHeaderMessage(){STATE.headerMessages.push({id:uid(),text:'پیام جدید برای هدر'});STATE.activeHeaderMessageIndex=Math.floor(Math.random()*STATE.headerMessages.length);saveState();renderPage();renderHeader();}
+function editHeaderMessage(id,text){const m=STATE.headerMessages.find(x=>x.id===id);if(m&&String(text).trim()){m.text=String(text).trim();saveState();renderHeader();}}
+function deleteHeaderMessage(id){if(STATE.headerMessages.length<=1){showToast('حداقل یک پیام نگه داشته شود');return;}STATE.headerMessages=STATE.headerMessages.filter(x=>x.id!==id);STATE.activeHeaderMessageIndex%=STATE.headerMessages.length;saveState();renderPage();renderHeader();}
+function rotateHeaderMessage(){if(!STATE.headerMessages?.length)return;let next=Math.floor(Math.random()*STATE.headerMessages.length);if(STATE.headerMessages.length>1&&next===STATE.activeHeaderMessageIndex)next=(next+1)%STATE.headerMessages.length;STATE.activeHeaderMessageIndex=next;saveState();if(STATE.headerItems.message)renderHeader();}
+let HEADER_MESSAGE_TIMER=null;function startHeaderMessageTimer(){if(HEADER_MESSAGE_TIMER)clearInterval(HEADER_MESSAGE_TIMER);HEADER_MESSAGE_TIMER=setInterval(rotateHeaderMessage,Math.max(1,Number(STATE.headerMessageInterval)||5)*60000);}
 function setLang(l){ STATE.lang=l; saveState(); applyLangDir(); renderNav(); renderHeader(); renderPage(); }
 function setTheme(th){ STATE.theme=th; document.documentElement.setAttribute('data-theme', th); saveState(); renderPage(); }
 
@@ -1887,64 +2316,18 @@ function chartDefaults(){
 }
 function renderCharts(){
   destroyCharts();
-  const lineEl = document.getElementById('chartLine');
+  const lineEl=document.getElementById('chartLine');
   if(lineEl){
-    // build last 14 days perf trend from checklist items with _date
-    const labels=[]; const data=[];
-    for(let i=13;i>=0;i--){
-      const d = new Date(); d.setDate(d.getDate()-i);
-      const iso = d.toISOString().slice(0,10);
-      labels.push(STATE.lang==='en'? (d.getMonth()+1)+'/'+d.getDate() : faDigits((d.getMonth()+1)+'/'+d.getDate()));
-      const items = allChecklistItems().filter(it=> it._date && it._date.slice(0,10)===iso);
-      let pct=0;
-      if(items.length){ let tw=0,dw=0; items.forEach(c=>{const w=c.score||1; tw+=w; if(c.done) dw+=w;}); pct= tw?Math.round((dw/tw)*100):0; }
-      data.push(pct);
-    }
-    charts.line = new Chart(lineEl, {type:'line', data:{labels, datasets:[{label:t('daily'), data, borderColor:CHART_COLORS.gold, backgroundColor:'rgba(201,162,39,.15)', fill:true, tension:.35, pointRadius:2}]},
-      options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{ticks:{color:CHART_COLORS.text},grid:{color:CHART_COLORS.grid}}, y:{min:0,max:100,ticks:{color:CHART_COLORS.text},grid:{color:CHART_COLORS.grid}}}}});
+    const labels=[],data=[];
+    for(let i=59;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const iso=d.toISOString().slice(0,10);labels.push(STATE.lang==='en'?(d.getMonth()+1)+'/'+d.getDate():faDigits((d.getMonth()+1)+'/'+d.getDate()));const items=allChecklistItems().filter(it=>it._date&&it._date.slice(0,10)===iso);let pct=0;if(items.length){let tw=0,dw=0;items.forEach(c=>{const w=c.score||1;tw+=w;if(c.done)dw+=w;});pct=tw?Math.round(dw/tw*100):0;}data.push(pct);}
+    charts.line=new Chart(lineEl,{type:'line',data:{labels,datasets:[{label:t('daily'),data,borderColor:CHART_COLORS.gold,backgroundColor:'rgba(201,162,39,.15)',fill:true,tension:.35,pointRadius:3,pointHoverRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>`${ctx.parsed.y}%`}}},scales:{x:{ticks:{color:CHART_COLORS.text,maxRotation:0,autoSkip:false},grid:{color:CHART_COLORS.grid}},y:{min:0,max:100,ticks:{color:CHART_COLORS.text,callback:v=>v+'%'},grid:{color:CHART_COLORS.grid}}}}});
   }
-  const donutEl = document.getElementById('chartDonut');
-  if(donutEl){
-    const items = allChecklistItems();
-    const done = items.filter(i=>i.done).length;
-    const total = items.length;
-    const notdone = total-done;
-    charts.donut = new Chart(donutEl, {type:'doughnut', data:{labels:[t('done'), t('notdone')], datasets:[{data:[done, notdone], backgroundColor:[CHART_COLORS.green, CHART_COLORS.red], borderWidth:0}]},
-      options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{color:CHART_COLORS.text}}}}});
-  }
-  const barEl = document.getElementById('chartBar');
-  if(barEl){
-    const labels=[t('challenges'), t('opportunities'), t('threats'), t('goals_title')];
-    const data=[STATE.challenges.length, STATE.opportunities.length, STATE.threats.length, STATE.goals.length];
-    charts.bar = new Chart(barEl, {type:'bar', data:{labels, datasets:[{data, backgroundColor:[CHART_COLORS.red, CHART_COLORS.green, CHART_COLORS.blue, CHART_COLORS.gold]}]},
-      options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{ticks:{color:CHART_COLORS.text},grid:{display:false}}, y:{ticks:{color:CHART_COLORS.text},grid:{color:CHART_COLORS.grid}}}}});
-  }
-  const wfEl = document.getElementById('chartWaterfall');
-  if(wfEl){
-    const startScore = 50;
-    const habitsBonus = Math.round(checklistProgress(STATE.development.flatMap(d=>d.checklist||[]))/10);
-    const oppsBonus = Math.round(countActive(STATE.opportunities.filter(o=>o.status==='done'))*2 + STATE.opportunities.filter(o=>o.status==='done').length*2);
-    const goalsBonus = Math.round(goalsProgressPct()/5);
-    const threatsMalus = -Math.round(STATE.threats.filter(th=>riskLevelFromScore(riskScore(th))==='high'||riskLevelFromScore(riskScore(th))==='critical').length*3);
-    const overdueMalus = -Math.round(allChecklistItems().filter(i=>isOverdue(i._date,i.done)).length*2);
-    const steps = [
-      {l:t('score_f')+' 0', v:startScore},
-      {l:t('development'), v:habitsBonus},
-      {l:t('opportunities'), v:oppsBonus},
-      {l:t('goals_title'), v:goalsBonus},
-      {l:t('threats'), v:threatsMalus},
-      {l:t('filter_overdue'), v:overdueMalus}
-    ];
-    let running=0; const floatData=[]; const labels=[]; const colors=[];
-    steps.forEach(s=>{
-      const from=running; running+=s.v; labels.push(s.l);
-      floatData.push([Math.min(from,running), Math.max(from,running)]);
-      colors.push(s.v>=0?CHART_COLORS.green:CHART_COLORS.red);
-    });
-    labels.push(t('overall_score')); floatData.push([0,Math.max(0,running)]); colors.push(CHART_COLORS.gold);
-    charts.waterfall = new Chart(wfEl, {type:'bar', data:{labels, datasets:[{data:floatData, backgroundColor:colors}]},
-      options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{ticks:{color:CHART_COLORS.text, font:{size:9}},grid:{display:false}}, y:{ticks:{color:CHART_COLORS.text},grid:{color:CHART_COLORS.grid}}}}});
-  }
+  function makeGauge(id,pct,label,isFinancial=false){const el=document.getElementById(id);if(!el)return;const v=Math.max(0,Math.min(100,pct));const plugin={id:id+'needle',afterDraw(chart){const ctx=chart.ctx,area=chart.chartArea,cx=(area.left+area.right)/2,cy=(area.top+area.bottom)/2+12,r=Math.min(area.right-area.left,area.bottom-area.top)*.42;const angle=Math.PI+Math.PI*v/100;ctx.save();ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(angle)*r,cy+Math.sin(angle)*r);ctx.lineWidth=4;ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--text');ctx.stroke();ctx.beginPath();ctx.arc(cx,cy,6,0,Math.PI*2);ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text');ctx.fill();ctx.textAlign='center';ctx.font='800 28px Vazirmatn';ctx.fillText((isFinancial?Math.round(v):Math.round(v))+'%',cx,cy+35);ctx.font='600 11px Vazirmatn';ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-dim');ctx.fillText(label,cx,cy+53);ctx.restore();}};const seg=isFinancial?Array.from({length:25},()=>4):[25,25,25,25];const colors=isFinancial?financialGaugeColors():[CHART_COLORS.red,'#D98F82','#8BC5A6',CHART_COLORS.green];return new Chart(el,{type:'doughnut',plugins:[plugin],data:{datasets:[{data:seg,backgroundColor:colors,borderWidth:isFinancial?2:0,borderColor:getComputedStyle(document.documentElement).getPropertyValue('--surface')}]},options:{responsive:true,maintainAspectRatio:false,rotation:-90,circumference:180,cutout:'72%',plugins:{legend:{display:false},tooltip:{enabled:false}}}});}
+  charts.goalGauge=makeGauge('chartGoalGauge',goalsProgressPct(),t('goals_pct'));
+  charts.perfGauge=makeGauge('chartPerfGauge',todayPerf(),t('today_perf'));
+  const financialPct=financialProgressPct();
+  charts.financialGauge=makeGauge('chartFinancialGauge',financialPct,t('financial_levels'),true);
+  const donutEl=document.getElementById('chartDonut');if(donutEl){const items=allChecklistItems(),done=items.filter(i=>i.done).length,total=items.length;charts.donut=new Chart(donutEl,{type:'doughnut',data:{labels:[t('done'),t('notdone')],datasets:[{data:[done,total-done],backgroundColor:[CHART_COLORS.green,CHART_COLORS.red],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CHART_COLORS.text}}}}});}
 }
 function afterRender(){
   if(CURRENT_PAGE==='dashboard'){ renderCharts(); }
@@ -1958,9 +2341,13 @@ function init(){
   renderHeader();
   renderPage();
   setInterval(()=>{ renderHeader(); }, 60000);
+  startHeaderMessageTimer();
   setInterval(()=>{ if(CURRENT_PAGE==='dashboard') { renderPage(); } }, 300000);
 }
 init();
+
+window.addEventListener('resize', updateTopHeaderHeight);
+window.addEventListener('load', updateTopHeaderHeight);
 </script>
 </body>
 </html>
