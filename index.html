@@ -101,10 +101,10 @@ main{flex:1; padding:18px 20px 90px; max-width:1400px; width:100%; margin:0 auto
   .grid.cols-3{grid-template-columns:repeat(3,1fr);}
   .grid.cols-4{grid-template-columns:repeat(4,1fr);}
 }
-.summary-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:14px;}
-.summary-card .sv{font-size:22px; font-weight:800;}
-.summary-card .sl{font-size:12px; color:var(--text-dim); margin-top:4px;}
-.summary-card .sicon{font-size:18px; opacity:.7; margin-bottom:6px;}
+.summary-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:14px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:78px;}
+.summary-card .sv{font-size:22px; font-weight:800; line-height:1.2; text-align:center; width:100%;}
+.summary-card .sl{font-size:12px; color:var(--text-dim); margin-top:4px; text-align:center; width:100%;}
+.summary-card .sicon{font-size:18px; opacity:.7; margin-bottom:6px; text-align:center; line-height:1;}
 .dashboard-summary-section{margin-top:10px;}
 .dashboard-summary-title{font-size:15px;font-weight:800;margin-bottom:8px;}
 .dashboard-summary-section .dashboard-summary-row{margin-top:0;}
@@ -182,7 +182,8 @@ h1.pagetitle{font-size:20px; font-weight:800; margin-bottom:4px;}
 .chk-progress{height:6px; background:var(--border); border-radius:4px; overflow:hidden; margin-top:8px;}
 .chk-progress > div{height:100%; background:var(--green);}
 
-.checklist-mini{margin-top:10px; border-top:1px dashed var(--border); padding-top:8px;}
+ .checklist-mini{margin-top:10px; border-top:1px dashed var(--border); padding-top:8px;}
+.cl-number{min-width:22px; width:22px; text-align:center; font-weight:700; color:var(--text-dim); flex:0 0 22px;}
 .cl-item{display:flex; align-items:center; gap:8px; padding:5px 0; font-size:13px;}
 .cl-item input[type=checkbox]{width:16px; height:16px; accent-color:var(--green);}
 .cl-item.done .cltext{text-decoration:line-through; color:var(--text-faint);}
@@ -225,6 +226,8 @@ h1.pagetitle{font-size:20px; font-weight:800; margin-bottom:4px;}
 .chart-scroll-inner{min-width:1100px; height:260px; position:relative;}
 .gauge-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .gauge-wrap{height:230px;position:relative;}
+.gauge-card{display:flex;flex-direction:column;justify-content:center;align-items:stretch;}
+.gauge-card .gauge-wrap{width:100%;}
 .goal-tools{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
 .goal-tabbar-wrap{position:sticky;top:var(--topheader-height,0px);z-index:15;background:var(--bg);padding:4px 0 0;border-bottom:1px solid var(--border);margin-bottom:12px;}
 .goal-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:7px;margin:0;position:static !important;top:auto !important;z-index:auto !important;scrollbar-width:none;}
@@ -237,6 +240,13 @@ h1.pagetitle{font-size:20px; font-weight:800; margin-bottom:4px;}
 .fin-level.closed .fin-level-body{display:none;}
 .fin-level-toggle{border:0;background:transparent;color:var(--text);cursor:pointer;font:inherit;text-align:start;display:flex;align-items:center;gap:7px;padding:0;}
 .fin-check-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.fin-check-row{min-width:0;}
+.fin-check-title{flex:1 1 auto;min-width:0;overflow:hidden;}
+.fin-check-title .badge{white-space:nowrap;display:inline-flex;align-items:center;vertical-align:middle;font-size:10px;padding:3px 6px;line-height:1.2;}
+.fin-check-row > .badge,.fin-check-row > span:not(.fin-check-title):not(.fin-check-actions){white-space:nowrap;flex:0 0 auto;font-size:11px;}
+.fin-check-actions{flex:0 0 auto;white-space:nowrap;}
+@media(max-width:560px){.fin-check-row{gap:4px;font-size:10.5px;padding:6px 0}.fin-check-title .badge{font-size:9px;padding:2px 4px}.fin-check-row > .badge,.fin-check-row > span:not(.fin-check-title):not(.fin-check-actions){font-size:10px}.fin-check-actions .action-gear{font-size:11px;padding:3px 4px}}
+@media(max-width:390px){.fin-check-row{gap:3px;font-size:9.5px}.fin-check-title .badge{font-size:8px;padding:2px 3px}.fin-check-row > .badge,.fin-check-row > span:not(.fin-check-title):not(.fin-check-actions){font-size:9px}.fin-check-actions .action-gear{font-size:10px;padding:2px 3px}}
 .fin-check-row:last-child{border-bottom:0;}
 .fin-check-title{flex:1;min-width:0;}
 .fin-check-actions .action-gear{font-size:13px;}
@@ -248,6 +258,8 @@ h1.pagetitle{font-size:20px; font-weight:800; margin-bottom:4px;}
 
 .progressbar-lg{height:16px; background:var(--border); border-radius:999px; overflow:hidden; margin:10px 0;}
 .progressbar-lg > div{height:100%; background:linear-gradient(90deg,var(--gold-dim),var(--gold));}
+.financial-milestone-card{overflow:hidden}.financial-milestone{padding:8px 4px 4px}.financial-milestone-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}.financial-milestone-title{font-weight:800;font-size:15px}.financial-milestone-current{font-size:12px;color:var(--text-dim)}.milestone-scroll{overflow-x:auto;overflow-y:hidden;padding:4px 2px 10px;-webkit-overflow-scrolling:touch}.milestone-track{position:relative;min-width:900px;height:86px;direction:ltr}.milestone-line{position:absolute;left:12px;right:12px;top:20px;height:6px;background:var(--border);border-radius:999px}.milestone-fill{position:absolute;left:12px;top:20px;height:6px;background:linear-gradient(90deg,var(--gold-dim),var(--gold));border-radius:999px}.milestone-points{direction:ltr;position:absolute;left:12px;right:12px;top:0;height:86px;display:flex;justify-content:space-between;align-items:flex-start}.milestone-point{width:30px;display:flex;flex-direction:column;align-items:center;cursor:pointer;position:relative}.milestone-dot{width:18px;height:18px;border-radius:50%;background:var(--surface2);border:3px solid var(--border);box-sizing:border-box;position:relative;z-index:2}.milestone-point.reached .milestone-dot{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.14)}.milestone-point.current .milestone-dot{transform:scale(1.18);box-shadow:0 0 0 4px rgba(201,162,39,.22)}.milestone-label{margin-top:8px;font-size:10px;color:var(--text-dim);white-space:nowrap;text-align:center}.milestone-point.reached .milestone-label,.milestone-point.current .milestone-label{color:var(--text);font-weight:800}.milestone-value{font-size:9px;color:var(--text-dim);margin-top:2px;white-space:nowrap}.milestone-legend{display:flex;justify-content:space-between;gap:8px;margin-top:2px;font-size:11px;color:var(--text-dim)}@media(max-width:600px){.milestone-track{min-width:820px}}
+
 
 .rule-row{display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
 .rule-row .rn{width:22px; height:22px; border-radius:50%; background:var(--surface2); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:var(--gold); flex-shrink:0;}
@@ -272,7 +284,11 @@ h1.pagetitle{font-size:20px; font-weight:800; margin-bottom:4px;}
 .folder-toggle{display:flex; align-items:center; gap:6px;}
 .item-row[draggable="true"]{cursor:grab;}
 .item-row.drag-over{border-color:var(--gold); border-style:dashed;}
-.goal-accordion-header{cursor:pointer; display:flex; align-items:center; justify-content:space-between;}
+.goal-note-editor{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--surface2);}.goal-note-toolbar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:7px;border-bottom:1px solid var(--border);background:var(--surface);}.goal-note-toolbar .btn{min-width:34px;padding:6px 9px;font-size:12px;}.goal-note-toolbar .goal-color{width:34px;height:32px;padding:2px;border:1px solid var(--border);border-radius:7px;background:var(--surface2);cursor:pointer;}.goal-note-content{min-height:110px;padding:10px 12px;outline:none;line-height:1.8;font-size:14px;word-break:break-word;overflow-wrap:anywhere;text-align:start;}.goal-note-content:empty:before{content:'یادداشت هدف را اینجا بنویسید...';color:var(--text-faint);}.goal-card-note{font-size:13px;line-height:1.8;color:var(--text-dim);margin-top:5px;max-width:100%;font-weight:400;word-break:break-word;overflow-wrap:anywhere;}.goal-card-note p,.goal-card-note div{margin:0 0 4px;}.goal-card-note p:last-child,.goal-card-note div:last-child{margin-bottom:0;}
+
+.rich-toolbar{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0}.rich-toolbar button{min-width:34px;height:32px;padding:4px 8px;border:1px solid var(--border);background:var(--surface2);color:var(--text);border-radius:6px}.rich-editor{min-height:90px;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--text);outline:none;line-height:1.9;white-space:pre-wrap;overflow-wrap:anywhere}.rich-editor:focus{border-color:var(--gold)}.perf-rich-desc{font-size:12.5px;color:var(--text-dim);line-height:1.8;margin-top:4px;overflow-wrap:anywhere;word-break:break-word}.perf-rich-note{font-size:12px;color:var(--text-dim);line-height:1.8;margin-top:6px;padding:6px 8px;border-inline-start:2px solid var(--gold-dim);overflow-wrap:anywhere;word-break:break-word}.perf-date-box{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.cl-completed-date{font-size:10px;color:var(--text-faint);margin-inline-start:4px}..goal-accordion-header{cursor:pointer; display:flex; align-items:center; justify-content:space-between;}
+.goal-accordion-header .idesc{font-size:12px;line-height:1.8;color:var(--text-dim);margin-top:5px;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;max-width:100%;font-weight:400;}
+.goal-accordion-header .ititle{line-height:1.5;overflow-wrap:anywhere;word-break:break-word;}
 .goal-collapsed .goal-body{display:none;}
 .countdown-box{display:flex; gap:6px; margin-top:8px;}
 .countdown-box .cbox{background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:6px 10px; text-align:center; min-width:46px;}
@@ -358,10 +374,10 @@ fa:{
   checklist:'چک‌لیست', add_item:'افزودن مورد', empty_generic:'هنوز موردی ثبت نشده است.',
   goals_title:'اهداف', goals_sub:'مدیریت اهداف بلندمدت و پیشرفت واقعی',
   new_goal:'هدف جدید', goal_name:'نام هدف', goal_deadline:'ضرب‌الاجل', goal_start:'تاریخ شروع', goal_importance:'اهمیت',
-  goal_progress:'درصد پیشرفت', new_list:'لیست جدید', list_name:'نام لیست',
+  goal_progress:'درصد پیشرفت', goal_end:'تاریخ ختم', goal_duration:'فاصله زمانی', goal_days:'روز', alarm_text:'هشدار متنی', new_list:'لیست جدید', list_name:'نام لیست',
   quiz_title:'آزمون‌ها', quiz_sub:'۱۰۰ سؤال چهارگزینه‌ای برای سنجش تفکر و تصمیم‌گیری',
   start_quiz:'شروع آزمون', quiz_progress:'سؤال', of_word:'از', next:'بعدی', finish:'پایان آزمون',
-  quiz_result:'نتیجه آزمون', category_breakdown:'تفکیک بر اساس حوزه', weak_area:'ضعف اصلی فعلی',
+  quiz_result:'نتیجه آزمون', category_breakdown:'تفکیک بر اساس حوزه', weak_area:'ضعف اصلی فعلی', quiz_settings:'تنظیمات آزمون', edit_category:'ویرایش دسته‌بندی', delete_category:'حذف دسته‌بندی', move_category:'جابجایی دسته‌بندی', new_quiz_folder:'پوشه جدید آزمون', edit_quiz_folder:'ویرایش پوشه آزمون', delete_quiz_folder:'حذف پوشه آزمون', archive_quiz:'آرشیو آزمون', archived_quizzes:'آزمون‌های آرشیو شده', restore_quiz:'بازگردانی آزمون', quiz_folders:'پوشه‌های آزمون', export_quiz:'اکسپورت آزمون', import_quiz:'ایمپورت آزمون', instant_feedback:'نمایش پاسخ بلافاصله', timer_enabled:'زمان معکوس برای هر سؤال', auto_skip:'رد کردن خودکار سؤال بدون پاسخ', time_per_question:'زمان هر سؤال (ثانیه)', active_quizzes:'آزمون‌های فعال', archived:'آرشیو شده',
   suggested_checklist:'چک‌لیست پیشنهادی', add_to_dev:'افزودن به توسعه',
   need_review:'نیازمند بازنگری', weak:'ضعیف', mediumres:'متوسط', good:'خوب', vgood:'بسیار خوب', excellent:'عالی',
   settings_title:'تنظیمات', section_name_f:'نام بخش', add_section:'افزودن بخش', about_me:'درباره من', name_f:'نام', age_f:'سن', bio_f:'توضیح کوتاه', mygoals_f:'اهداف',
@@ -422,10 +438,10 @@ en:{
   checklist:'Checklist', add_item:'Add Item', empty_generic:'Nothing here yet.',
   goals_title:'Goals', goals_sub:'Manage long-term goals with real progress',
   new_goal:'New Goal', goal_name:'Goal Name', goal_deadline:'Deadline', goal_start:'Start Date', goal_importance:'Importance',
-  goal_progress:'Progress %', new_list:'New List', list_name:'List Name',
+  goal_progress:'Progress %', goal_end:'End Date', goal_duration:'Duration', goal_days:'days', alarm_text:'Alarm Text', new_list:'New List', list_name:'List Name',
   quiz_title:'Quiz', quiz_sub:'100 multiple-choice questions to test thinking and decisions',
   start_quiz:'Start Quiz', quiz_progress:'Question', of_word:'of', next:'Next', finish:'Finish Quiz',
-  quiz_result:'Quiz Result', category_breakdown:'Category Breakdown', weak_area:'Current Weak Area',
+  quiz_result:'Quiz Result', category_breakdown:'Category Breakdown', weak_area:'Current Weak Area', quiz_settings:'Quiz Settings', edit_category:'Edit Category', delete_category:'Delete Category', move_category:'Move Category', new_quiz_folder:'New Quiz Folder', edit_quiz_folder:'Edit Quiz Folder', delete_quiz_folder:'Delete Quiz Folder', archive_quiz:'Archive Quiz', archived_quizzes:'Archived Quizzes', restore_quiz:'Restore Quiz', quiz_folders:'Quiz Folders', export_quiz:'Export Quiz', import_quiz:'Import Quiz', instant_feedback:'Show answer immediately', timer_enabled:'Countdown timer per question', auto_skip:'Auto-skip unanswered question', time_per_question:'Time per question (seconds)', active_quizzes:'Active Quizzes', archived:'Archived',
   suggested_checklist:'Suggested Checklist', add_to_dev:'Add to Development',
   need_review:'Needs Review', weak:'Weak', mediumres:'Medium', good:'Good', vgood:'Very Good', excellent:'Excellent',
   settings_title:'Settings', section_name_f:'Section name', add_section:'Add section', about_me:'About Me', name_f:'Name', age_f:'Age', bio_f:'Short Bio', mygoals_f:'Goals',
@@ -517,9 +533,11 @@ function defaultState(){
     goalTabs:[{id:'tab_main',name:'اصلی',order:0},{id:'tab_fin',name:'سطوح مالی',order:1,isSystem:true}],
     activeGoalTab:'tab_main', goalFolders:[], goalArchive:[],
     financialLevels:[],
-    quizBank:null // populated on init from QUIZ_BANK, then user-editable
+    quizBank:null, // populated on init from QUIZ_BANK, then user-editable
+    quizCategories:null, quizFolders:[], quizExams:[], quizThresholdChecklists:{}, quizSettings:{instantFeedback:false,timerEnabled:true,autoSkip:true,timePerQuestion:20,totalTimerEnabled:true,totalTime:30,defaultQuestionCount:25,defaultPoints:1}
   };
 }
+let PERF_TREND_MODE = 'weeks-past';
 let STATE = loadState();
 function loadState(){
   try{
@@ -529,21 +547,67 @@ function loadState(){
     const def = defaultState();
     const merged = Object.assign(def, parsed);
     if(merged.lang!=='fa' && merged.lang!=='en') merged.lang='fa';
+    if(!Array.isArray(merged.quizCategories)) merged.quizCategories=[['independent','تفکر مستقل'],['management','مدیریت و بازخورد'],['scarcity','فقر و اثر کمبود'],['probability','احتمال و تصمیم‌گیری'],['habits','عادت‌ها'],['compound','اثر مرکب'],['gratitude','شکرگزاری']].map((x,i)=>({id:x[0],name:x[1],order:i}));
+    if(!Array.isArray(merged.quizFolders)) merged.quizFolders=[];
+    if(!merged.quizThresholdChecklists || typeof merged.quizThresholdChecklists!=='object') merged.quizThresholdChecklists={};
+    merged.quizSettings=Object.assign({instantFeedback:false,timerEnabled:true,autoSkip:true,timePerQuestion:20},merged.quizSettings||{});
     return merged;
   }catch(e){ return defaultState(); }
 }
-function initFinancialLevels(){
+function initFinancialLevels(count=25,target=18000){
   const cats=[
     ['emergency',22.2],['online_opportunity',13.9],['housing',13.9],['marriage_home',27.8],
     ['startup_services',8.3],['skills_tools',8.3],['family_spending',5.6]
   ];
-  return Array.from({length:25},(_,i)=>{
-    const ratio=i/24;
-    const threshold=Math.round(25*Math.pow(18000/25,ratio)*100)/100;
+  count=Math.max(1,Math.min(100,Number(count)||25)); target=Math.max(1,Number(target)||18000);
+  return Array.from({length:count},(_,i)=>{
+    const ratio=count===1?1:i/(count-1);
+    const threshold=Math.round(25*Math.pow(target/25,ratio)*100)/100;
     const allocations={}; cats.forEach(([k,p])=>allocations[k]=p);
     return {id:'fin_'+(i+1),level:i+1,threshold,startDate:'',deadline:'',allocations,checklist:cats.map(([k])=>({id:uid(),key:k,title:'',done:false,date:todayISO()}))};
   });
 }
+function normalizeFinancialLevelsConfig(){
+  const cfg=STATE.financialLevelConfig||{count:25,target:18000};
+  const count=Math.max(1,Math.min(100,Number(cfg.count)||25));
+  const target=Math.max(1,Number(cfg.target)||18000);
+  const old=Array.isArray(STATE.financialLevels)?STATE.financialLevels:[];
+  const base=initFinancialLevels(count,target);
+  base.forEach((x,i)=>{
+    const prev=old[i];
+    if(prev){
+      x.id=prev.id||x.id; x.threshold=Number(prev.threshold)>0?Number(prev.threshold):x.threshold;
+      x.startDate=prev.startDate||''; x.deadline=prev.deadline||'';
+      x.allocations=prev.allocations||x.allocations;
+      x.checklist=Array.isArray(prev.checklist)?prev.checklist:x.checklist;
+      x.display=prev.display&&typeof prev.display==='object'?{...prev.display}:{};
+      x.risk=Number.isFinite(Number(prev.risk))?Number(prev.risk):0;
+    }
+    x.display=x.display||{};
+    const defDisplay={share:true,checklist:true,dates:true,countdown:true,daysBetween:true,risk:true};
+    Object.keys(defDisplay).forEach(k=>{if(typeof x.display[k]!=='boolean')x.display[k]=defDisplay[k];});
+    x.risk=Number.isFinite(Number(x.risk))?Number(x.risk):0;
+  });
+  STATE.financialLevelConfig={count,target};
+  STATE.financialLevels=base;
+}
+function openFinancialLevelsSettings(){
+  const cfg=STATE.financialLevelConfig||{count:25,target:18000};
+  openModal(`<h3>⚙️ تنظیمات سطوح مالی</h3>
+    <div class="field"><label>تعداد مرز / سطح مالی</label><input type="number" min="1" max="100" id="f_fin_count" value="${Math.round(Number(cfg.count)||25)}"></div>
+    <div class="field"><label>حد نهایی مالی (دالر)</label><input type="number" min="1" step="0.01" id="f_fin_target" value="${Number(cfg.target)||18000}"></div>
+    <div class="smallnote">با تغییر این دو مقدار، مرزهای مالی به‌صورت خودکار از ۲۵ دالر تا حد نهایی جدید توزیع می‌شوند. اطلاعات سطوح موجود تا حد امکان حفظ می‌شود.</div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveFinancialLevelsSettings()">${t('save')}</button></div>`);
+}
+function saveFinancialLevelsSettings(){
+  const count=Math.max(1,Math.min(100,Math.round(Number(document.getElementById('f_fin_count')?.value)||25)));
+  const target=Math.max(1,Number(document.getElementById('f_fin_target')?.value)||18000);
+  STATE.financialLevelConfig={count,target};
+  normalizeFinancialLevelsConfig();
+  STATE.financial.target=target;
+  saveState(); closeModal(); renderPage(); renderHeader();
+}
+
 function normalizeChecklistFlags(){
   (STATE.goals||[]).forEach(g=>(g.lists||[]).forEach(l=>(l.checklist||[]).forEach(c=>{c.done = c.done === true;})));
   (STATE.financialLevels||[]).forEach(l=>(l.checklist||[]).forEach(c=>{c.done = c.done === true;}));
@@ -584,7 +648,11 @@ function normalizeState(){
   if(!Array.isArray(STATE.goalTabs)||!STATE.goalTabs.length) STATE.goalTabs=[{id:'tab_main',name:'اصلی',order:0},{id:'tab_fin',name:'سطوح مالی',order:1,isSystem:true}]; if(STATE.goalTabs.some(x=>x.id==='tab_fin')){const ft=STATE.goalTabs.find(x=>x.id==='tab_fin');ft.isSystem=true;if(!ft.name||ft.name==='مالی')ft.name='سطوح مالی';}
   if(!Array.isArray(STATE.goalFolders)) STATE.goalFolders=[];
   if(!Array.isArray(STATE.goalArchive)) STATE.goalArchive=[];
-  if(!Array.isArray(STATE.financialLevels)||STATE.financialLevels.length!==25) STATE.financialLevels=initFinancialLevels();
+  if(!STATE.financialLevelConfig) STATE.financialLevelConfig={count:25,target:18000};
+  STATE.financialLevelConfig.count=Math.max(1,Math.min(100,Number(STATE.financialLevelConfig.count)||25));
+  STATE.financialLevelConfig.target=Math.max(1,Number(STATE.financialLevelConfig.target)||18000);
+  if(!Array.isArray(STATE.financialLevels)||!STATE.financialLevels.length) STATE.financialLevels=initFinancialLevels();
+  normalizeFinancialLevelsConfig();
   STATE.financialLevels.forEach(x=>{
     if(x.firstTickAt) delete x.firstTickAt;
     if(x.startDate==null) x.startDate='';
@@ -593,14 +661,13 @@ function normalizeState(){
     if(!Array.isArray(x.checklist)) x.checklist=keys.map(k=>({id:uid(),key:k,title:k,done:false,date:todayISO()}));
     x.checklist=keys.map(k=>x.checklist.find(c=>c.key===k)||({id:uid(),key:k,title:k,done:false,date:todayISO()}));
   });
-  STATE.goals.forEach(g=>{ if(!g.tabId) g.tabId=g.isFinancial?'tab_fin':'tab_main'; if(g.archived==null) g.archived=false; if(!Array.isArray(g.lists)) g.lists=[]; g.lists.forEach(l=>{if(!Array.isArray(l.checklist))l.checklist=[];}); });
+  STATE.goals.forEach(g=>{ if(!g.tabId) g.tabId=g.isFinancial?'tab_fin':'tab_main'; if(g.archived==null) g.archived=false; if(g.startDate==null) g.startDate=''; if(g.finishDate==null) g.finishDate=''; if(g.alarmDateTime==null) g.alarmDateTime=''; if(g.alarmText==null) g.alarmText=''; if(!Array.isArray(g.lists)) g.lists=[]; g.lists.forEach(l=>{if(!Array.isArray(l.checklist))l.checklist=[];}); });
 }
 normalizeState();
 normalizeChecklistFlags();
 try{ if(telegramWebApp()){ telegramWebApp().ready(); telegramWebApp().expand(); } }catch(e){}
 function saveState(){
   localStorage.setItem(STORE_KEY, JSON.stringify(STATE));
-  scheduleOnlineBackup();
 }
 function showToast(msg){
   const root = document.getElementById('toastRoot');
@@ -640,10 +707,18 @@ function formatGregorian(date){
   return STATE.lang==='fa'?faDigits(s):s;
 }
 function weekdayName(date){ return t('weekday_'+date.getDay()); }
-function localizeNum(n){
-  n = Math.round(n*10)/10;
-  if(STATE.lang==='fa') return faDigits(n);
-  return String(n);
+function localizeNum(n, decimals=1){
+  const d=Math.max(0,Math.min(6,Number(decimals)||0));
+  const num=Number(n);
+  if(!Number.isFinite(num)) return STATE.lang==='fa'?'۰':'0';
+  const rounded=Math.round((num+Number.EPSILON)*Math.pow(10,d))/Math.pow(10,d);
+  const str=rounded.toFixed(d).replace(/\.?0+$/,'');
+  return STATE.lang==='fa'?faDigits(str):str;
+}
+function formatMoney(n){
+  const num=Number(n)||0;
+  const str=num.toLocaleString(STATE.lang==='fa'?'en-US':'en-US',{minimumFractionDigits:0,maximumFractionDigits:2});
+  return STATE.lang==='fa'?faDigits(str):str;
 }
 function fmtClock(date){
   let h=date.getHours(), m=String(date.getMinutes()).padStart(2,'0'), sec=String(date.getSeconds()).padStart(2,'0');
@@ -1110,10 +1185,13 @@ function renderMiniChecklist(containerId, list, scope, ids){
     deleteCallPrefix = (clId)=>`deleteGoalChecklistItem('${ids.goalId}','${ids.listId}','${clId}')`;
   }
   let html = `<div class="checklist-mini">`;
-  (list||[]).forEach(item=>{
+  (list||[]).forEach((item,index)=>{
+    const number = localizeNum(index+1);
     html += `<div class="cl-item ${item.done?'done':''}">
+      <span class="cl-number">${number}.</span>
       <input type="checkbox" ${item.done?'checked':''} onchange="${toggleCall(item.id)}">
       <span class="cltext">${esc(item.title)}</span>
+      ${item.done&&item.completedDate?`<span class="cl-completed-date">✓ ${esc(item.completedDate)}</span>`:''}
       <span class="badge">${item.score||1}</span>
       ${scope==='goal'?`<button class="action-gear" onclick="event.stopPropagation();openGoalChecklistActions('${ids.goalId}','${ids.listId}','${item.id}')" title="${t('settings')}">⚙️</button>`:`<button class="action-gear" onclick="event.stopPropagation();openPerfChecklistActions('${ids.itemId}','${item.id}')" title="${t('settings')}">⚙️</button>`}
     </div>`;
@@ -1179,7 +1257,7 @@ function getTodayMessage(){const list=(STATE.headerMessages||[]).filter(x=>x&&St
 function calendarNumeric(date,locale,calendar){try{const parts=new Intl.DateTimeFormat(locale+'-u-ca-'+calendar,{year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);const o={};parts.forEach(p=>{if(['year','month','day'].includes(p.type))o[p.type]=p.value;});const raw=`${o.year}/${o.month}/${o.day}`;return STATE.lang==='fa'?faDigits(raw):raw;}catch(e){return formatGregorian(date);}}
 function headerDateItems(now){const h=STATE.headerItems||{};const a=[];if(h.afghan)a.push(`<span class="dchip">🇦🇫 ${calendarNumeric(now,'fa-AF','persian')}</span>`);if(h.iran)a.push(`<span class="dchip">🇮🇷 ${calendarNumeric(now,'fa-IR','persian')}</span>`);if(h.gregorian)a.push(`<span class="dchip">${formatGregorian(now)}</span>`);if(h.hijri)a.push(`<span class="dchip">☪️ ${calendarNumeric(now,'fa-AF','islamic')}</span>`);if(h.clock)a.push(`<span class="clock" id="liveClock">${fmtClock(now)}</span>`);return a.join('');}
 function updateTopHeaderHeight(){const h=document.getElementById('topheader'); if(h) document.documentElement.style.setProperty('--topheader-height', h.offsetHeight+'px');}
-function renderHeader(){const now=new Date(),db=document.getElementById('dateblock'),h=STATE.headerItems||{};db.innerHTML=`${h.message?`<div class="today-message"><span>💬</span>${esc(getTodayMessage())}</div>`:''}<div class="weekdayline">${weekdayName(now)}</div><div class="datechips">${headerDateItems(now)}</div>`;const sb=document.getElementById('statusblock'),overall=overallSystemScore(),gp=goalsProgressPct(),fp=financialProgressPct(),fc=Math.max(0,Number(STATE.financial.current)||0),ft=Math.max(1,Number(STATE.financial.target)||18000);sb.innerHTML=`<div class="ministat"><div class="v" style="color:var(--gold)">${localizeNum(overall)}%</div><div class="l">${t('overallStatus')}</div></div><div class="ministat"><div class="v" style="color:var(--green)">${localizeNum(gp)}%</div><div class="l">${t('goalsProgress')}</div></div><div class="ministat"><div class="v" style="color:var(--gold)">${localizeNum(fp)}%</div><div class="l">پیشرفت مالی · $${localizeNum(fc)} / $${localizeNum(ft)}</div></div>`;document.getElementById('themeToggle').textContent=STATE.theme==='dark'?'🌙':'☀️'; updateTopHeaderHeight();}
+function renderHeader(){const now=new Date(),db=document.getElementById('dateblock'),h=STATE.headerItems||{};db.innerHTML=`${h.message?`<div class="today-message"><span>💬</span>${esc(getTodayMessage())}</div>`:''}<div class="weekdayline">${weekdayName(now)}</div><div class="datechips">${headerDateItems(now)}</div>`;const sb=document.getElementById('statusblock'),overall=overallSystemScore(),gp=goalsProgressPct(),fp=financialProgressPct(),fc=Math.max(0,Number(STATE.financial.current)||0),ft=Math.max(1,Number(STATE.financial.target)||18000);sb.innerHTML=`<div class="ministat"><div class="v" style="color:var(--gold)">${localizeNum(overall)}%</div><div class="l">${t('overallStatus')}</div></div><div class="ministat"><div class="v" style="color:var(--green)">${localizeNum(gp)}%</div><div class="l">${t('goalsProgress')}</div></div><div class="ministat"><div class="v" style="color:var(--gold)">${localizeNum(fp)}%</div><div class="l">پیشرفت مالی · $${formatMoney(fc)} / $${formatMoney(ft)}</div></div>`;document.getElementById('themeToggle').textContent=STATE.theme==='dark'?'🌙':'☀️'; updateTopHeaderHeight();}
 setInterval(()=>{ const el=document.getElementById('liveClock'); if(el) el.textContent = fmtClock(new Date()); if(CURRENT_PAGE==='goals') updateGoalCountdowns(); if(CURRENT_PAGE==='goals') updateFinancialLevelCountdowns(); }, 1000);
 setInterval(()=>{ checkGoalAlarms(); }, 15000);
 
@@ -1252,70 +1330,42 @@ function pageDashboard(){
   </div>
 
   <div class="card" style="margin-top:14px;">
-    <div class="sectiontitle">${t('chart_perf_time')} <span class="badge gold">${t('line_scroll_hint')}</span></div>
-    <div class="chart-scroll"><div class="chart-scroll-inner"><canvas id="chartLine"></canvas></div></div>
-  </div>
-  <div class="gauge-grid" style="margin-top:14px;">
-    <div class="card"><div class="sectiontitle">${t('goal_gauge')}</div><div class="gauge-wrap"><canvas id="chartGoalGauge"></canvas></div></div>
-    <div class="card"><div class="sectiontitle">${t('performance_gauge')}</div><div class="gauge-wrap"><canvas id="chartPerfGauge"></canvas></div></div>
-    <div class="card"><div class="sectiontitle">💰 ${t('financial_levels')}</div><div class="gauge-wrap"><canvas id="chartFinancialGauge"></canvas></div><div class="smallnote" style="text-align:center;margin-top:4px;">$${localizeNum(STATE.financial.current)} / $${localizeNum(STATE.financial.target)} · ${localizeNum(Math.min(100,Math.round(STATE.financial.current/Math.max(1,STATE.financial.target)*100)))}%</div></div>
-  </div>
-  <div class="grid cols-2" style="margin-top:14px;">
-    <div class="card">
-      <div class="sectiontitle">${t('chart_status')}</div>
-      <div class="chart-wrap"><canvas id="chartDonut"></canvas></div>
+    <div class="sectiontitle" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+      <span>${t('chart_perf_time')}</span>
+      <select class="input" style="width:auto;min-width:180px;" onchange="setPerfTrendMode(this.value)">
+        <option value="weeks-past" ${PERF_TREND_MODE==='weeks-past'?'selected':''}>۱۲ هفته گذشته</option>
+        <option value="weeks-future" ${PERF_TREND_MODE==='weeks-future'?'selected':''}>۱۲ هفته آینده</option>
+        <option value="months-past" ${PERF_TREND_MODE==='months-past'?'selected':''}>۱۲ ماه گذشته</option>
+        <option value="years-3" ${PERF_TREND_MODE==='years-3'?'selected':''}>۳ سال گذشته</option>
+      </select>
     </div>
+    <div class="chart-scroll"><div class="chart-scroll-inner" id="perfTrendChartInner"><canvas id="chartLine"></canvas></div></div>
   </div>
+  ${renderFinancialMilestoneBar()}
 
-  <div class="grid cols-2" style="margin-top:14px;">
-    <div class="card">
-      <div class="sectiontitle">${t('daily_mission')} <span class="badge gold">${localizeNum(dailyScorePct)}/100</span></div>
-      ${missionList.map(item=>`
-        <div class="dailymission-item">
-          <input type="checkbox" ${item.done?'checked':''} onchange="toggleDailyMissionItem('${item.id}')">
-          <span class="dmlabel ${item.done?'done-text':''}">${esc(item.title)}</span>
-          <button class="btn sm ghost" onclick="editDailyMissionItem('${item.id}')">✎</button>
-          <button class="btn sm ghost" onclick="deleteDailyMissionItem('${item.id}')">✕</button>
-        </div>`).join('') || `<div class="empty-state">${t('no_data')}</div>`}
-      <div style="display:flex; gap:6px; margin-top:10px;">
-        <input type="text" id="newMissionItemInput" placeholder="${t('mission_item_ph')}" style="flex:1; background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:8px; border-radius:6px; font-size:12.5px;">
-        <button class="btn sm primary" onclick="addDailyMissionItem()">+</button>
-      </div>
-      <div class="progressbar-lg"><div style="width:${dailyScorePct}%"></div></div>
+  <div class="card" style="margin-top:14px;">
+    <div class="sectiontitle">${t('financial_goal')}</div>
+    <div class="smallnote" style="font-size:13px; color:var(--text-dim); margin-bottom:6px;">${STATE.goals.find(g=>g.isFinancial)?esc(STATE.goals.find(g=>g.isFinancial).name):t('financial_goal_title')}</div>
+    <div class="progressbar-lg"><div style="width:${fgPct}%"></div></div>
+    <div class="kpi-row">
+      <div class="kpi">${t('fg_current')}<b>$${formatMoney(fg.current)}</b></div>
+      <div class="kpi">${t('fg_remaining')}<b>$${formatMoney(Math.max(0,fg.target-fg.current))}</b></div>
+      <div class="kpi">${t('fg_pct')}<b>${localizeNum(fgPct)}%</b></div>
+      <div class="kpi">${t('fg_avg')}<b>$${formatMoney(avgIncome)}</b></div>
     </div>
-
-    <div class="card">
-      <div class="sectiontitle">${t('financial_goal')}</div>
-      <div class="smallnote" style="font-size:13px; color:var(--text-dim); margin-bottom:6px;">${STATE.goals.find(g=>g.isFinancial)?esc(STATE.goals.find(g=>g.isFinancial).name):t('financial_goal_title')}</div>
-      <div class="progressbar-lg"><div style="width:${fgPct}%"></div></div>
-      <div class="kpi-row">
-        <div class="kpi">${t('fg_current')}<b>$${localizeNum(fg.current)}</b></div>
-        <div class="kpi">${t('fg_remaining')}<b>$${localizeNum(Math.max(0,fg.target-fg.current))}</b></div>
-        <div class="kpi">${t('fg_pct')}<b>${localizeNum(fgPct)}%</b></div>
-        <div class="kpi">${t('fg_avg')}<b>$${localizeNum(avgIncome)}</b></div>
-      </div>
-      <button class="btn primary sm" style="margin-top:10px;" onclick="openIncomeModal()">${t('fg_addincome')}</button>
-    </div>
+    <button class="btn primary sm" style="margin-top:10px;" onclick="openIncomeModal()">${t('fg_addincome')}</button>
   </div>
 
-  <div class="grid cols-2" style="margin-top:14px;">
-    <div class="card">
-      <div class="sectiontitle">${t('compound_title')}</div>
-      <div class="field-row">
-        <div class="field"><label>${t('compound_amount')}</label><input type="number" id="compAmount" value="30"></div>
-        <div class="field"><label>${t('compound_times')}</label><input type="number" id="compTimes" value="365"></div>
-      </div>
-      <div class="field"><label>${t('compound_unit')}</label><input type="text" id="compUnit" value="دقیقه یادگیری"></div>
-      <button class="btn primary sm" onclick="calcCompound()">${t('compound_calc')}</button>
-      <div id="compoundResult" style="margin-top:10px; font-weight:800; font-size:15px; color:var(--gold);"></div>
-    </div>
+  <div class="card" style="margin-top:14px;">
+    <div class="sectiontitle">${t('myrules_title')}</div>
+    <div style="font-size:12.5px; color:var(--text-dim); margin-bottom:6px;">${t('myrules')}</div>
+    ${STATE.rules.slice(0,5).map((r,i)=>`<div class="rule-row"><div class="rn">${localizeNum(i+1)}</div><div>${esc(r.text)}</div></div>`).join('') || `<div class="empty-state">${t('no_data')}</div>`}
+    <button class="btn ghost sm" style="margin-top:10px;" onclick="navigate('settings')">${t('edit')} →</button>
+  </div>
 
-    <div class="card">
-      <div class="sectiontitle">${t('myrules_title')}</div>
-      <div style="font-size:12.5px; color:var(--text-dim); margin-bottom:6px;">${t('myrules')}</div>
-      ${STATE.rules.slice(0,5).map((r,i)=>`<div class="rule-row"><div class="rn">${localizeNum(i+1)}</div><div>${esc(r.text)}</div></div>`).join('') || `<div class="empty-state">${t('no_data')}</div>`}
-      <button class="btn ghost sm" style="margin-top:10px;" onclick="navigate('settings')">${t('edit')} →</button>
-    </div>
+  <div class="card" style="margin-top:14px;">
+    <div class="sectiontitle" style="text-align:center;">📋 شمارش چک‌لیست عملکرد</div>
+    <div class="chart-wrap" style="height:300px;"><canvas id="chartPerfChecklist"></canvas></div>
   </div>
   `;
 }
@@ -1405,8 +1455,9 @@ function pagePerformance(){
   <div class="pagesub">${t('performance_sub')}</div>
   <div class="perf-tabbar-wrap">
     <div class="tabbar perf-tabbar">
-      ${tabs.map(sec=>`<div class="perf-tab-item ${PERF_TAB===sec.key?'active':''}"><button class="tabbtn ${PERF_TAB===sec.key?'active':''}" onclick="setPerfTab('${sec.key}')">${esc(sec.name)}</button><button class="tab-settings" onclick="event.stopPropagation();openPerfSectionActions('${sec.key}')" title="${t('settings')}">⚙️</button></div>`).join('')}
+      ${tabs.map(sec=>`<div class="perf-tab-item ${PERF_TAB===sec.key?'active':''}"><button class="tabbtn ${PERF_TAB===sec.key?'active':''}" onclick="setPerfTab('${sec.key}')">${esc(sec.name)}</button></div>`).join('')}
       <button class="tab-add" onclick="addPerfSection()">＋</button>
+      <button class="tab-settings" onclick="openPerfSectionsManager()" title="${t('settings')}">⚙️</button>
     </div>
   </div>
   <div class="filterrow">
@@ -1462,44 +1513,33 @@ function renderPerfList(){
   if(!filtered.length) return `<div class="empty-state"><div class="eicon">🗂️</div>${t('empty_generic')}</div>`;
   return filtered.map(o=>renderPerfItem(o)).join('');
 }
+function sanitizeRichHTML(html){const box=document.createElement('div');box.innerHTML=html||'';box.querySelectorAll('script,style,iframe,object,embed,link,meta').forEach(x=>x.remove());box.querySelectorAll('*').forEach(el=>{[...el.attributes].forEach(a=>{if(/^on/i.test(a.name)||a.name.toLowerCase()==='href'&&/^javascript:/i.test(a.value))el.removeAttribute(a.name);});});return box.innerHTML;}
+function richEditor(id,value){return `<div class="rich-toolbar"><button type="button" onclick="richCmd('justifyCenter')">↔</button><button type="button" onclick="richCmd('justifyRight')">☷</button><button type="button" onclick="richCmd('justifyLeft')">⇤</button><button type="button" onclick="richCmd('strikeThrough')">S̶</button><button type="button" onclick="richCmd('fontSize',5)">A+</button><button type="button" onclick="richCmd('fontSize',2)">A−</button><label class="btn sm" style="display:inline-flex;align-items:center;gap:4px;cursor:pointer">🎨<input type="color" onchange="richColor(this.value)" style="width:22px;height:22px;padding:0;border:0;background:transparent"></label></div><div id="${id}" class="rich-editor" contenteditable="true">${sanitizeRichHTML(value||'')}</div>`;}
+function richCmd(cmd,val){document.execCommand(cmd,false,val||null);}function richColor(c){document.execCommand('foreColor',false,c);}
+function richValue(id){return sanitizeRichHTML(document.getElementById(id)?.innerHTML||'');}
+function displayRich(v){if(!v)return '';return sanitizeRichHTML(v).replace(/^(?:\s|<br>)+|(?:\s|<br>)+$/g,'');}
+function perfDaysBetween(start,end){if(!start||!end)return '';const a=new Date(start+'T00:00:00'),b=new Date(end+'T00:00:00');return Math.max(0,Math.round((b-a)/86400000));}
+function perfCountdownText(o){const start=o.startDate||o.followUpStartDate||o.createdDate||'';const end=o.endDate||o.followUpDate||'';if(!end)return '';const total=perfDaysBetween(start,end);const now=new Date();const e=new Date(end+'T23:59:59');const remaining=Math.ceil((e-now)/86400000);return {total,remaining};}
 function renderPerfItem(o){
   const pct = checklistProgress(o.checklist);
   let scoreLine='';
-  if(PERF_TAB==='opportunities'){
-    scoreLine = `<span class="badge gold">${t('opp_score')}: ${localizeNum(oppScore(o))}</span>`;
-  } else if(PERF_TAB==='threats'){
-    const rs = riskScore(o);
-    scoreLine = `<span class="badge ${levelBadgeClass(riskLevelFromScore(rs))}">${t('risk_score')}: ${localizeNum(rs)} (${levelLabel(riskLevelFromScore(rs))})</span>`;
-  } else {
-    scoreLine = `<span class="badge">${t('score_f')}: ${localizeNum(o.score||0)}</span>`;
-  }
-  const dateStr = o.date||o.followUpDate||o.createdDate||'';
-  const dragAttrs = PERF_ARCHIVE_VIEW ? '' : `draggable="true" data-id="${o.id}" ondragstart="perfDragStart(event)" ondragover="perfDragOver(event)" ondrop="perfDrop(event)" ondragend="perfDragEnd(event)"`;
-  return `
-  <div class="item-row" ${dragAttrs}>
-    <div class="irow-top">
-      <div>
-        <div class="ititle">${PERF_ARCHIVE_VIEW?'':'⠿ '}${esc(o.title)}</div>
-        ${o.description?`<div class="idesc">${esc(o.description)}</div>`:''}
-      </div>
-      <div class="item-actions">
-        ${PERF_ARCHIVE_VIEW?`<button class="btn sm ghost" onclick="restorePerfItem('${o.id}')">↩ ${t('restore')}</button>`:`<button class="action-gear" onclick="event.stopPropagation();openPerfListActions('${o.id}')" title="${t('settings')}">⚙️</button>`}
-      </div>
-    </div>
-    <div class="imeta">
-      <span class="badge ${statusBadgeClass(o.status)}">${statusLabel(o.status)}</span>
-      ${scoreLine}
-      ${dateStr?`<span class="badge">📅 ${dateStr}</span>`:''}
-      ${o.severity?`<span class="badge ${levelBadgeClass(o.severity)}">${t('severity_f')}: ${levelLabel(o.severity)}</span>`:''}
-    </div>
-    ${renderMiniChecklist('cl_'+o.id, o.checklist, 'perf', {itemId:o.id})}
-  </div>`;
+  if(PERF_TAB==='opportunities'){scoreLine = `<span class="badge gold">${t('opp_score')}: ${localizeNum(oppScore(o))}</span>`;}
+  else if(PERF_TAB==='threats'){const rs=riskScore(o);scoreLine=`<span class="badge ${levelBadgeClass(riskLevelFromScore(rs))}">${t('risk_score')}: ${localizeNum(rs)} (${levelLabel(riskLevelFromScore(rs))})</span>`;}
+  else {scoreLine=`<span class="badge">${t('score_f')}: ${localizeNum(o.score||0)}</span>`;}
+  const dragAttrs=PERF_ARCHIVE_VIEW?'':`draggable="true" data-id="${o.id}" ondragstart="perfDragStart(event)" ondragover="perfDragOver(event)" ondrop="perfDrop(event)" ondragend="perfDragEnd(event)"`;
+  let dateHtml='';
+  if(PERF_TAB==='challenges'){const cd=perfCountdownText(o);dateHtml=`<div class="perf-date-box">${o.startDate?`<span class="badge">شروع: ${esc(o.startDate)}</span>`:''}${o.endDate?`<span class="badge">ختم: ${esc(o.endDate)}</span>`:''}${cd?`<span class="badge gold">فاصله: ${localizeNum(cd.total)} روز</span><span class="badge">روز شمار: ${localizeNum(Math.max(0,cd.remaining))} روز</span>`:''}${o.followUpDate?`<span class="badge">پیگیری: ${esc(o.followUpDate)}</span>`:''}</div>`;}
+  return `<div class="item-row" ${dragAttrs}>
+    <div class="irow-top"><div><div class="ititle">${PERF_ARCHIVE_VIEW?'':'⠿ '}${esc(o.title)}</div>${o.description?`<div class="perf-rich-desc">${displayRich(o.description)}</div>`:''}${PERF_TAB==='challenges'&&o.note?`<div class="perf-rich-note">📝 ${displayRich(o.note)}</div>`:''}</div>
+      <div class="item-actions">${PERF_ARCHIVE_VIEW?`<button class="btn sm ghost" onclick="restorePerfItem('${o.id}')">↩ ${t('restore')}</button>`:`<button class="action-gear" onclick="event.stopPropagation();openPerfListActions('${o.id}')" title="${t('settings')}">⚙️</button>`}</div></div>
+    <div class="imeta"><span class="badge ${statusBadgeClass(o.status)}">${statusLabel(o.status)}</span>${scoreLine}${o.severity?`<span class="badge ${levelBadgeClass(o.severity)}">${t('severity_f')}: ${levelLabel(o.severity)}</span>`:''}</div>${dateHtml}${renderMiniChecklist('cl_'+o.id,o.checklist,'perf',{itemId:o.id})}</div>`;
 }
 function findPerfItem(id){ return (STATE[PERF_TAB]||[]).find(x=>x.id===id); }
 function toggleChecklistItem(itemId, clId){
   const o = findPerfItem(itemId); if(!o) return;
   const c = (o.checklist||[]).find(x=>x.id===clId); if(!c) return;
   c.done = !c.done;
+  if(c.done) c.completedDate=todayISO(); else delete c.completedDate;
   updateParentStatusFromChecklist(o);
   saveState(); renderPage(); renderHeader();
 }
@@ -1515,7 +1555,7 @@ function addChecklistItem(itemId, containerId){
   const val = input.value.trim();
   if(!val) return;
   if(!o.checklist) o.checklist=[];
-  o.checklist.push({id:uid(), title:val, done:false, score:5});
+  o.checklist.push({id:uid(), title:val, done:false, score:5, completedDate:null});
   saveState(); renderPage(); renderHeader();
 }
 function deleteChecklistItem(itemId, clId){
@@ -1527,7 +1567,7 @@ function deleteChecklistItem(itemId, clId){
 function restorePerfItem(id){
   const o = STATE[PERF_TAB].find(x=>x.id===id); if(!o) return;
   o.status = 'notdone';
-  if(o.checklist) o.checklist.forEach(c=>c.done=false);
+  if(o.checklist) o.checklist.forEach(c=>{c.done=false;delete c.completedDate;});
   saveState(); showToast(t('save_success')); renderPage(); renderHeader();
 }
 let PERF_DRAG_ID = null;
@@ -1564,15 +1604,22 @@ function deletePerfItem(id){
     saveState(); showToast(t('deleted')); renderPage(); renderHeader();
   });
 }
-function openPerfSectionActions(key){
-  const sec=perfSectionByKey(key); if(!sec) return;
-  openModal(`<h3>⚙️ ${esc(sec.name)}</h3><div class="goal-action-grid">
-    <button class="btn" onclick="closeModal();editPerfSection('${key}')">✎ ${t('edit')}</button>
-    <button class="btn" onclick="closeModal();duplicatePerfSection('${key}')">⧉ ${t('duplicate')}</button>
-    <button class="btn" onclick="closeModal();movePerfSection('${key}',-1)">↑ ${t('move_up')}</button>
-    <button class="btn" onclick="closeModal();movePerfSection('${key}',1)">↓ ${t('move_down')}</button>
-    <button class="btn danger" onclick="closeModal();deletePerfSection('${key}')">✕ ${t('delete')}</button>
-  </div>`);
+function openPerfSectionsManager(){
+  const tabs=perfSections();
+  openModal(`<h3>⚙️ ${t('performance_title')}</h3>
+    <div class="smallnote" style="margin-bottom:10px;">مدیریت همه بخش‌های عملکرد از یک تنظیمات</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      ${tabs.map((sec,i)=>`<div class="card" style="padding:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+        <div style="font-weight:800;">${localizeNum(i+1)}. ${esc(sec.name)}</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;">
+          <button class="btn sm" onclick="closeModal();editPerfSection('${sec.key}')">✎ ${t('edit')}</button>
+          <button class="btn sm" onclick="closeModal();duplicatePerfSection('${sec.key}')">⧉ ${t('duplicate')}</button>
+          <button class="btn sm" onclick="closeModal();movePerfSection('${sec.key}',-1)">↑ ${t('move_up')}</button>
+          <button class="btn sm" onclick="closeModal();movePerfSection('${sec.key}',1)">↓ ${t('move_down')}</button>
+          <button class="btn sm danger" onclick="closeModal();deletePerfSection('${sec.key}')">✕ ${t('delete')}</button>
+        </div>
+      </div>`).join('')}
+    </div>`);
 }
 function editPerfSection(key){
   const sec=perfSectionByKey(key); if(!sec) return;
@@ -1672,14 +1719,15 @@ function openItemModal(tab, id){
   if(tab==='challenges'){
     fields = `
       <div class="field"><label>${t('title_f')}</label><input id="f_title" value="${esc(o?.title||'')}"></div>
-      <div class="field"><label>${t('desc_f')}</label><textarea id="f_desc">${esc(o?.description||'')}</textarea></div>
+      <div class="field"><label>${t('desc_f')}</label>${richEditor('f_desc',o?.description||'')}</div>
       <div class="field-row">
         <div class="field"><label>${t('severity_f')}</label><select id="f_severity">
           ${['low','medium','high','critical'].map(l=>`<option value="${l}" ${o?.severity===l?'selected':''}>${t(l)}</option>`).join('')}
         </select></div>
         <div class="field"><label>${t('followup_f')}</label><input type="date" id="f_followUpDate" value="${o?.followUpDate||''}"></div>
       </div>
-      <div class="field"><label>${t('note_f')}</label><textarea id="f_note">${esc(o?.note||'')}</textarea></div>`;
+      <div class="field-row"><div class="field"><label>تاریخ شروع</label><input type="date" id="f_startDate" value="${o?.startDate||o?.followUpStartDate||o?.createdDate||todayISO()}"></div><div class="field"><label>تاریخ ختم</label><input type="date" id="f_endDate" value="${o?.endDate||o?.followUpDate||''}"></div></div>
+      <div class="field"><label>${t('note_f')}</label>${richEditor('f_note',o?.note||'')}</div>`;
   } else if(tab==='opportunities'){
     fields = `
       <div class="field"><label>${t('title_f')}</label><input id="f_title" value="${esc(o?.title||'')}"></div>
@@ -1721,7 +1769,7 @@ function openItemModal(tab, id){
 function saveItemModal(tab, id){
   const title = document.getElementById('f_title').value.trim();
   if(!title){ showToast('...'); return; }
-  const desc = document.getElementById('f_desc') ? document.getElementById('f_desc').value : '';
+  const desc = document.getElementById('f_desc') ? richValue('f_desc') : '';
   let obj;
   const existing = id ? STATE[tab].find(x=>x.id===id) : null;
   if(existing){ obj = existing; } else { obj = {id:uid(), status:'notdone', checklist:[], createdDate:todayISO()}; STATE[tab].push(obj); }
@@ -1729,7 +1777,9 @@ function saveItemModal(tab, id){
   if(tab==='challenges'){
     obj.severity = document.getElementById('f_severity').value;
     obj.followUpDate = document.getElementById('f_followUpDate').value;
-    obj.note = document.getElementById('f_note').value;
+    obj.note = richValue('f_note');
+    obj.startDate = document.getElementById('f_startDate').value;
+    obj.endDate = document.getElementById('f_endDate').value;
   } else if(tab==='opportunities'){
     obj.probability = Number(document.getElementById('f_probability').value)||0;
     obj.benefit = Number(document.getElementById('f_benefit').value)||0;
@@ -1764,8 +1814,9 @@ function pageGoals(){
   const archived=STATE.goals.filter(g=>g.archived);
   return `
   <h1 class="pagetitle">${t('goals_title')}</h1><div class="pagesub">${t('goals_sub')}</div>
-  <div class="goal-tabbar-wrap"><div class="goal-tabs">${tabs.map(tb=>`<span class="goal-tab-wrap"><button class="goal-tab ${tb.id===GOAL_TAB_ID?'active':''}" onclick="setGoalTab('${tb.id}')">${esc(tb.name)}</button><button class="action-gear" onclick="event.stopPropagation();openGoalTabActions('${tb.id}')">⚙️</button></span>`).join('')}
+  <div class="goal-tabbar-wrap"><div class="goal-tabs">${tabs.map(tb=>`<button class="goal-tab ${tb.id===GOAL_TAB_ID?'active':''}" onclick="setGoalTab('${tb.id}')">${esc(tb.name)}</button>`).join('')}
     <button class="goal-tab" onclick="openGoalTabModal()">+ ${t('new_goal_tab')}</button>
+    <button class="action-gear" title="${t('settings')}" onclick="event.stopPropagation();openGoalTabsActions()">⚙️</button>
   </div></div>
   <div class="goal-tools">
     <button class="btn primary" onclick="openGoalModal()">+ ${t('new_goal')}</button>
@@ -1775,7 +1826,7 @@ function pageGoals(){
   ${GOAL_VIEW==='archive'?renderGoalArchive():(GOAL_TAB_ID==='tab_fin'?renderFinancialLevelPage():renderGoalWorkspace(goals))}`;
 }
 function setGoalTab(id){GOAL_TAB_ID=id;STATE.activeGoalTab=id;saveState();renderPage();}
-function renderFinancialLevelPage(){return `<div class="card"><div class="sectiontitle">💰 ${t('financial_levels')}</div><div class="smallnote">${t('financial_levels_sub')}</div><div style="margin-top:12px;">${renderFinancialLevels()}</div></div>`;}
+function renderFinancialLevelPage(){const cfg=STATE.financialLevelConfig||{count:25,target:18000};return `<div class="card"><div class="sectiontitle" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><span>💰 ${t('financial_levels')}</span><button class="action-gear" onclick="openFinancialLevelsSettings()" title="تنظیمات سطوح مالی">⚙️</button></div><div class="smallnote">${t('financial_levels_sub')} · ${localizeNum(cfg.count)} سطح · سقف $${formatMoney(cfg.target)}</div><div style="margin-top:12px;">${renderFinancialLevels()}</div></div>`;}
 function renderGoalWorkspace(goals){
   const folders=STATE.goalFolders.filter(f=>f.tabId===GOAL_TAB_ID);
   let html='';
@@ -1784,29 +1835,30 @@ function renderGoalWorkspace(goals){
   return html || `<div class="empty-state"><div class="eicon">🏁</div>${t('empty_generic')}</div>`;
 }
 function renderGoalArchive(){return STATE.goals.filter(g=>g.archived).map(g=>`<div class="item-row"><div class="irow-top"><div><div class="ititle">📦 ${esc(g.name)}</div><div class="idesc">${g.deadline||''}</div></div><div class="item-actions"><button class="action-gear" onclick="openGoalArchiveActions('${g.id}')">⚙️</button></div></div></div>`).join('')||`<div class="empty-state">${t('empty_generic')}</div>`;}
+function goalDaysBetween(start,end){if(!start||!end)return null;const a=new Date(start+'T00:00:00'),b=new Date(end+'T00:00:00');if(Number.isNaN(a.getTime())||Number.isNaN(b.getTime()))return null;return Math.round((b-a)/86400000);}
 function renderGoalCard(g){
-  const pct=goalProgress(g),isOpen=OPEN_GOAL_ID===g.id,cd=formatCountdown(g.alarmDateTime||g.deadline);
+  const pct=goalProgress(g),isOpen=OPEN_GOAL_ID===g.id,cd=formatCountdown(g.alarmDateTime||g.deadline),duration=goalDaysBetween(g.startDate,g.finishDate);
   return `<div class="card ${isOpen?'':'goal-collapsed'}" draggable="true" data-goalid="${g.id}" ondragover="goalDragOver(event)" ondrop="dropGoal(event,'${g.id}')">
-    <div class="goal-accordion-header" onclick="toggleGoalOpen('${g.id}')"><div><div class="ititle" style="font-size:16px;">${isOpen?'▾':'▸'} ${esc(g.name)} ${g.isFinancial?'💰':''}</div>${g.description?`<div class="idesc">${esc(g.description)}</div>`:''}</div>
+    <div class="goal-accordion-header" onclick="toggleGoalOpen('${g.id}')"><div><div class="ititle" style="font-size:16px;">${isOpen?'▾':'▸'} ${esc(g.name)} ${g.isFinancial?'💰':''}</div>${g.description?`<div class="goal-card-note">${goalDescHtml(g.description)}</div>`:''}</div>
     <div class="item-actions" onclick="event.stopPropagation();"><button class="action-gear" onclick="openGoalActions('${g.id}')">⚙️</button></div></div>
-    <div class="imeta">${g.deadline?`<span class="badge">⏳ ${g.deadline}</span>`:''}<span class="badge gold">${t('goal_progress')}: ${localizeNum(pct)}%</span></div><div class="progressbar-lg"><div style="width:${pct}%"></div></div>
+    <div class="imeta">${g.startDate?`<span class="badge">▶️ ${t('goal_start')}: ${g.startDate}</span>`:''}${g.finishDate?`<span class="badge">🏁 ${t('goal_end')}: ${g.finishDate}</span>`:''}${duration!==null?`<span class="badge gold">📅 ${t('goal_duration')}: ${localizeNum(duration)} ${t('goal_days')}</span>`:''}${g.deadline?`<span class="badge">⏳ ${g.deadline}</span>`:''}<span class="badge gold">${t('goal_progress')}: ${localizeNum(pct)}%</span></div><div class="progressbar-lg"><div style="width:${pct}%"></div></div>
     ${cd?`<div class="countdown-box goal-countdown" data-goal="${g.id}" data-target="${esc(g.alarmDateTime||g.deadline)}"><div class="cbox"><b class="cd-d">${localizeNum(cd.d)}</b><span>${t('d_short')}</span></div><div class="cbox"><b class="cd-h">${localizeNum(cd.h)}</b><span>${t('h_short')}</span></div><div class="cbox"><b class="cd-m">${localizeNum(cd.m)}</b><span>${t('m_short')}</span></div><div class="cbox"><b class="cd-s">${localizeNum(cd.s)}</b><span>${t('s_short')}</span></div></div>`:''}
     <div class="goal-body" style="margin-top:10px;">${(g.lists||[]).map(l=>renderGoalList(g,l)).join('')}<button class="btn sm ghost" onclick="openGoalListModal('${g.id}')">+ ${t('new_list')}</button></div></div>`;
 }
-function renderGoalList(g,l){const pct=checklistProgress(l.checklist);return `<div class="item-row" draggable="true" data-listid="${l.id}" ondragstart="event.dataTransfer.setData('text/plain','${l.id}')" ondragover="goalDragOver(event)" ondrop="dropGoalList(event,'${g.id}','${l.id}')"><div class="irow-top"><div class="ititle">☷ ${esc(l.name)} <span class="badge gold">${localizeNum(pct)}%</span></div><div class="item-actions"><button class="action-gear" onclick="openGoalListActions('${g.id}','${l.id}')">⚙️</button></div></div>${renderMiniChecklist('gl_'+l.id,l.checklist,'goal',{goalId:g.id,listId:l.id})}</div>`;}
+function renderGoalList(g,l){const pct=checklistProgress(l.checklist),duration=goalDaysBetween(l.startDate,l.finishDate);return `<div class="item-row" draggable="true" data-listid="${l.id}" ondragstart="event.dataTransfer.setData('text/plain','${l.id}')" ondragover="goalDragOver(event)" ondrop="dropGoalList(event,'${g.id}','${l.id}')"><div class="irow-top"><div><div class="ititle">☷ ${esc(l.name)} <span class="badge gold">${localizeNum(pct)}%</span></div>${l.description?`<div class="goal-card-note">${goalDescHtml(l.description)}</div>`:''}</div><div class="item-actions"><button class="action-gear" onclick="openGoalListActions('${g.id}','${l.id}')">⚙️</button></div></div><div class="imeta">${l.startDate?`<span class="badge">▶️ ${t('goal_start')}: ${esc(l.startDate)}</span>`:''}${l.finishDate?`<span class="badge">🏁 ${t('goal_end')}: ${esc(l.finishDate)}</span>`:''}${duration!==null?`<span class="badge gold">📅 ${t('goal_duration')}: ${localizeNum(duration)} ${t('goal_days')}</span>`:''}</div>${renderMiniChecklist('gl_'+l.id,l.checklist,'goal',{goalId:g.id,listId:l.id})}</div>`;}
 function findGoal(id){return STATE.goals.find(x=>x.id===id);}
 function toggleGoalOpen(gid){OPEN_GOAL_ID=gid;renderPage();}
-function toggleGoalChecklistItem(gid,lid,clId){const g=findGoal(gid);if(!g)return;const l=(g.lists||[]).find(x=>x.id===lid);if(!l)return;const c=(l.checklist||[]).find(x=>x.id===clId);if(!c)return;c.done=!c.done;const pct=goalProgress(g);if(pct===100)g.status='done';else if(pct>0)g.status='inprogress';saveState();renderPage();renderHeader();}
+function toggleGoalChecklistItem(gid,lid,clId){const g=findGoal(gid);if(!g)return;const l=(g.lists||[]).find(x=>x.id===lid);if(!l)return;const c=(l.checklist||[]).find(x=>x.id===clId);if(!c)return;c.done=!c.done;if(c.done)c.completedDate=todayISO();else delete c.completedDate;const pct=goalProgress(g);if(pct===100)g.status='done';else if(pct>0)g.status='inprogress';saveState();renderPage();renderHeader();}
 function addGoalChecklistItem(gid,lid,containerId){const g=findGoal(gid);if(!g)return;const l=(g.lists||[]).find(x=>x.id===lid);if(!l)return;const input=document.getElementById(containerId+'_newitem');const val=input.value.trim();if(!val)return;if(!l.checklist)l.checklist=[];l.checklist.push({id:uid(),title:val,done:false,score:5,date:todayISO()});saveState();renderPage();}
 function editGoalChecklistItem(gid,lid,cid){const g=findGoal(gid),l=g&&g.lists.find(x=>x.id===lid),c=l&&l.checklist.find(x=>x.id===cid);if(!c)return;openModal(`<h3>${t('edit_check')}</h3><div class="field"><input id="f_cltitle" value="${esc(c.title)}"></div><div class="field"><label>${t('date_f')}</label><input type="date" id="f_cldate" value="${c.date||''}"></div><div class="field"><label>${t('score_f')}</label><input type="number" id="f_clscore" value="${c.score||5}"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveGoalChecklistEdit('${gid}','${lid}','${cid}')">${t('save')}</button></div>`);}
 function saveGoalChecklistEdit(gid,lid,cid){const g=findGoal(gid),l=g&&g.lists.find(x=>x.id===lid),c=l&&l.checklist.find(x=>x.id===cid);if(!c)return;c.title=document.getElementById('f_cltitle').value;c.date=document.getElementById('f_cldate').value;c.score=Number(document.getElementById('f_clscore').value)||1;saveState();closeModal();renderPage();}
 function deleteGoalChecklistItem(gid,lid,clId){const g=findGoal(gid);if(!g)return;const l=(g.lists||[]).find(x=>x.id===lid);if(!l)return;l.checklist=(l.checklist||[]).filter(x=>x.id!==clId);saveState();renderPage();}
-function duplicateGoalChecklistItem(gid,lid,cid){const g=findGoal(gid),l=g&&g.lists.find(x=>x.id===lid),c=l&&l.checklist.find(x=>x.id===cid);if(!c)return;const copy={...JSON.parse(JSON.stringify(c)),id:uid(),title:c.title+' (copy)',done:false};l.checklist.push(copy);saveState();renderPage();}
+function duplicateGoalChecklistItem(gid,lid,cid){const g=findGoal(gid),l=g&&g.lists.find(x=>x.id===lid),c=l&&l.checklist.find(x=>x.id===cid);if(!c)return;const copy={...JSON.parse(JSON.stringify(c)),id:uid(),title:c.title+' (copy)',done:false};delete copy.completedDate;l.checklist.push(copy);saveState();renderPage();}
 function moveGoalChecklistItem(gid,lid,cid,dir){const g=findGoal(gid),l=g&&g.lists.find(x=>x.id===lid);if(!l)return;const a=l.checklist,i=a.findIndex(x=>x.id===cid),j=i+dir;if(i<0||j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];saveState();renderPage();}
 function deleteGoalList(gid,lid){confirmDelete(()=>{const g=findGoal(gid);if(!g)return;g.lists=(g.lists||[]).filter(x=>x.id!==lid);saveState();renderPage();});}
-function openGoalListModal(gid,lid){const g=findGoal(gid),l=lid&&g&&g.lists.find(x=>x.id===lid);openModal(`<h3>${lid?t('edit_list'):t('new_list')}</h3><div class="field"><label>${t('list_name')}</label><input id="f_listname" value="${esc(l?.name||'')}"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveGoalList('${gid}','${lid||''}')">${t('save')}</button></div>`);}
-function saveGoalList(gid,lid){const name=document.getElementById('f_listname').value.trim();if(!name)return;const g=findGoal(gid);if(!g)return;if(lid){const l=g.lists.find(x=>x.id===lid);if(l)l.name=name;}else g.lists.push({id:uid(),name,checklist:[]});saveState();closeModal();renderPage();}
-function duplicateGoalList(gid,lid){const g=findGoal(gid),l=g&&g.lists.find(x=>x.id===lid);if(!l)return;const copy=JSON.parse(JSON.stringify(l));copy.id=uid();copy.name=l.name+' (copy)';copy.checklist=(copy.checklist||[]).map(c=>({...c,id:uid(),done:false}));g.lists.push(copy);saveState();renderPage();}
+function openGoalListModal(gid,lid){const g=findGoal(gid),l=lid&&g&&g.lists.find(x=>x.id===lid),desc=goalDescHtml(l?.description||'');openModal(`<h3>${lid?t('edit_list'):t('new_list')}</h3><div class="field"><label>${t('list_name')}</label><input id="f_listname" value="${esc(l?.name||'')}"></div><div class="field"><label>${t('desc_f')}</label><div class="goal-note-editor"><div class="goal-note-toolbar"><button type="button" class="btn ghost" onmousedown="event.preventDefault()" onclick="goalNoteCmd('justifyCenter')">↔ وسط</button><button type="button" class="btn ghost" onmousedown="event.preventDefault()" onclick="goalNoteCmd('justifyRight')">☷ راست</button><button type="button" class="btn ghost" onmousedown="event.preventDefault()" onclick="goalNoteCmd('justifyLeft')">☰ چپ</button><button type="button" class="btn ghost" onmousedown="event.preventDefault()" onclick="goalNoteCmd('strikeThrough')">S̶</button><button type="button" class="btn ghost" onmousedown="event.preventDefault()" onclick="goalNoteCmd('fontSize','5')">A＋</button><button type="button" class="btn ghost" onmousedown="event.preventDefault()" onclick="goalNoteCmd('fontSize','2')">A−</button><label title="رنگ فونت" style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-dim);">رنگ <input class="goal-color" type="color" value="#d4af37" onchange="goalNoteColor(this.value)"></label></div><div id="f_gdesc" class="goal-note-content" contenteditable="true" spellcheck="true">${desc}</div></div></div><div class="field-row"><div class="field"><label>${t('goal_start')}</label><div style="display:flex;gap:6px;align-items:center"><input type="date" id="f_liststart" value="${l?.startDate||''}" style="flex:1"><button type="button" class="btn ghost" onclick="clearGoalDate('f_liststart')">✕</button></div></div><div class="field"><label>${t('goal_end')}</label><div style="display:flex;gap:6px;align-items:center"><input type="date" id="f_listfinish" value="${l?.finishDate||''}" style="flex:1"><button type="button" class="btn ghost" onclick="clearGoalDate('f_listfinish')">✕</button></div></div></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveGoalList('${gid}','${lid||''}')">${t('save')}</button></div>`);}
+function saveGoalList(gid,lid){const name=document.getElementById('f_listname').value.trim();if(!name)return;const g=findGoal(gid);if(!g)return;const description=sanitizeGoalHtml(document.getElementById('f_gdesc')?.innerHTML||'');const startDate=document.getElementById('f_liststart')?.value||'';const finishDate=document.getElementById('f_listfinish')?.value||'';if(lid){const l=g.lists.find(x=>x.id===lid);if(l){l.name=name;l.description=description;l.startDate=startDate;l.finishDate=finishDate;}}else g.lists.push({id:uid(),name,description,startDate,finishDate,checklist:[]});saveState();closeModal();renderPage();}
+function duplicateGoalList(gid,lid){const g=findGoal(gid),l=g&&g.lists.find(x=>x.id===lid);if(!l)return;const copy=JSON.parse(JSON.stringify(l));copy.id=uid();copy.name=l.name+' (copy)';copy.checklist=(copy.checklist||[]).map(c=>{const x={...c,id:uid(),done:false};delete x.completedDate;return x;});g.lists.push(copy);saveState();renderPage();}
 function moveGoalList(gid,lid,dir){const g=findGoal(gid),a=g&&g.lists;if(!a)return;const i=a.findIndex(x=>x.id===lid),j=i+dir;if(i<0||j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];saveState();renderPage();}
 function openGoalTabModal(id){const tb=id&&STATE.goalTabs.find(x=>x.id===id);openModal(`<h3>${id?t('edit_tab'):t('new_goal_tab')}</h3><div class="field"><input id="f_tabname" value="${esc(tb?.name||'')}"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveGoalTab('${id||''}')">${t('save')}</button></div>`);}
 function saveGoalTab(id){const n=document.getElementById('f_tabname').value.trim();if(!n)return;if(id){const x=STATE.goalTabs.find(t=>t.id===id);if(x)x.name=n;}else{const x={id:uid(),name:n,order:STATE.goalTabs.length};STATE.goalTabs.push(x);GOAL_TAB_ID=x.id;}saveState();closeModal();renderPage();}
@@ -1836,51 +1888,63 @@ function financialLevelCountdown(x){
   const diff=target-now;
   return {days:Math.ceil(diff/86400000),past:diff<0};
 }
-function toggleFinancialLevelChecklist(level,cid){const x=STATE.financialLevels.find(v=>v.level===level);if(!x)return;const c=(x.checklist||[]).find(v=>v.id===cid);if(!c)return;c.done=!c.done;c.date=todayISO();saveState();renderPage();renderHeader();}
+function toggleFinancialLevelChecklist(level,cid){const x=STATE.financialLevels.find(v=>v.level===level);if(!x)return;const c=(x.checklist||[]).find(v=>v.id===cid);if(!c)return;c.done=!c.done;if(c.done)c.completedDate=todayISO();else delete c.completedDate;saveState();renderPage();renderHeader();}
 function toggleFinancialLevelOpen(level){FIN_OPEN_LEVEL=Number(level)||1;renderPage();}
 function ensureFinancialOpenLevel(){if(!FIN_OPEN_LEVEL || !(STATE.financialLevels||[]).some(x=>Number(x.level)===Number(FIN_OPEN_LEVEL))) FIN_OPEN_LEVEL=Number((STATE.financialLevels||[])[0]?.level)||1;}
 function renderFinancialLevels(){
   ensureFinancialOpenLevel();
   const overallTarget=Math.max(1,Number(STATE.financial.target)||18000);
-  const current=Math.max(0,Number(STATE.financial.current)||0);
   return (STATE.financialLevels||[]).map(x=>{
-    const cl=x.checklist||[];
+    // نمایش چک‌لیست هر سطح مالی بر اساس بیشترین درصد تا کمترین درصد
+    const cl=[...(x.checklist||[])].filter(c=>!c.archived).sort((a,b)=>{
+      const av=Number(x.allocations&&x.allocations[a.key]||0);
+      const bv=Number(x.allocations&&x.allocations[b.key]||0);
+      return bv-av;
+    });
     const done=cl.filter(c=>c.done).length;
     const effort=Math.round(done/Math.max(1,cl.length)*100);
     const threshold=Math.max(0.01,Number(x.threshold)||0.01);
-    const assetPct=Math.min(100,Math.max(0,current/threshold*100));
     const share=Math.min(100,Math.max(0,Number(x.threshold||0)/overallTarget*100));
-    const reached=current>=Number(x.threshold||0);
+    const reached=Math.max(0,Number(STATE.financial.current)||0)>=Number(x.threshold||0);
     const cd=financialLevelCountdown(x);
+    const d=x.display||{};
     const isOpen=Number(FIN_OPEN_LEVEL)===Number(x.level);
+    let daysBetween='';
+    if(x.startDate&&x.deadline){
+      const a=new Date(x.startDate+'T00:00:00'),b=new Date(x.deadline+'T00:00:00');
+      const diff=Math.round((b-a)/86400000);
+      if(Number.isFinite(diff))daysBetween=diff;
+    }
     return `<div class="fin-level ${isOpen?'open':'closed'}">
       <div class="fin-level-head">
         <button class="fin-level-toggle" onclick="toggleFinancialLevelOpen(${x.level})" aria-expanded="${isOpen}">
-          <span>${isOpen?'▾':'▸'}</span><b>${t('level')} ${localizeNum(x.level)} — $${Number(x.threshold).toLocaleString()}</b>
+          <span>${isOpen?'▾':'▸'}</span><b>${t('level')} ${localizeNum(x.level)} — $${formatMoney(x.threshold)}</b>
         </button>
         <button class="action-gear" onclick="event.stopPropagation();openFinancialLevelActions(${x.level})">⚙️</button>
       </div>
       <div class="fin-level-body">
-        <div class="fin-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${effort}"><div style="width:${effort.toFixed(2)}%;"></div></div>
-        <div class="fin-progress-label">${localizeNum(effort)}%</div>
+        ${d.checklist!==false?`<div class="fin-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${effort}"><div style="width:${effort.toFixed(2)}%;"></div></div><div class="fin-progress-label">${localizeNum(effort)}%</div>`:''}
         <div class="smallnote fin-level-stats" style="margin-top:4px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;">
-          <span><b>دارایی سطح:</b> ${localizeNum(assetPct,2)}%</span>
-          <span><b>سهم از 18,000 دالر:</b> ${localizeNum(share,2)}%</span>
-          <span><b>تلاش چک‌لیست:</b> ${localizeNum(effort)}% — ${localizeNum(done)}/${localizeNum(cl.length)}</span>
-          ${x.startDate?`<span><b>تاریخ شروع:</b> ${esc(x.startDate)}</span>`:''}
-          ${x.deadline?`<span><b>تاریخ هدف:</b> ${esc(x.deadline)}</span><span><b>روز شمار:</b> <span data-fin-countdown="${x.level}">${cd?(cd.past?'گذشته':localizeNum(Math.max(0,cd.days))+' روز'):''}</span></span>`:''}
+          ${d.share!==false?`<span><b>سهم از ${formatMoney(overallTarget)} دالر:</b> ${localizeNum(share,2)}%</span>`:''}
+          ${d.checklist!==false?`<span><b>تلاش چک‌لیست:</b> ${localizeNum(effort)}% — ${localizeNum(done)}/${localizeNum(cl.length)}</span>`:''}
+          ${d.dates!==false&&x.startDate?`<span><b>تاریخ شروع:</b> ${esc(x.startDate)}</span>`:''}
+          ${d.dates!==false&&x.deadline?`<span><b>تاریخ ختم:</b> ${esc(x.deadline)}</span>`:''}
+          ${d.countdown!==false&&x.deadline?`<span><b>روز شمار:</b> <span data-fin-countdown="${x.level}">${cd?(cd.past?'گذشته':localizeNum(Math.max(0,cd.days))+' روز'):''}</span></span>`:''}
+          ${d.daysBetween!==false&&daysBetween!==''?`<span><b>مقدار روز بین شروع و ختم:</b> ${localizeNum(Math.max(0,daysBetween))} روز</span>`:''}
+          ${d.risk!==false?`<span><b>مقدار ریسک:</b> ${localizeNum(Number(x.risk)||0,2)}%</span>`:''}
           ${reached?`<span class="badge gold">✓ رسید</span>`:''}
         </div>
-        <div style="margin-top:6px;">
+        ${d.checklist!==false?`<div style="margin-top:6px;">
           ${cl.map(c=>{const v=Number(x.allocations[c.key]||0);return `<div class="fin-check-row">
             <input type="checkbox" ${c.done?'checked':''} onchange="toggleFinancialLevelChecklist(${x.level},'${c.id}')">
-            <span class="fin-check-title">${esc((c.key && I18N[STATE.lang] && I18N[STATE.lang][c.key]) ? t(c.key) : (c.title||t(c.key)))}</span>
+            <span class="fin-check-title">${esc((c.key && I18N[STATE.lang] && I18N[STATE.lang][c.key]) ? t(c.key) : (c.title||t(c.key)))}${c.done&&c.completedDate?` <span class="badge gold">✓ ${esc(c.completedDate)}</span>`:''}</span>
             <span class="badge">${localizeNum(v)}%</span>
-            <span>$${Math.round(x.threshold*v/100).toLocaleString()}</span>
+            <span>$${formatMoney(Number(x.threshold)*Number(v)/100)}</span>
             <span class="fin-check-actions"><button class="action-gear" onclick="openFinancialChecklistActions(${x.level},'${c.id}')">⚙️</button></span>
           </div>`}).join('')}
           <button class="btn sm ghost fin-add-check" onclick="openFinancialChecklistModal(${x.level})">+ ایجاد چک‌لیست جدید</button>
-        </div>
+          ${(x.checklist||[]).some(c=>c.archived)?`<details class="fin-archive-box" style="margin-top:8px;"><summary>📦 آرشیو چک‌لیست‌ها (${localizeNum((x.checklist||[]).filter(c=>c.archived).length)})</summary><div style="margin-top:6px;display:grid;gap:6px;">${renderFinancialChecklistArchive(x.level)}</div></details>`:''}
+        </div>`:''}
       </div>
     </div>`;
   }).join('');
@@ -1888,14 +1952,25 @@ function renderFinancialLevels(){
 function findFinancialLevel(level){return (STATE.financialLevels||[]).find(v=>Number(v.level)===Number(level));}
 function openFinancialChecklistActions(level,cid){
   const x=findFinancialLevel(level),c=x&&(x.checklist||[]).find(v=>v.id===cid);if(!c)return;
+  const isArchived=!!c.archived;
   openModal(`<h3>⚙️ تنظیمات چک‌لیست سطح ${localizeNum(level)}</h3><div class="goal-action-grid">
     <button class="btn" onclick="closeModal();openFinancialChecklistModal(${level},'${cid}')">✎ ${t('edit')}</button>
-    <button class="btn" onclick="closeModal();duplicateFinancialChecklistItem(${level},'${cid}')">⧉ ${t('duplicate')}</button>
-    <button class="btn" onclick="closeModal();moveFinancialChecklistItem(${level},'${cid}',-1)">↑ ${t('move_up')}</button>
-    <button class="btn" onclick="closeModal();moveFinancialChecklistItem(${level},'${cid}',1)">↓ ${t('move_down')}</button>
+    ${isArchived
+      ? `<button class="btn primary" onclick="closeModal();restoreFinancialChecklistItem(${level},'${cid}')">↩ بازگردانی از آرشیو</button>`
+      : `<button class="btn" onclick="closeModal();archiveFinancialChecklistItem(${level},'${cid}')">📦 انتقال به آرشیو</button>`}
+    ${!isArchived?`<button class="btn" onclick="closeModal();duplicateFinancialChecklistItem(${level},'${cid}')">⧉ ${t('duplicate')}</button>`:''}
+    ${!isArchived?`<button class="btn" onclick="closeModal();moveFinancialChecklistItem(${level},'${cid}',-1)">↑ ${t('move_up')}</button>`:''}
+    ${!isArchived?`<button class="btn" onclick="closeModal();moveFinancialChecklistItem(${level},'${cid}',1)">↓ ${t('move_down')}</button>`:''}
     <button class="btn danger" onclick="closeModal();deleteFinancialChecklistItem(${level},'${cid}')">✕ ${t('delete')}</button>
     <button class="btn primary" onclick="closeModal();openFinancialChecklistModal(${level})">＋ ایجاد جدید</button>
   </div>`);
+}
+function archiveFinancialChecklistItem(level,cid){const x=findFinancialLevel(level),c=x&&(x.checklist||[]).find(v=>v.id===cid);if(!c)return;c.archived=true;saveState();renderPage();}
+function restoreFinancialChecklistItem(level,cid){const x=findFinancialLevel(level),c=x&&(x.checklist||[]).find(v=>v.id===cid);if(!c)return;c.archived=false;saveState();renderPage();}
+function renderFinancialChecklistArchive(level){
+  const x=findFinancialLevel(level);if(!x)return '';
+  const a=(x.checklist||[]).filter(c=>c.archived);
+  return a.length?a.map(c=>{const v=Number(x.allocations&&x.allocations[c.key]||0);return `<div class="fin-check-row" style="opacity:.78;"><span>📦</span><span class="fin-check-title">${esc((c.key&&I18N[STATE.lang]&&I18N[STATE.lang][c.key])?t(c.key):(c.title||t(c.key)))}${c.done&&c.completedDate?` <span class="badge gold">✓ ${esc(c.completedDate)}</span>`:''}</span><span class="badge">${localizeNum(v)}%</span><span>$${formatMoney(Number(x.threshold)*Number(v)/100)}</span><span class="fin-check-actions"><button class="action-gear" onclick="openFinancialChecklistActions(${level},'${c.id}')">⚙️</button></span></div>`}).join(''):`<div class="empty-state">آرشیو این سطح خالی است.</div>`;
 }
 function openFinancialChecklistModal(level,cid){
   const x=findFinancialLevel(level),c=cid&&x&&(x.checklist||[]).find(v=>v.id===cid);if(!x)return;
@@ -1919,7 +1994,7 @@ function deleteFinancialChecklistItem(level,cid){
 }
 function duplicateFinancialChecklistItem(level,cid){
   const x=findFinancialLevel(level),c=x&&(x.checklist||[]).find(v=>v.id===cid);if(!c)return;
-  const copy=JSON.parse(JSON.stringify(c));copy.id=uid();copy.title=c.title+' (copy)';copy.done=false;x.checklist.push(copy);saveState();renderPage();
+  const copy=JSON.parse(JSON.stringify(c));copy.id=uid();copy.title=c.title+' (copy)';copy.done=false;delete copy.completedDate;x.checklist.push(copy);saveState();renderPage();
 }
 function moveFinancialChecklistItem(level,cid,dir){
   const x=findFinancialLevel(level),a=x&&x.checklist;if(!a)return;const i=a.findIndex(v=>v.id===cid),j=i+dir;if(i<0||j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];saveState();renderPage();
@@ -1929,166 +2004,159 @@ function openGoalActions(id){openModal(`<h3>⚙️ ${t('settings')}</h3><div cla
 function openFolderActions(id){openModal(`<h3>⚙️ ${t('folders')}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();openFolderModal('${id}')">✎ ${t('edit')}</button><button class="btn" onclick="closeModal();duplicateFolder('${id}')">⧉ ${t('duplicate')}</button><button class="btn" onclick="closeModal();moveFolder('${id}',-1)">↑ ${t('move_up')}</button><button class="btn" onclick="closeModal();moveFolder('${id}',1)">↓ ${t('move_down')}</button><button class="btn danger" onclick="closeModal();deleteFolder('${id}')">✕ ${t('delete')}</button></div>`);}
 function openGoalListActions(gid,lid){openModal(`<h3>⚙️ ${t('edit_list')}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();openGoalListModal('${gid}','${lid}')">✎ ${t('edit')}</button><button class="btn" onclick="closeModal();duplicateGoalList('${gid}','${lid}')">⧉ ${t('duplicate')}</button><button class="btn" onclick="closeModal();moveGoalList('${gid}','${lid}',-1)">↑ ${t('move_up')}</button><button class="btn" onclick="closeModal();moveGoalList('${gid}','${lid}',1)">↓ ${t('move_down')}</button><button class="btn danger" onclick="closeModal();deleteGoalList('${gid}','${lid}')">✕ ${t('delete')}</button></div>`);}
 function openGoalChecklistActions(gid,lid,cid){openModal(`<h3>⚙️ ${t('edit_check')}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();editGoalChecklistItem('${gid}','${lid}','${cid}')">✎ ${t('edit')}</button><button class="btn" onclick="closeModal();duplicateGoalChecklistItem('${gid}','${lid}','${cid}')">⧉ ${t('duplicate')}</button><button class="btn" onclick="closeModal();moveGoalChecklistItem('${gid}','${lid}','${cid}',-1)">↑ ${t('move_up')}</button><button class="btn" onclick="closeModal();moveGoalChecklistItem('${gid}','${lid}','${cid}',1)">↓ ${t('move_down')}</button><button class="btn danger" onclick="closeModal();deleteGoalChecklistItem('${gid}','${lid}','${cid}')">✕ ${t('delete')}</button></div>`);}
-function openGoalTabActions(id){const tb=STATE.goalTabs.find(x=>x.id===id);if(!tb)return;openModal(`<h3>⚙️ ${t('goal_tabs')}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();openGoalTabModal('${id}')">✎ ${t('edit')}</button><button class="btn" onclick="closeModal();duplicateGoalTab('${id}')">⧉ ${t('duplicate')}</button><button class="btn" onclick="closeModal();moveGoalTab('${id}',-1)">↑ ${t('move_up')}</button><button class="btn" onclick="closeModal();moveGoalTab('${id}',1)">↓ ${t('move_down')}</button>${tb.isSystem?'':`<button class="btn danger" onclick="closeModal();deleteGoalTab('${id}')">✕ ${t('delete')}</button>`}</div>`);}
-function openFinancialLevelActions(level){openModal(`<h3>⚙️ ${t('edit_fin_level')} ${level}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();editFinancialLevel(${level})">✎ ${t('edit')}</button></div>`);}
-function editFinancialLevel(level){const x=STATE.financialLevels.find(v=>v.level===level);if(!x)return;openModal(`<h3>${t('edit_fin_level')} ${level}</h3><div class="field"><label>${t('threshold')}</label><input type="number" id="f_finthreshold" value="${x.threshold}"></div><div class="field-row"><div class="field"><label>تاریخ شروع سطح</label><input type="date" id="f_finstart" value="${x.startDate||''}"></div><div class="field"><label>تاریخ هدف / پایان</label><input type="date" id="f_findeadline" value="${x.deadline||''}"></div></div>${Object.entries(x.allocations).map(([k,v])=>`<div class="field"><label>${t(k)} (%)</label><input type="number" step="0.1" id="f_fin_${k}" value="${v}"></div>`).join('')}<div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveFinancialLevel(${level})">${t('save')}</button></div>`);}
-function saveFinancialLevel(level){const x=STATE.financialLevels.find(v=>v.level===level);if(!x)return;x.threshold=Number(document.getElementById('f_finthreshold').value)||x.threshold;x.startDate=document.getElementById('f_finstart')?.value||'';x.deadline=document.getElementById('f_findeadline')?.value||'';Object.keys(x.allocations).forEach(k=>x.allocations[k]=Number(document.getElementById('f_fin_'+k).value)||0);const total=Object.values(x.allocations).reduce((a,b)=>a+b,0);if(Math.abs(total-100)>0.01){showToast('Allocation must equal 100%');return;}saveState();closeModal();renderPage();}
+function openGoalTabsActions(){const tabs=STATE.goalTabs.slice().sort((a,b)=>(a.order||0)-(b.order||0));openModal(`<h3>⚙️ ${t('goal_tabs')}</h3><div style="display:flex;flex-direction:column;gap:8px;">${tabs.map((tb,i)=>`<div class="item-row"><div class="irow-top"><b>${esc(tb.name)}</b><div class="item-actions"><button class="action-gear" onclick="closeModal();openGoalTabModal('${tb.id}')">✎</button><button class="action-gear" onclick="closeModal();moveGoalTab('${tb.id}',-1)">↑</button><button class="action-gear" onclick="closeModal();moveGoalTab('${tb.id}',1)">↓</button>${tb.isSystem?'':`<button class="action-gear" onclick="closeModal();deleteGoalTab('${tb.id}')">✕</button>`}</div></div></div>`).join('')}</div><div style="margin-top:12px;"><button class="btn primary" onclick="closeModal();openGoalTabModal()">+ ${t('new_goal_tab')}</button></div>`);}
+function openFinancialLevelActions(level){openModal(`<h3>⚙️ ${t('edit_fin_level')} ${localizeNum(level)}</h3><div class="goal-action-grid"><button class="btn" onclick="closeModal();editFinancialLevel(${level})">✎ ${t('edit')}</button></div>`);}
+function editFinancialLevel(level){
+  const x=STATE.financialLevels.find(v=>v.level===level);if(!x)return;
+  x.display=x.display||{};
+  const d={share:true,checklist:true,dates:true,countdown:true,daysBetween:true,risk:true,...x.display};
+  openModal(`<h3>⚙️ ${t('edit_fin_level')} ${localizeNum(level)}</h3>
+    <div class="field"><label>${t('threshold')}</label><input type="number" step="0.01" id="f_finthreshold" value="${x.threshold}"></div>
+    <div class="field-row"><div class="field"><label>تاریخ شروع سطح</label><input type="date" id="f_finstart" value="${x.startDate||''}"></div><div class="field"><label>تاریخ ختم سطح</label><input type="date" id="f_findeadline" value="${x.deadline||''}"></div></div>
+    <div class="field"><label>مقدار ریسک (%)</label><input type="number" min="0" max="100" step="0.01" id="f_finrisk" value="${Number(x.risk)||0}"></div>
+    <div class="smallnote" style="margin:8px 0 4px;">نمایش گزینه‌ها در کارت این سطح</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <label class="checkline"><input type="checkbox" id="f_finshow_share" ${d.share?'checked':''}> سهم از هدف مالی</label>
+      <label class="checkline"><input type="checkbox" id="f_finshow_checklist" ${d.checklist?'checked':''}> تلاش چک‌لیست</label>
+      <label class="checkline"><input type="checkbox" id="f_finshow_dates" ${d.dates?'checked':''}> تاریخ شروع و ختم</label>
+      <label class="checkline"><input type="checkbox" id="f_finshow_countdown" ${d.countdown?'checked':''}> روز شمار</label>
+      <label class="checkline"><input type="checkbox" id="f_finshow_days" ${d.daysBetween?'checked':''}> مقدار روز بین شروع و ختم</label>
+      <label class="checkline"><input type="checkbox" id="f_finshow_risk" ${d.risk?'checked':''}> مقدار ریسک</label>
+    </div>
+    ${Object.entries(x.allocations).map(([k,v])=>`<div class="field"><label>${t(k)} (%)</label><input type="number" step="0.1" id="f_fin_${k}" value="${v}"></div>`).join('')}
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveFinancialLevel(${level})">${t('save')}</button></div>`);
+}
+function saveFinancialLevel(level){
+  const x=STATE.financialLevels.find(v=>v.level===level);if(!x)return;
+  x.threshold=Number(document.getElementById('f_finthreshold').value)||x.threshold;
+  x.startDate=document.getElementById('f_finstart')?.value||'';
+  x.deadline=document.getElementById('f_findeadline')?.value||'';
+  x.risk=Math.max(0,Math.min(100,Number(document.getElementById('f_finrisk')?.value)||0));
+  x.display={
+    share:!!document.getElementById('f_finshow_share')?.checked,
+    checklist:!!document.getElementById('f_finshow_checklist')?.checked,
+    dates:!!document.getElementById('f_finshow_dates')?.checked,
+    countdown:!!document.getElementById('f_finshow_countdown')?.checked,
+    daysBetween:!!document.getElementById('f_finshow_days')?.checked,
+    risk:!!document.getElementById('f_finshow_risk')?.checked
+  };
+  Object.keys(x.allocations).forEach(k=>x.allocations[k]=Number(document.getElementById('f_fin_'+k).value)||0);
+  const total=Object.values(x.allocations).reduce((a,b)=>a+b,0);if(Math.abs(total-100)>0.01){showToast('Allocation must equal 100%');return;}
+  saveState();closeModal();renderPage();
+}
 function formatCountdown(targetIso){if(!targetIso)return null;const target=new Date(targetIso),now=new Date();let diff=target-now;const past=diff<0;diff=Math.abs(diff);return {d:Math.floor(diff/86400000),h:Math.floor(diff%86400000/3600000),m:Math.floor(diff%3600000/60000),s:Math.floor(diff%60000/1000),past};}
-function checkGoalAlarms(){const now=new Date();let changed=false;STATE.goals.forEach(g=>{const target=g.alarmDateTime||null;if(target&&!g.alarmFired&&new Date(target)<=now){g.alarmFired=true;changed=true;showToast(`${t('alarm_triggered')}: ${g.name}`);}});if(changed)saveState();}
+function checkGoalAlarms(){const now=new Date();let changed=false;STATE.goals.forEach(g=>{const target=g.alarmDateTime||null;if(target&&!g.alarmFired&&new Date(target)<=now){g.alarmFired=true;changed=true;showToast(g.alarmText&&String(g.alarmText).trim()?g.alarmText:`${t('alarm_triggered')}: ${g.name}`);}});if(changed)saveState();}
 function updateGoalCountdowns(){document.querySelectorAll('.goal-countdown').forEach(el=>{const cd=formatCountdown(el.dataset.target);if(!cd)return;el.querySelector('.cd-d').textContent=localizeNum(cd.d);el.querySelector('.cd-h').textContent=localizeNum(cd.h);el.querySelector('.cd-m').textContent=localizeNum(cd.m);el.querySelector('.cd-s').textContent=localizeNum(cd.s);});}
-function openGoalModal(id){const isEdit=!!id,g=isEdit?findGoal(id):null;openModal(`<h3>${isEdit?t('edit'):t('new_goal')}</h3><div class="field"><label>${t('goal_name')}</label><input id="f_gname" value="${esc(g?.name||'')}"></div><div class="field"><label>${t('desc_f')}</label><textarea id="f_gdesc">${esc(g?.description||'')}</textarea></div><div class="field-row"><div class="field"><label>${t('goal_start')}</label><input type="date" id="f_gstart" value="${g?.startDate||todayISO()}"></div><div class="field"><label>${t('goal_deadline')}</label><input type="date" id="f_gdeadline" value="${g?.deadline||''}"></div></div><div class="field-row"><div class="field"><label>${t('category_f')}</label><input id="f_gcat" value="${esc(g?.category||'')}"></div><div class="field"><label>${t('goal_importance')}</label><select id="f_gimportance">${['low','medium','high','critical'].map(l=>`<option value="${l}" ${g?.importance===l?'selected':''}>${t(l)}</option>`).join('')}</select></div></div><div class="field"><label>Tab</label><select id="f_gtab">${STATE.goalTabs.map(x=>`<option value="${x.id}" ${(g?.tabId||GOAL_TAB_ID)===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div><div class="field"><label>${t('folders')}</label><select id="f_gfolder"><option value="">—</option>${STATE.goalFolders.filter(f=>f.tabId===GOAL_TAB_ID).map(x=>`<option value="${x.id}" ${g?.folderId===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div><div class="field"><label>${t('alarm_time')}</label><input type="datetime-local" id="f_galarm" value="${g?.alarmDateTime||''}"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveGoalModal('${id||''}')">${t('save')}</button></div>`);}
-function saveGoalModal(id){const name=document.getElementById('f_gname').value.trim();if(!name)return;let g=id?findGoal(id):null;const isNew=!g;if(!g){g={id:uid(),status:'notdone',lists:[]};STATE.goals.push(g);}g.name=name;g.description=document.getElementById('f_gdesc').value;g.startDate=document.getElementById('f_gstart').value;g.deadline=document.getElementById('f_gdeadline').value;g.category=document.getElementById('f_gcat').value;g.importance=document.getElementById('f_gimportance').value;g.tabId=document.getElementById('f_gtab').value;g.folderId=document.getElementById('f_gfolder').value||null;const na=document.getElementById('f_galarm').value;if(na!==g.alarmDateTime)g.alarmFired=false;g.alarmDateTime=na;if(isNew)OPEN_GOAL_ID=g.id;saveState();closeModal();showToast(t('save_success'));renderPage();renderHeader();}
+function clearGoalDate(id){const el=document.getElementById(id);if(el){el.value='';el.dispatchEvent(new Event('change',{bubbles:true}));}}
+function goalDescHtml(value){const raw=String(value||'');if(!raw)return '';if(/<\/?[a-z][\s\S]*>/i.test(raw))return sanitizeGoalHtml(raw);return esc(raw).replace(/\r?\n/g,'<br>');}
+function sanitizeGoalHtml(html){const box=document.createElement('div');box.innerHTML=String(html||'');const allowed=['B','STRONG','I','EM','U','S','STRIKE','BR','P','DIV','SPAN','FONT'];box.querySelectorAll('*').forEach(el=>{if(!allowed.includes(el.tagName)){el.replaceWith(...Array.from(el.childNodes));return;}Array.from(el.attributes).forEach(a=>{const n=a.name.toLowerCase(),v=a.value;if(n==='style'){const clean=v.split(';').map(x=>x.trim()).filter(x=>/^(text-align|color|font-size)\s*:/i.test(x)&&!/[<>"']/ .test(x)).join(';');if(clean)el.setAttribute('style',clean);else el.removeAttribute('style');}else if(n==='color'&&el.tagName==='FONT'){if(!/^#[0-9a-f]{3,8}$/i.test(v)&&!/^rgba?\(/i.test(v)&&!/^hsla?\(/i.test(v))el.removeAttribute(a.name);}else{el.removeAttribute(a.name);}});});return box.innerHTML;}
+function goalNoteCmd(cmd,value){const ed=document.getElementById('f_gdesc');if(!ed)return;ed.focus();document.execCommand(cmd,false,value||null);}
+function goalNoteColor(value){const ed=document.getElementById('f_gdesc');if(!ed)return;ed.focus();document.execCommand('foreColor',false,value);}
+function openGoalModal(id){const isEdit=!!id,g=isEdit?findGoal(id):null;const desc=goalDescHtml(g?.description||'');openModal(`<h3>${isEdit?t('edit'):t('new_goal')}</h3><div class="field"><label>${t('goal_name')}</label><input id="f_gname" value="${esc(g?.name||'')}"></div><div class="field"><label>${t('desc_f')}</label><div class="goal-note-editor"><div class="goal-note-toolbar"><button type="button" class="btn ghost" title="وسط چین" onmousedown="event.preventDefault()" onclick="goalNoteCmd('justifyCenter')">↔ وسط</button><button type="button" class="btn ghost" title="راست کردن" onmousedown="event.preventDefault()" onclick="goalNoteCmd('justifyRight')">☷ راست</button><button type="button" class="btn ghost" title="خط کشیدن" onmousedown="event.preventDefault()" onclick="goalNoteCmd('strikeThrough')">S̶</button><button type="button" class="btn ghost" title="بزرگ کردن" onmousedown="event.preventDefault()" onclick="goalNoteCmd('fontSize','5')">A＋</button><button type="button" class="btn ghost" title="کوچک کردن" onmousedown="event.preventDefault()" onclick="goalNoteCmd('fontSize','2')">A−</button><label title="رنگ فونت" style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-dim);">رنگ <input class="goal-color" type="color" value="#d4af37" onchange="goalNoteColor(this.value)"></label></div><div id="f_gdesc" class="goal-note-content" contenteditable="true" spellcheck="true">${desc}</div></div></div><div class="field-row"><div class="field"><label>${t('goal_start')}</label><div style="display:flex;gap:6px;align-items:center"><input type="date" id="f_gstart" value="${g?.startDate||todayISO()}" style="flex:1"><button type="button" class="btn ghost" onclick="clearGoalDate('f_gstart')" title="حذف تاریخ">✕</button></div></div><div class="field"><label>${t('goal_end')}</label><div style="display:flex;gap:6px;align-items:center"><input type="date" id="f_gfinish" value="${g?.finishDate||''}" style="flex:1"><button type="button" class="btn ghost" onclick="clearGoalDate('f_gfinish')" title="حذف تاریخ">✕</button></div></div></div><div class="field"><label>${t('goal_deadline')}</label><div style="display:flex;gap:6px;align-items:center"><input type="date" id="f_gdeadline" value="${g?.deadline||''}" style="flex:1"><button type="button" class="btn ghost" onclick="clearGoalDate('f_gdeadline')" title="حذف تاریخ">✕</button></div></div><div class="field-row"><div class="field"><label>${t('category_f')}</label><input id="f_gcat" value="${esc(g?.category||'')}"></div><div class="field"><label>${t('goal_importance')}</label><select id="f_gimportance">${['low','medium','high','critical'].map(l=>`<option value="${l}" ${g?.importance===l?'selected':''}>${t(l)}</option>`).join('')}</select></div></div><div class="field"><label>Tab</label><select id="f_gtab">${STATE.goalTabs.map(x=>`<option value="${x.id}" ${(g?.tabId||GOAL_TAB_ID)===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div><div class="field"><label>${t('folders')}</label><select id="f_gfolder"><option value="">—</option>${STATE.goalFolders.filter(f=>f.tabId===GOAL_TAB_ID).map(x=>`<option value="${x.id}" ${g?.folderId===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div><div class="field"><label>${t('alarm_time')}</label><input type="datetime-local" id="f_galarm" value="${g?.alarmDateTime||''}"></div><div class="field"><label>${t('alarm_text')}</label><textarea id="f_galarmtext" placeholder="${STATE.lang==='fa'?'متن هشدار قابل ویرایش...':'Editable alarm message...'}">${esc(g?.alarmText||'')}</textarea></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveGoalModal('${id||''}')">${t('save')}</button></div>`);}
+function saveGoalModal(id){const name=document.getElementById('f_gname').value.trim();if(!name)return;let g=id?findGoal(id):null;const isNew=!g;if(!g){g={id:uid(),status:'notdone',lists:[]};STATE.goals.push(g);}g.name=name;g.description=sanitizeGoalHtml(document.getElementById('f_gdesc').innerHTML);g.startDate=document.getElementById('f_gstart').value;g.finishDate=document.getElementById('f_gfinish').value;g.deadline=document.getElementById('f_gdeadline').value;g.category=document.getElementById('f_gcat').value;g.importance=document.getElementById('f_gimportance').value;g.tabId=document.getElementById('f_gtab').value;g.folderId=document.getElementById('f_gfolder').value||null;const na=document.getElementById('f_galarm').value;if(na!==g.alarmDateTime)g.alarmFired=false;g.alarmDateTime=na;g.alarmText=document.getElementById('f_galarmtext')?.value||'';if(isNew)OPEN_GOAL_ID=g.id;saveState();closeModal();showToast(t('save_success'));renderPage();renderHeader();}
 /* ============ QUIZ PAGE ============ */
-let QUIZ_SESSION = null; // {questions:[], index:0, answers:[], selected:null}
-let QUIZ_VIEW = 'home'; // 'home' | 'list'
+let QUIZ_SESSION = null;
+let QUIZ_VIEW = 'home';
+let QUIZ_TIMER_HANDLE = null;
+let QUIZ_TIME_LEFT = 0;
 
 function getQuizBank(){
-  if(!STATE.quizBank){
-    STATE.quizBank = JSON.parse(JSON.stringify(QUIZ_BANK));
-    saveState();
-  }
-  return STATE.quizBank;
+  if(!STATE.quizBank){ STATE.quizBank=JSON.parse(JSON.stringify(QUIZ_BANK)); }
+  STATE.quizBank.forEach(q=>{ if(q.folderId===undefined) q.folderId=null; if(q.archived===undefined) q.archived=false; if(q.points===undefined) q.points=1; if(q.category===undefined) q.category=getQuizCategories()[0]?.id; });
+  if(!Array.isArray(STATE.quizCategories)) STATE.quizCategories=CATS.map((id,i)=>({id,name:CAT_LABELS[id].fa,order:i}));
+  if(!Array.isArray(STATE.quizFolders)) STATE.quizFolders=[];
+  if(!Array.isArray(STATE.quizExams)) STATE.quizExams=[];
+  STATE.quizSettings=Object.assign({instantFeedback:false,timerEnabled:true,autoSkip:true,timePerQuestion:20,totalTimerEnabled:true,totalTime:30,defaultQuestionCount:25,defaultPoints:1},STATE.quizSettings||{});
+  saveState(); return STATE.quizBank;
 }
+function getQuizCategories(){return (STATE.quizCategories||[]).slice().sort((a,b)=>(a.order??0)-(b.order??0));}
+function quizCatLabel(id){const c=getQuizCategories().find(x=>x.id===id);return c?c.name:(CAT_LABELS[id]?.[STATE.lang]||CAT_LABELS[id]?.fa||id);}
+function quizFolderLabel(id){const f=STATE.quizFolders.find(x=>x.id===id);return f?f.name:'—';}
+function activeQuizBank(){return getQuizBank().filter(q=>!q.archived);}
+function stopQuizTimer(){if(QUIZ_TIMER_HANDLE){clearInterval(QUIZ_TIMER_HANDLE);QUIZ_TIMER_HANDLE=null;}}
+function startQuizTimer(){stopQuizTimer(); if(!STATE.quizSettings.timerEnabled)return; QUIZ_TIME_LEFT=Math.max(1,Number(STATE.quizSettings.timePerQuestion)||20); QUIZ_TIMER_HANDLE=setInterval(()=>{if(!QUIZ_SESSION||QUIZ_SESSION.finished){stopQuizTimer();return;} QUIZ_TIME_LEFT--; const el=document.getElementById('quizTimerValue'); if(el)el.textContent=localizeNum(Math.max(0,QUIZ_TIME_LEFT)); if(QUIZ_TIME_LEFT<=0){stopQuizTimer(); if(STATE.quizSettings.autoSkip) skipQuizQuestion();}},1000);}
 function pageQuiz(){
-  if(QUIZ_SESSION && !QUIZ_SESSION.finished) return renderQuizQuestion();
-  if(QUIZ_SESSION && QUIZ_SESSION.finished) return renderQuizResult(QUIZ_SESSION.result);
-  if(QUIZ_VIEW==='list') return renderQuizList();
-  const bank = getQuizBank();
-  return `
-  <h1 class="pagetitle">${t('quiz_title')}</h1>
-  <div class="pagesub">${t('quiz_sub')}</div>
-  <div class="card">
-    <div class="sectiontitle">${t('category_breakdown')}</div>
-    <div class="grid cols-3">
-      ${CATS.map(c=>`<div class="summary-card"><div class="sicon">📌</div><div class="sv" style="font-size:14px;">${CAT_LABELS[c][STATE.lang]||CAT_LABELS[c].fa}</div><div class="sl">${bank.filter(q=>q.category===c).length}</div></div>`).join('')}
-    </div>
-    <div style="display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;">
-      <button class="btn primary" onclick="startQuiz()">${t('start_quiz')} (${bank.length})</button>
-      <button class="btn ghost" onclick="QUIZ_VIEW='list'; renderPage();">📋 ${t('question_list')}</button>
-    </div>
+  if(QUIZ_SESSION&&!QUIZ_SESSION.finished)return renderQuizQuestion();
+  if(QUIZ_SESSION&&QUIZ_SESSION.finished)return renderQuizResult(QUIZ_SESSION.result);
+  if(QUIZ_VIEW==='list')return renderQuizList();
+  if(QUIZ_VIEW==='folders')return renderQuizFolders();
+  if(QUIZ_VIEW==='archive')return renderQuizArchive();
+  if(QUIZ_VIEW==='exams')return renderQuizExams();
+  const bank=activeQuizBank(),cats=getQuizCategories();
+  return `<h1 class="pagetitle">${t('quiz_title')}</h1><div class="pagesub">${t('quiz_sub')}</div>
+  <div class="card"><div class="sectiontitle">${t('category_breakdown')}</div>
+    <div class="grid cols-3">${cats.map(c=>{const n=bank.filter(q=>q.category===c.id).length;return `<div class="summary-card"><div class="sicon">📌</div><div class="sv" style="font-size:14px;">${esc(c.name)}</div><div class="sl">${localizeNum(n)}</div><div class="item-actions" style="margin-top:7px;"><button class="btn sm ghost" onclick="openQuizCategoryModal('${c.id}')">✎</button><button class="btn sm ghost" onclick="moveQuizCategory('${c.id}',-1)">↑</button><button class="btn sm ghost" onclick="moveQuizCategory('${c.id}',1)">↓</button><button class="btn sm danger" onclick="deleteQuizCategory('${c.id}')">✕</button></div></div>`}).join('')}</div>
+    <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;"><button class="btn primary" onclick="openStartQuizModal()">▶️ شروع آزمون</button><button class="btn ghost" onclick="openQuizExamModal()">➕ ایجاد آزمون</button><button class="btn ghost" onclick="QUIZ_VIEW='exams';renderPage();">📝 آزمون‌های من</button><button class="btn ghost" onclick="QUIZ_VIEW='list';renderPage();">📋 ${t('question_list')}</button><button class="btn ghost" onclick="QUIZ_VIEW='folders';renderPage();">📁 ${t('quiz_folders')}</button><button class="btn ghost" onclick="QUIZ_VIEW='archive';renderPage();">🗄️ آزمون‌های آرشیو شده</button><button class="btn ghost" onclick="openQuizSettings()">⚙️ ${t('quiz_settings')}</button></div>
   </div>
-  ${STATE.quizResults.length? `
-  <div class="card">
-    <div class="sectiontitle">${t('quiz_result')}</div>
-    ${STATE.quizResults.slice().reverse().slice(0,8).map(r=>`
-      <div class="item-row"><div class="irow-top">
-        <div><div class="ititle">${r.date}</div><div class="idesc">${scoreLabel(r.scorePct)}</div></div>
-        <div style="display:flex; align-items:center; gap:8px;">
-          <div class="badge gold">${localizeNum(r.scorePct)}%</div>
-          <button class="btn sm danger" onclick="deleteQuizResult('${r.id}')">✕</button>
-        </div>
-      </div></div>`).join('')}
-  </div>`:''}
-  `;
+  ${STATE.quizFolders.length?`<div class="card"><div class="sectiontitle">📁 ${t('quiz_folders')}</div>${STATE.quizFolders.filter(f=>!f.archived).map(f=>`<div class="item-row"><div class="irow-top"><div><div class="ititle">📁 ${esc(f.name)}</div><div class="idesc">${localizeNum(bank.filter(q=>q.folderId===f.id).length)} ${t('quiz_title')}</div></div><div class="item-actions"><button class="btn sm ghost" onclick="openQuizFolderModal('${f.id}')">✎</button><button class="btn sm ghost" onclick="archiveQuizFolder('${f.id}')">🗄️</button><button class="btn sm danger" onclick="deleteQuizFolder('${f.id}')">✕</button></div></div></div>`).join('')}</div>`:''}
+  ${STATE.quizResults.length?`<div class="card"><div class="sectiontitle">${t('quiz_result')}</div>${STATE.quizResults.slice().reverse().slice(0,8).map(r=>`<div class="item-row"><div class="irow-top"><div><div class="ititle">${r.date}</div><div class="idesc">${scoreLabel(r.scorePct)}</div></div><div style="display:flex;align-items:center;gap:8px;"><div class="badge gold">${localizeNum(r.scorePct)}%</div><button class="btn sm danger" onclick="deleteQuizResult('${r.id}')">✕</button></div></div></div>`).join('')}</div>`:''}`;
 }
+function renderQuizList(){const bank=activeQuizBank();return `<h1 class="pagetitle">${t('question_list')}</h1><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;"><button class="btn ghost" onclick="QUIZ_VIEW='home';renderPage();">← ${t('back')}</button><button class="btn primary" onclick="openNewQuizQuestion()">＋ سوال جدید</button><button class="btn ghost" onclick="openQuizQuestionListSettings()">⚙️ تنظیمات لیست سوالات</button></div><div class="card"><div class="sectiontitle">📋 مدیریت سوالات</div><div class="smallnote">تعداد سوالات فعال: ${localizeNum(bank.length)} · از این بخش می‌توانید سوال جدید بسازید، سوالات موجود را ویرایش یا آرشیو کنید.</div></div>${bank.map((q,idx)=>`<div class="item-row"><div class="irow-top"><div style="flex:1;"><span class="badge gold">${esc(quizCatLabel(q.category))}</span>${q.folderId?` <span class="badge">📁 ${esc(quizFolderLabel(q.folderId))}</span>`:''}<span class="badge">⭐ ${localizeNum(Number(q.points)||1)}</span><div class="ititle" style="margin-top:6px;">${localizeNum(idx+1)}. ${esc(q.question)}</div></div><div class="item-actions"><button class="btn sm ghost" onclick="editQuizQuestion('${q.id}')">✎</button><button class="btn sm ghost" onclick="archiveQuizQuestion('${q.id}')">🗄️</button></div></div></div>`).join('')||`<div class="card"><div class="smallnote">هنوز سوالی ساخته نشده است. از دکمه «سوال جدید» استفاده کنید.</div></div>`}`;}
+function openNewQuizQuestion(){const cats=getQuizCategories(),folders=STATE.quizFolders.filter(f=>!f.archived),defaultCat=cats[0]?.id||'';openModal(`<h3>ساخت سوال جدید</h3><div class="field"><label>${t('title_f')}</label><textarea id="f_newqtext" placeholder="متن سوال را وارد کنید..."></textarea></div>${[0,1,2,3].map(i=>`<div class="field"><label>${t('option_f')} ${localizeNum(i+1)}</label><input id="f_newqopt${i}" placeholder="گزینه ${localizeNum(i+1)}"></div>`).join('')}<div class="field"><label>${t('correct_answer_f')}</label><select id="f_newqcorrect">${[0,1,2,3].map(i=>`<option value="${i}">${localizeNum(i+1)}</option>`).join('')}</select></div><div class="field"><label>${t('explanation_f')}</label><textarea id="f_newqexp" placeholder="توضیح پاسخ صحیح..."></textarea></div><div class="field"><label>امتیاز این پرسش</label><input type="number" id="f_newqpoints" min="0.1" max="100" step="0.1" value="${Number(STATE.quizSettings.defaultPoints)||1}"></div><div class="field"><label>${t('category_f')}</label><select id="f_newqcat">${cats.map(c=>`<option value="${c.id}" ${c.id===defaultCat?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div><div class="field"><label>${t('quiz_folders')}</label><select id="f_newqfolder"><option value="">—</option>${folders.map(f=>`<option value="${f.id}">${esc(f.name)}</option>`).join('')}</select></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveNewQuizQuestion()">${t('save')}</button></div>`);}
+function saveNewQuizQuestion(){const question=document.getElementById('f_newqtext')?.value.trim();const options=[0,1,2,3].map(i=>document.getElementById('f_newqopt'+i)?.value.trim());const explanation=document.getElementById('f_newqexp')?.value.trim()||'';const category=document.getElementById('f_newqcat')?.value||getQuizCategories()[0]?.id;const folderId=document.getElementById('f_newqfolder')?.value||null;const correct=Number(document.getElementById('f_newqcorrect')?.value);const points=Math.max(.1,Number(document.getElementById('f_newqpoints')?.value)||Number(STATE.quizSettings.defaultPoints)||1);if(!question||options.some(x=>!x)){showToast('متن سوال و هر چهار گزینه لازم است.');return;}const q={id:uid(),category,question,options,correct,explanation,folderId,archived:false,points};getQuizBank().push(q);saveState();closeModal();showToast('سوال جدید ساخته شد.');QUIZ_VIEW='list';renderPage();}
+function openQuizQuestionListSettings(){const bank=getQuizBank();const active=bank.filter(q=>!q.archived).length,arch=bank.filter(q=>q.archived).length;openModal(`<h3>تنظیمات لیست سوالات</h3><div class="card" style="margin:0 0 10px"><div class="sectiontitle">وضعیت لیست</div><div class="smallnote">فعال: ${localizeNum(active)} · آرشیو: ${localizeNum(arch)}</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" onclick="closeModal();openNewQuizQuestion()">＋ ساخت سوال جدید</button><button class="btn ghost" onclick="closeModal();openQuizSettings()">⚙️ تنظیمات کلی آزمون</button><button class="btn ghost" onclick="closeModal();QUIZ_VIEW='archive';renderPage()">🗄️ سوالات آرشیو شده</button></div><div class="smallnote" style="margin-top:10px">هر سوال می‌تواند حوزه، پوشه، توضیح پاسخ و امتیاز مستقل داشته باشد. برای ویرایش هر سوال از دکمه ✎ در فهرست استفاده کنید.</div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('close')}</button></div>`);}
+function renderQuizArchive(){const bank=getQuizBank().filter(q=>q.archived);return `<h1 class="pagetitle">آرشیو آزمون‌ها</h1><button class="btn ghost" onclick="QUIZ_VIEW='home';renderPage();">← ${t('back')}</button><div class="card"><div class="sectiontitle">آزمون‌های آرشیو شده بر اساس حوزه</div>${renderQuizExamsArchive()}</div><div class="card"><div class="sectiontitle">پرسش‌های آرشیو شده بر اساس حوزه</div>${getQuizCategories().map(c=>{const qs=bank.filter(q=>q.category===c.id);return qs.length?`<div style="margin-bottom:14px"><b>${esc(c.name)}</b>${qs.map(q=>`<div class="item-row"><div class="irow-top"><div><div class="ititle">${esc(q.question)}</div></div><button class="btn sm ghost" onclick="restoreQuizQuestion('${q.id}')">↩️ ${t('restore_quiz')}</button></div></div>`).join('')}</div>`:''}).join('')||`<div class="smallnote">پرسش آرشیو شده‌ای نیست.</div>`}</div>`;}
+function renderQuizFolders(){return `<h1 class="pagetitle">${t('quiz_folders')}</h1><button class="btn ghost" onclick="QUIZ_VIEW='home';renderPage();">← ${t('back')}</button><button class="btn primary" style="margin:10px 0;" onclick="openQuizFolderModal()">+ ${t('new_quiz_folder')}</button>${STATE.quizFolders.map(f=>`<div class="item-row"><div class="irow-top"><div><div class="ititle">📁 ${esc(f.name)} ${f.archived?'— '+t('archived'):''}</div><div class="idesc">${localizeNum(getQuizBank().filter(q=>q.folderId===f.id).length)}</div></div><div class="item-actions"><button class="btn sm ghost" onclick="openQuizFolderModal('${f.id}')">✎</button>${f.archived?`<button class="btn sm ghost" onclick="restoreQuizFolder('${f.id}')">↩️</button>`:`<button class="btn sm ghost" onclick="archiveQuizFolder('${f.id}')">🗄️</button>`}<button class="btn sm danger" onclick="deleteQuizFolder('${f.id}')">✕</button></div></div></div>`).join('')}`;}
+function renderQuizExams(){
+  const exams=STATE.quizExams||[];
+  return `<h1 class="pagetitle">آزمون‌های من</h1><button class="btn ghost" onclick="QUIZ_VIEW='home';renderPage();">← ${t('back')}</button><button class="btn primary" style="margin:10px 0" onclick="openQuizExamModal()">+ ایجاد آزمون</button>
+  ${exams.length?exams.map(e=>{const qs=e.questionIds.map(id=>getQuizBank().find(q=>q.id===id)).filter(Boolean);return `<div class="item-row"><div class="irow-top"><div><div class="ititle">📝 ${esc(e.name)}</div><div class="idesc">📁 ${esc(quizFolderLabel(e.folderId))} · ${localizeNum(qs.length)} پرسش · ${e.archived?'آرشیو شده':'فعال'}</div></div><div class="item-actions">${e.archived?`<button class="btn sm ghost" onclick="restoreQuizExam('${e.id}')">↩️</button>`:`<button class="btn sm primary" onclick="openStartQuizModal('${e.id}')">▶️</button><button class="btn sm ghost" onclick="archiveQuizExam('${e.id}')">🗄️</button>`}<button class="btn sm ghost" onclick="openQuizExamModal('${e.id}')">✎</button><button class="btn sm danger" onclick="deleteQuizExam('${e.id}')">✕</button></div></div></div>`}).join(''):`<div class="card">هنوز آزمونی ایجاد نشده است.</div>`}`;
+}
+function openQuizExamModal(id){
+ const e=id&&(STATE.quizExams||[]).find(x=>x.id===id), bank=activeQuizBank();
+ const selected=e?new Set(e.questionIds):new Set(bank.map(q=>q.id));
+ openModal(`<h3>${id?'ویرایش آزمون':'ایجاد آزمون'}</h3><div class="field"><label>عنوان آزمون</label><input id="f_examname" value="${esc(e?.name||'آزمون جدید')}"></div><div class="field"><label>پوشه</label><select id="f_examfolder"><option value="">بدون پوشه</option>${STATE.quizFolders.filter(f=>!f.archived).map(f=>`<option value="${f.id}" ${e?.folderId===f.id?'selected':''}>${esc(f.name)}</option>`).join('')}</select></div><div class="field"><label>پرسش‌های آزمون را انتخاب کنید</label><div style="max-height:280px;overflow:auto;border:1px solid var(--border);border-radius:8px;padding:8px;">${bank.map(q=>`<label style="display:block;padding:6px;"><input type="checkbox" class="exam-q" value="${q.id}" ${selected.has(q.id)?'checked':''}> ${esc(quizCatLabel(q.category))} — ${esc(q.question)}</label>`).join('')}</div></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveQuizExam('${id||''}')">${t('save')}</button></div>`);
+}
+function saveQuizExam(id){const name=document.getElementById('f_examname')?.value.trim();const ids=[...document.querySelectorAll('.exam-q:checked')].map(x=>x.value);if(!name||!ids.length){showToast('عنوان و حداقل یک پرسش لازم است.');return;}const folderId=document.getElementById('f_examfolder')?.value||null;if(id){const e=STATE.quizExams.find(x=>x.id===id);if(e){e.name=name;e.folderId=folderId;e.questionIds=ids;}}else STATE.quizExams.push({id:uid(),name,folderId,questionIds:ids,archived:false,createdAt:new Date().toISOString()});saveState();closeModal();QUIZ_VIEW='exams';renderPage();}
+function archiveQuizExam(id){const e=STATE.quizExams.find(x=>x.id===id);if(e){e.archived=true;saveState();renderPage();}}
+function restoreQuizExam(id){const e=STATE.quizExams.find(x=>x.id===id);if(e){e.archived=false;saveState();renderPage();}}
+function deleteQuizExam(id){confirmDelete(()=>{STATE.quizExams=STATE.quizExams.filter(e=>e.id!==id);saveState();renderPage();});}
+function openStartQuizModal(examId){
+ const e=examId&&(STATE.quizExams||[]).find(x=>x.id===examId), available=e?e.questionIds.map(id=>getQuizBank().find(q=>q.id===id)).filter(Boolean):activeQuizBank();
+ if(!available.length){showToast('هیچ پرسشی برای این آزمون وجود ندارد.');return;}
+ const d=STATE.quizSettings;
+ openModal(`<h3>شروع آزمون${e?' — '+esc(e.name):''}</h3><div class="field"><label>تعداد پرسش</label><select id="f_qcount"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="custom">مقدار دلخواه</option></select></div><div class="field" id="customCountWrap" style="display:none"><label>تعداد دلخواه</label><input type="number" id="f_qcustom" min="1" max="${available.length}" value="${Math.min(available.length,25)}"></div><div class="field"><label><input type="checkbox" id="f_totalTimer" ${d.totalTimerEnabled?'checked':''}> زمان‌شمار معکوس کل آزمون</label></div><div class="field"><label>زمان کل (دقیقه)</label><input type="number" id="f_totalTime" min="1" max="1440" value="${d.totalTime||30}"></div><div class="field"><label>امتیاز هر پرسش</label><input type="number" id="f_points" min="0.1" max="100" step="0.1" value="${d.defaultPoints||1}"></div><div class="smallnote">این تنظیمات فقط برای همین آزمون اعمال می‌شود و تنظیمات کلی برنامه را تغییر نمی‌دهد.</div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="launchQuiz('${examId||''}')">شروع</button></div>`);
+ document.getElementById('f_qcount').onchange=function(){document.getElementById('customCountWrap').style.display=this.value==='custom'?'block':'none';};
+}
+function launchQuiz(examId){
+ const e=examId&&(STATE.quizExams||[]).find(x=>x.id===examId), base=e?e.questionIds.map(id=>getQuizBank().find(q=>q.id===id)).filter(Boolean):activeQuizBank();let mode=document.getElementById('f_qcount').value;let count=mode==='custom'?Number(document.getElementById('f_qcustom').value):Number(mode);count=Math.max(1,Math.min(count,base.length));const points=Math.max(.1,Number(document.getElementById('f_points').value)||1);const totalTimer=!!document.getElementById('f_totalTimer').checked;const totalMinutes=Math.max(1,Number(document.getElementById('f_totalTime').value)||30);const qs=base.slice().sort(()=>Math.random()-.5).slice(0,count);closeModal();startQuiz(qs,{points,totalTimer,totalSeconds:totalMinutes*60,examId:examId||null});
+}
+function startQuiz(questionSet,opts){const bank=questionSet||activeQuizBank();if(!bank.length)return;const o=opts||{points:1,totalTimer:false,totalSeconds:0};QUIZ_SESSION={questions:bank.slice().sort(()=>Math.random()-.5),index:0,answers:[],finished:false,selected:null,points:o.points||1,totalTimer:!!o.totalTimer,totalSeconds:o.totalSeconds||0,totalStartedAt:o.totalTimer?Date.now():null,examId:o.examId||null};startQuizTimer();startQuizTotalTimer();renderPage();}
+function startQuizTotalTimer(){if(window.QUIZ_TOTAL_TIMER_HANDLE)clearInterval(window.QUIZ_TOTAL_TIMER_HANDLE);if(!QUIZ_SESSION?.totalTimer)return;window.QUIZ_TOTAL_TIMER_HANDLE=setInterval(()=>{if(!QUIZ_SESSION||QUIZ_SESSION.finished){clearInterval(window.QUIZ_TOTAL_TIMER_HANDLE);return;}const elapsed=Math.floor((Date.now()-QUIZ_SESSION.totalStartedAt)/1000);const left=Math.max(0,QUIZ_SESSION.totalSeconds-elapsed);const el=document.getElementById('quizTotalTimerValue');if(el)el.textContent=formatQuizTime(left);if(left<=0){clearInterval(window.QUIZ_TOTAL_TIMER_HANDLE);finishQuiz();}},1000);}
+function formatQuizTime(sec){sec=Math.max(0,Math.floor(sec));const m=Math.floor(sec/60),s=sec%60;return `${localizeNum(String(m).padStart(2,'0'))}:${localizeNum(String(s).padStart(2,'0'))}`;}
+function stopQuizTotalTimer(){if(window.QUIZ_TOTAL_TIMER_HANDLE){clearInterval(window.QUIZ_TOTAL_TIMER_HANDLE);window.QUIZ_TOTAL_TIMER_HANDLE=null;}}
+function renderQuizExamsArchive(){const a=(STATE.quizExams||[]).filter(e=>e.archived);return `<h1 class="pagetitle">آزمون‌های آرشیو شده</h1>${getQuizCategories().map(c=>{const es=a.filter(e=>e.questionIds.some(id=>getQuizBank().find(q=>q.id===id)?.category===c.id));return es.length?`<div class="card"><div class="sectiontitle">${esc(c.name)}</div>${es.map(e=>`<div class="item-row"><div class="ititle">🗄️ ${esc(e.name)}</div><div class="idesc">${localizeNum(e.questionIds.length)} پرسش</div></div>`).join('')}</div>`:''}).join('')||'<div class="card">آرشیوی وجود ندارد.</div>'}`;}
+
+function openQuizCategoryModal(id){const c=getQuizCategories().find(x=>x.id===id);if(!c)return;openModal(`<h3>${t('edit_category')}</h3><div class="field"><label>${t('section_name_f')}</label><input id="f_qcatname" value="${esc(c.name)}"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveQuizCategory('${id}')">${t('save')}</button></div>`);}
+function saveQuizCategory(id){const c=STATE.quizCategories.find(x=>x.id===id),n=document.getElementById('f_qcatname')?.value.trim();if(c&&n){c.name=n;saveState();closeModal();renderPage();}}
+function moveQuizCategory(id,dir){const a=getQuizCategories(),i=a.findIndex(x=>x.id===id),j=i+dir;if(i<0||j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];a.forEach((x,k)=>x.order=k);STATE.quizCategories=a;saveState();renderPage();}
+function deleteQuizCategory(id){const n=getQuizBank().filter(q=>q.category===id&&!q.archived).length;if(n){showToast(STATE.lang==='fa'?'ابتدا سوالات این دسته‌بندی را به دسته دیگری منتقل کنید.':'Move the questions to another category first.');return;}if(getQuizCategories().length<=1)return;confirmDelete(()=>{STATE.quizCategories=STATE.quizCategories.filter(c=>c.id!==id);saveState();renderPage();});}
+function openQuizFolderModal(id){const f=id&&STATE.quizFolders.find(x=>x.id===id);openModal(`<h3>${id?t('edit_quiz_folder'):t('new_quiz_folder')}</h3><div class="field"><label>${t('list_name')}</label><input id="f_qfoldername" value="${esc(f?.name||'')}"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveQuizFolder('${id||''}')">${t('save')}</button></div>`);}
+function saveQuizFolder(id){const n=document.getElementById('f_qfoldername')?.value.trim();if(!n)return;if(id){const f=STATE.quizFolders.find(x=>x.id===id);if(f)f.name=n;}else STATE.quizFolders.push({id:uid(),name:n,archived:false,order:STATE.quizFolders.length});saveState();closeModal();renderPage();}
+function archiveQuizFolder(id){const f=STATE.quizFolders.find(x=>x.id===id);if(f){f.archived=true;saveState();renderPage();}}
+function restoreQuizFolder(id){const f=STATE.quizFolders.find(x=>x.id===id);if(f){f.archived=false;saveState();renderPage();}}
+function deleteQuizFolder(id){confirmDelete(()=>{STATE.quizFolders=STATE.quizFolders.filter(f=>f.id!==id);getQuizBank().forEach(q=>{if(q.folderId===id)q.folderId=null;});saveState();renderPage();});}
+function archiveQuizQuestion(id){const q=getQuizBank().find(x=>x.id===id);if(q){q.archived=true;saveState();renderPage();}}
+function restoreQuizQuestion(id){const q=getQuizBank().find(x=>x.id===id);if(q){q.archived=false;saveState();renderPage();}}
+function openQuizSettings(){const s=STATE.quizSettings;openModal(`<h3>${t('quiz_settings')}</h3><div class="field"><label><input type="checkbox" id="f_qinstant" ${s.instantFeedback?'checked':''}> ${t('instant_feedback')}</label></div><div class="field"><label><input type="checkbox" id="f_qtimer" ${s.timerEnabled?'checked':''}> ${t('timer_enabled')}</label></div><div class="field"><label><input type="checkbox" id="f_qskip" ${s.autoSkip?'checked':''}> ${t('auto_skip')}</label></div><div class="field"><label>${t('time_per_question')}</label><input type="number" id="f_qtime" min="5" max="600" value="${Number(s.timePerQuestion)||20}"></div><div class="field"><label><input type="checkbox" id="f_qtotaltimer" ${s.totalTimerEnabled?'checked':''}> زمان‌شمار معکوس کل آزمون پیش‌فرض</label></div><div class="field"><label>زمان کل پیش‌فرض (دقیقه)</label><input type="number" id="f_qtotaltime" min="1" max="1440" value="${s.totalTime||30}"></div><div class="field"><label>امتیاز پیش‌فرض هر پرسش</label><input type="number" id="f_qpoints" min="0.1" max="100" step="0.1" value="${s.defaultPoints||1}"></div><div class="field"><button class="btn ghost" style="width:100%" onclick="closeModal();openQuizThresholdChecklistSettings()">⚙️ ویرایش چک‌لیست‌های پیشنهادی 25٪ / 50٪ / 75٪ / 100٪</button></div><hr><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost" onclick="exportQuizData()">⬇️ امپورت/اکسپورت: اکسپورت</button><button class="btn ghost" onclick="document.getElementById('quizImportInputSettings').click()">⬆️ امپورت</button><input id="quizImportInputSettings" type="file" accept="application/json,.json" style="display:none" onchange="importQuizData(this)"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveQuizSettings()">${t('save')}</button></div>`);}
+function saveQuizSettings(){STATE.quizSettings={instantFeedback:!!document.getElementById('f_qinstant')?.checked,timerEnabled:!!document.getElementById('f_qtimer')?.checked,autoSkip:!!document.getElementById('f_qskip')?.checked,timePerQuestion:Math.max(5,Math.min(600,Number(document.getElementById('f_qtime')?.value)||20)),totalTimerEnabled:!!document.getElementById('f_qtotaltimer')?.checked,totalTime:Math.max(1,Math.min(1440,Number(document.getElementById('f_qtotaltime')?.value)||30)),defaultPoints:Math.max(.1,Math.min(100,Number(document.getElementById('f_qpoints')?.value)||1)),defaultQuestionCount:STATE.quizSettings.defaultQuestionCount||25};saveState();closeModal();showToast(t('save_success'));renderPage();}
+function exportQuizData(){const data={version:3,exportedAt:new Date().toISOString(),quizBank:getQuizBank(),quizCategories:getQuizCategories(),quizFolders:STATE.quizFolders,quizExams:STATE.quizExams||[],quizSettings:STATE.quizSettings};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='quiz-backup-'+todayISO()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
+function importQuizData(input){const file=input.files&&input.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const d=JSON.parse(reader.result);if(!Array.isArray(d.quizBank))throw new Error('invalid');STATE.quizBank=d.quizBank;STATE.quizCategories=Array.isArray(d.quizCategories)?d.quizCategories:CATS.map((id,i)=>({id,name:CAT_LABELS[id].fa,order:i}));STATE.quizFolders=Array.isArray(d.quizFolders)?d.quizFolders:[];STATE.quizExams=Array.isArray(d.quizExams)?d.quizExams:[];STATE.quizSettings=Object.assign(STATE.quizSettings||{},d.quizSettings||{});getQuizBank();saveState();showToast(t('save_success'));closeModal();renderPage();}catch(e){showToast(STATE.lang==='fa'?'فایل آزمون معتبر نیست.':'Invalid quiz file.');}input.value='';};reader.readAsText(file);}
+function editQuizQuestion(qid){const q=getQuizBank().find(x=>x.id===qid);if(!q)return;openModal(`<h3>${t('edit_question')}</h3><div class="field"><label>${t('title_f')}</label><textarea id="f_qtext">${esc(q.question)}</textarea></div>${q.options.map((opt,i)=>`<div class="field"><label>${t('option_f')} ${localizeNum(i+1)}</label><input id="f_qopt${i}" value="${esc(opt)}"></div>`).join('')}<div class="field"><label>${t('correct_answer_f')}</label><select id="f_qcorrect">${q.options.map((opt,i)=>`<option value="${i}" ${q.correct===i?'selected':''}>${localizeNum(i+1)}. ${esc(opt).slice(0,30)}</option>`).join('')}</select></div><div class="field"><label>${t('explanation_f')}</label><textarea id="f_qexp">${esc(q.explanation)}</textarea></div><div class="field"><label>امتیاز این پرسش</label><input type="number" id="f_qpoints_single" min="0.1" max="100" step="0.1" value="${Number(q.points)||1}"></div><div class="field"><label>${t('category_f')}</label><select id="f_qcat">${getQuizCategories().map(c=>`<option value="${c.id}" ${q.category===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div><div class="field"><label>${t('quiz_folders')}</label><select id="f_qfolder"><option value="">—</option>${STATE.quizFolders.filter(f=>!f.archived).map(f=>`<option value="${f.id}" ${q.folderId===f.id?'selected':''}>${esc(f.name)}</option>`).join('')}</select></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn primary" onclick="saveQuizQuestionEdit('${qid}')">${t('save')}</button></div>`);}
+function saveQuizQuestionEdit(qid){const q=getQuizBank().find(x=>x.id===qid);if(!q)return;q.question=document.getElementById('f_qtext').value;q.options=q.options.map((opt,i)=>document.getElementById('f_qopt'+i).value);q.correct=Number(document.getElementById('f_qcorrect').value);q.explanation=document.getElementById('f_qexp').value;q.points=Math.max(.1,Number(document.getElementById('f_qpoints_single')?.value)||1);q.category=document.getElementById('f_qcat').value;q.folderId=document.getElementById('f_qfolder').value||null;saveState();closeModal();showToast(t('save_success'));renderPage();}
+/* Legacy startQuiz() removed: the parameterized version above is the single quiz launcher. */
+function renderQuizQuestion(){const q=QUIZ_SESSION.questions[QUIZ_SESSION.index],sel=QUIZ_SESSION.selected,s=STATE.quizSettings;const totalLeft=QUIZ_SESSION.totalTimer?Math.max(0,QUIZ_SESSION.totalSeconds-Math.floor((Date.now()-QUIZ_SESSION.totalStartedAt)/1000)):0;return `<h1 class="pagetitle">${t('quiz_title')}</h1><div class="pagesub">${t('quiz_progress')} ${localizeNum(QUIZ_SESSION.index+1)} ${t('of_word')} ${localizeNum(QUIZ_SESSION.questions.length)} — ${esc(quizCatLabel(q.category))}</div><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><div class="badge gold">امتیاز سؤال: ${localizeNum(QUIZ_SESSION.points)}</div>${QUIZ_SESSION.totalTimer?`<div class="badge">⏱️ کل آزمون: <b id="quizTotalTimerValue">${formatQuizTime(totalLeft)}</b></div>`:''}${s.timerEnabled?`<div class="badge">⏳ سؤال: <b id="quizTimerValue">${localizeNum(Math.max(0,QUIZ_TIME_LEFT))}</b></div>`:''}</div><div class="progressbar-lg"><div style="width:${(QUIZ_SESSION.index/QUIZ_SESSION.questions.length)*100}%"></div></div><div class="card"><div style="font-weight:700;font-size:15.5px;margin-bottom:14px;line-height:1.8;">${esc(q.question)}</div>${q.options.map((opt,i)=>{let cls='quiz-opt';if(s.instantFeedback&&sel!==null){if(i===q.correct)cls+=' correct';else if(i===sel&&sel!==q.correct)cls+=' wrong';}return `<button class="${cls}" ${sel!==null?'disabled':''} onclick="selectQuizAnswer(${i})">${esc(opt)}</button>`}).join('')}${s.instantFeedback&&sel!==null?`<div class="smallnote" style="margin-top:10px;font-size:12.5px;">${esc(q.explanation)}</div><button class="btn primary" style="margin-top:14px;" onclick="nextQuizQuestion()">${QUIZ_SESSION.index+1>=QUIZ_SESSION.questions.length?t('finish'):t('next')}</button>`:''}</div>`;}
+function selectQuizAnswer(i){if(!QUIZ_SESSION||QUIZ_SESSION.selected!==null)return;stopQuizTimer();QUIZ_SESSION.selected=i;const q=QUIZ_SESSION.questions[QUIZ_SESSION.index];QUIZ_SESSION.answers.push({category:q.category,correct:i===q.correct,answered:true,points:QUIZ_SESSION.points});if(STATE.quizSettings.instantFeedback){renderPage();}else{nextQuizQuestion();}}
+function skipQuizQuestion(){if(!QUIZ_SESSION||QUIZ_SESSION.selected!==null)return;const q=QUIZ_SESSION.questions[QUIZ_SESSION.index];QUIZ_SESSION.answers.push({category:q.category,correct:false,answered:false,skipped:true,points:0});QUIZ_SESSION.index++;QUIZ_SESSION.selected=null;if(QUIZ_SESSION.index>=QUIZ_SESSION.questions.length)finishQuiz();else{renderPage();startQuizTimer();}}
+function nextQuizQuestion(){if(!QUIZ_SESSION)return;QUIZ_SESSION.index++;QUIZ_SESSION.selected=null;if(QUIZ_SESSION.index>=QUIZ_SESSION.questions.length)finishQuiz();else{renderPage();startQuizTimer();}}
+function finishQuiz(){stopQuizTimer();stopQuizTotalTimer();const answers=QUIZ_SESSION.answers,totalCorrect=answers.filter(a=>a.correct).reduce((sum,a)=>sum+(Number(a.points)||0),0),maxPoints=QUIZ_SESSION.questions.length*(Number(QUIZ_SESSION.points)||1),scorePct=maxPoints?Math.round(totalCorrect/maxPoints*100):0,byCat={};getQuizCategories().forEach(c=>{const ca=answers.filter(a=>a.category===c.id),earned=ca.filter(a=>a.correct).reduce((sum,a)=>sum+(Number(a.points)||0),0),max=ca.length*(Number(QUIZ_SESSION.points)||1);byCat[c.id]=ca.length?{pct:Math.round(earned/max*100),points:earned,maxPoints:max,count:ca.length}:null;});let weakCat=null,weakVal=101;Object.keys(byCat).forEach(c=>{if(byCat[c]&&byCat[c].pct<weakVal){weakVal=byCat[c].pct;weakCat=c;}});const result={id:uid(),scorePct,totalPoints:totalCorrect,maxPoints,byCat,weakCat,weakVal,date:todayISO(),total:QUIZ_SESSION.questions.length,correct:answers.filter(a=>a.correct).length,skipped:answers.filter(a=>a.skipped).length,examId:QUIZ_SESSION.examId||null};STATE.quizResults.push(result);saveState();QUIZ_SESSION.finished=true;QUIZ_SESSION.result=result;renderPage();renderHeader();}
 function deleteQuizResult(id){
-  confirmDelete(()=>{
-    STATE.quizResults = STATE.quizResults.filter(r=>r.id!==id);
-    saveState(); showToast(t('deleted')); renderPage(); renderHeader();
-  });
-}
-function renderQuizList(){
-  const bank = getQuizBank();
-  return `
-  <h1 class="pagetitle">${t('question_list')}</h1>
-  <button class="btn ghost" style="margin-bottom:12px;" onclick="QUIZ_VIEW='home'; renderPage();">← ${t('back')}</button>
-  ${bank.map((q,idx)=>`
-    <div class="item-row">
-      <div class="irow-top">
-        <div style="flex:1;">
-          <span class="badge gold">${CAT_LABELS[q.category][STATE.lang]||CAT_LABELS[q.category].fa}</span>
-          <div class="ititle" style="margin-top:6px;">${localizeNum(idx+1)}. ${esc(q.question)}</div>
-        </div>
-        <div class="item-actions"><button class="btn sm ghost" onclick="editQuizQuestion('${q.id}')">✎</button></div>
-      </div>
-    </div>`).join('')}
-  `;
-}
-function editQuizQuestion(qid){
-  const bank = getQuizBank();
-  const q = bank.find(x=>x.id===qid); if(!q) return;
-  openModal(`
-    <h3>${t('edit_question')}</h3>
-    <div class="field"><label>${t('title_f')}</label><textarea id="f_qtext">${esc(q.question)}</textarea></div>
-    ${q.options.map((opt,i)=>`<div class="field"><label>${t('option_f')} ${localizeNum(i+1)}</label><input id="f_qopt${i}" value="${esc(opt)}"></div>`).join('')}
-    <div class="field"><label>${t('correct_answer_f')}</label><select id="f_qcorrect">
-      ${q.options.map((opt,i)=>`<option value="${i}" ${q.correct===i?'selected':''}>${localizeNum(i+1)}. ${esc(opt).slice(0,30)}</option>`).join('')}
-    </select></div>
-    <div class="field"><label>${t('explanation_f')}</label><textarea id="f_qexp">${esc(q.explanation)}</textarea></div>
-    <div class="modal-actions">
-      <button class="btn ghost" onclick="closeModal()">${t('cancel')}</button>
-      <button class="btn primary" onclick="saveQuizQuestionEdit('${qid}')">${t('save')}</button>
-    </div>`);
-}
-function saveQuizQuestionEdit(qid){
-  const bank = getQuizBank();
-  const q = bank.find(x=>x.id===qid); if(!q) return;
-  q.question = document.getElementById('f_qtext').value;
-  q.options = q.options.map((opt,i)=>document.getElementById('f_qopt'+i).value);
-  q.correct = Number(document.getElementById('f_qcorrect').value);
-  q.explanation = document.getElementById('f_qexp').value;
-  saveState(); closeModal(); showToast(t('save_success')); renderPage();
-}
-function startQuiz(){
-  const bank = getQuizBank();
-  const shuffled = bank.slice().sort(()=>Math.random()-0.5);
-  QUIZ_SESSION = {questions:shuffled, index:0, answers:[], finished:false, selected:null};
-  renderPage();
-}
-function renderQuizQuestion(){
-  const q = QUIZ_SESSION.questions[QUIZ_SESSION.index];
-  const sel = QUIZ_SESSION.selected;
-  return `
-  <h1 class="pagetitle">${t('quiz_title')}</h1>
-  <div class="pagesub">${t('quiz_progress')} ${localizeNum(QUIZ_SESSION.index+1)} ${t('of_word')} ${localizeNum(QUIZ_SESSION.questions.length)} — ${CAT_LABELS[q.category][STATE.lang]||CAT_LABELS[q.category].fa}</div>
-  <div class="progressbar-lg"><div style="width:${(QUIZ_SESSION.index/QUIZ_SESSION.questions.length)*100}%"></div></div>
-  <div class="card">
-    <div style="font-weight:700; font-size:15.5px; margin-bottom:14px; line-height:1.8;">${esc(q.question)}</div>
-    ${q.options.map((opt,i)=>{
-      let cls='quiz-opt';
-      if(sel!==null){
-        if(i===q.correct) cls+=' correct';
-        else if(i===sel && sel!==q.correct) cls+=' wrong';
-      }
-      return `<button class="${cls}" ${sel!==null?'disabled':''} onclick="selectQuizAnswer(${i})">${esc(opt)}</button>`;
-    }).join('')}
-    ${sel!==null? `<div class="smallnote" style="margin-top:10px; font-size:12.5px;">${esc(q.explanation)}</div>
-      <button class="btn primary" style="margin-top:14px;" onclick="nextQuizQuestion()">${QUIZ_SESSION.index+1>=QUIZ_SESSION.questions.length? t('finish'): t('next')}</button>` : ''}
-  </div>`;
-}
-function selectQuizAnswer(i){
-  if(QUIZ_SESSION.selected!==null) return;
-  QUIZ_SESSION.selected = i;
-  const q = QUIZ_SESSION.questions[QUIZ_SESSION.index];
-  QUIZ_SESSION.answers.push({category:q.category, correct: i===q.correct});
-  renderPage();
-}
-function nextQuizQuestion(){
-  QUIZ_SESSION.index++;
-  QUIZ_SESSION.selected=null;
-  if(QUIZ_SESSION.index>=QUIZ_SESSION.questions.length){
-    finishQuiz();
-  } else {
-    renderPage();
-  }
-}
-function finishQuiz(){
-  const answers = QUIZ_SESSION.answers;
-  const totalCorrect = answers.filter(a=>a.correct).length;
-  const scorePct = Math.round((totalCorrect/answers.length)*100);
-  const byCat = {};
-  CATS.forEach(c=>{
-    const catAnswers = answers.filter(a=>a.category===c);
-    byCat[c] = catAnswers.length? Math.round((catAnswers.filter(a=>a.correct).length/catAnswers.length)*100) : null;
-  });
-  let weakCat = null, weakVal = 101;
-  Object.keys(byCat).forEach(c=>{ if(byCat[c]!==null && byCat[c]<weakVal){ weakVal=byCat[c]; weakCat=c; } });
-  const result = {id:uid(), scorePct, byCat, weakCat, weakVal, date:todayISO()};
-  STATE.quizResults.push(result);
+  const idx=STATE.quizResults.findIndex(r=>r.id===id);
+  if(idx<0)return;
+  STATE.quizResults.splice(idx,1);
   saveState();
-  QUIZ_SESSION.finished = true;
-  QUIZ_SESSION.result = result;
-  renderPage(); renderHeader();
+  renderPage();
+  renderHeader();
 }
 const SUGGESTED_CHECKLISTS = {
   independent:['قبل از پذیرش یک ادعا، منبع آن را بررسی کن.','هفته‌ای یک باور قدیمی خودت را زیر سؤال ببر.','قبل از تقلید از جمع، دلیل شخصی خودت را بنویس.'],
@@ -2099,37 +2167,92 @@ const SUGGESTED_CHECKLISTS = {
   compound:['یک رفتار کوچک مثبت را انتخاب و هر روز تکرار کن.','نتیجه تجمعی آن را ماهانه اندازه بگیر.','از رهاکردن زودهنگام روند مثبت خودداری کن.'],
   gratitude:['هر روز حداقل یک مورد شکرگزاری ثبت کن.','شکرگزاری را همراه با یک اقدام واقعی انجام بده.','از انکار مشکلات با شکرگزاری اجتناب کن.']
 };
-function renderQuizResult(result){
-  const weakLabel = result.weakCat ? (CAT_LABELS[result.weakCat][STATE.lang]||CAT_LABELS[result.weakCat].fa) : '-';
-  return `
-  <h1 class="pagetitle">${t('quiz_result')}</h1>
-  <div class="card" style="text-align:center;">
-    <div style="font-size:42px; font-weight:800; color:var(--gold);">${localizeNum(result.scorePct)}%</div>
-    <div style="font-size:15px; color:var(--text-dim); margin-top:4px;">${scoreLabel(result.scorePct)}</div>
-  </div>
-  <div class="card">
-    <div class="sectiontitle">${t('category_breakdown')}</div>
-    ${CATS.map(c=>{
-      const v = result.byCat[c];
-      if(v===null) return '';
-      return `<div style="margin-bottom:10px;">
-        <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px;"><span>${CAT_LABELS[c][STATE.lang]||CAT_LABELS[c].fa}</span><span>${localizeNum(v)}%</span></div>
-        <div class="chk-progress"><div style="width:${v}%; background:${v<50?'var(--red)':'var(--green)'}"></div></div>
-      </div>`;
-    }).join('')}
-  </div>
-  ${result.weakCat? `
-  <div class="card">
-    <div class="sectiontitle">⚠️ ${t('weak_area')}: ${weakLabel}</div>
-    <div class="sectiontitle" style="margin-top:10px; font-size:13px;">${t('suggested_checklist')}</div>
-    ${(SUGGESTED_CHECKLISTS[result.weakCat]||[]).map(s=>`<div class="cl-item"><span style="margin-inline-end:6px;">□</span><span class="cltext">${esc(s)}</span></div>`).join('')}
-    <button class="btn primary sm" style="margin-top:12px;" onclick="addWeakChecklistToDev('${result.weakCat}')">${t('add_to_dev')}</button>
-  </div>`:''}
-  <button class="btn ghost" onclick="QUIZ_SESSION=null; renderPage();">${t('close')}</button>
-  `;
+function defaultThresholdChecklist(cat,th){
+ const base=(SUGGESTED_CHECKLISTS[cat]||SUGGESTED_CHECKLISTS.independent||[]);
+ const special={25:'شناخت پایه را کامل کن و ۵ پرسش ساده از این حوزه را دوباره حل کن.',50:'نقاط ضعف را مشخص کن و حداقل ۱۰ پرسش هدفمند از این حوزه تمرین کن.',75:'خطاهای خودت را تحلیل کن و یک آزمون کوتاه دوباره با هدف ۷۵٪ بزن.',100:'همه خطاهای قبلی را مرور کن و تا رسیدن به ۱۰۰٪ یک آزمون مجدد انجام بده.'};
+ return [special[th],...base].slice(0,3);
 }
+function thresholdChecklist(cat,th){
+ cat=cat||'independent';
+ const key=String(th);
+ STATE.quizThresholdChecklists=STATE.quizThresholdChecklists||{};
+ STATE.quizThresholdChecklists[key]=STATE.quizThresholdChecklists[key]||{};
+ if(!Array.isArray(STATE.quizThresholdChecklists[key][cat])){
+   STATE.quizThresholdChecklists[key][cat]=defaultThresholdChecklist(cat,th).map(text=>({id:uid(),text}));
+   saveState();
+ }
+ return STATE.quizThresholdChecklists[key][cat].filter(x=>x && x.text).map(x=>x.text);
+}
+function thresholdChecklistItems(cat,th){
+ cat=cat||'independent'; const key=String(th);
+ thresholdChecklist(cat,th);
+ return (STATE.quizThresholdChecklists[key][cat]||[]);
+}
+function openQuizThresholdChecklistSettings(){
+ const cats=getQuizCategories(), currentCat=STATE.quizThresholdSettingsCat||cats[0]?.id||'independent', currentTh=Number(STATE.quizThresholdSettingsTh)||25;
+ const render=(cat,th)=>{
+   const items=thresholdChecklistItems(cat,th);
+   return `<div id="thresholdChecklistEditor">${items.map((x,i)=>`<div class="item-row" style="margin-bottom:7px"><div style="display:flex;gap:7px;align-items:center"><span class="badge gold">${localizeNum(i+1)}</span><input id="thcl_${x.id}" value="${esc(x.text)}" style="flex:1;min-width:0"><button class="btn sm danger" onclick="deleteQuizThresholdChecklist('${cat}',${th},'${x.id}')">✕</button></div></div>`).join('')||`<div class="smallnote">هنوز چک‌لیستی برای این نتیجه ثبت نشده است.</div>`}</div>`;
+ };
+ openModal(`<h3>⚙️ ویرایش چک‌لیست‌های پیشنهادی نتایج</h3><div class="field"><label>حوزه آزمون</label><select id="f_thcat" onchange="refreshQuizThresholdEditor()">${cats.map(c=>`<option value="${c.id}" ${c.id===currentCat?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div><div class="field"><label>سطح نتیجه</label><select id="f_thth" onchange="refreshQuizThresholdEditor()">${[25,50,75,100].map(th=>`<option value="${th}" ${th===currentTh?'selected':''}>${localizeNum(th)}%</option>`).join('')}</select></div><div class="smallnote">برای هر حوزه و هر سطح می‌توانید چک‌لیست‌های پیشنهادی را ویرایش، حذف یا مورد جدید اضافه کنید.</div>${render(currentCat,currentTh)}<div class="modal-actions"><button class="btn ghost" onclick="closeModal()">${t('close')}</button><button class="btn primary" onclick="addQuizThresholdChecklist()">＋ افزودن چک‌لیست</button><button class="btn primary" onclick="saveQuizThresholdChecklistSettings()">${t('save')}</button></div>`);
+}
+function refreshQuizThresholdEditor(){
+ const cat=document.getElementById('f_thcat')?.value||'independent', th=Number(document.getElementById('f_thth')?.value)||25;
+ STATE.quizThresholdSettingsCat=cat; STATE.quizThresholdSettingsTh=th;
+ const box=document.getElementById('thresholdChecklistEditor'); if(!box)return;
+ box.innerHTML=thresholdChecklistItems(cat,th).map((x,i)=>`<div class="item-row" style="margin-bottom:7px"><div style="display:flex;gap:7px;align-items:center"><span class="badge gold">${localizeNum(i+1)}</span><input id="thcl_${x.id}" value="${esc(x.text)}" style="flex:1;min-width:0"><button class="btn sm danger" onclick="deleteQuizThresholdChecklist('${cat}',${th},'${x.id}')">✕</button></div></div>`).join('')||`<div class="smallnote">هنوز چک‌لیستی برای این نتیجه ثبت نشده است.</div>`;
+}
+function saveQuizThresholdChecklistSettings(){
+ const cat=document.getElementById('f_thcat')?.value||'independent', th=Number(document.getElementById('f_thth')?.value)||25, items=thresholdChecklistItems(cat,th);
+ items.forEach(x=>{const el=document.getElementById('thcl_'+x.id);if(el)x.text=el.value.trim();});
+ STATE.quizThresholdChecklists[String(th)][cat]=items.filter(x=>x.text);
+ saveState();showToast(t('save_success'));closeModal();renderPage();
+}
+function addQuizThresholdChecklist(){
+ const cat=document.getElementById('f_thcat')?.value||'independent', th=Number(document.getElementById('f_thth')?.value)||25;
+ thresholdChecklistItems(cat,th).push({id:uid(),text:'چک‌لیست پیشنهادی جدید'}); refreshQuizThresholdEditor();
+ const box=document.getElementById('thresholdChecklistEditor'); if(box){const inputs=box.querySelectorAll('input');const last=inputs[inputs.length-1];if(last){last.focus();last.select();}}
+}
+function deleteQuizThresholdChecklist(cat,th,id){
+ const key=String(th); if(!STATE.quizThresholdChecklists?.[key]?.[cat])return;
+ STATE.quizThresholdChecklists[key][cat]=STATE.quizThresholdChecklists[key][cat].filter(x=>x.id!==id); refreshQuizThresholdEditor();
+}
+function renderQuizResult(result){const weakLabel=result.weakCat?quizCatLabel(result.weakCat):'-';requestAnimationFrame(()=>requestAnimationFrame(()=>renderQuizResultChart(result)));return `<h1 class="pagetitle">${t('quiz_result')}</h1><div class="card" style="text-align:center"><div style="font-size:42px;font-weight:800;color:var(--gold)">${localizeNum(result.scorePct)}%</div><div style="font-size:16px;margin-top:6px">امتیاز: ${localizeNum(result.totalPoints,1)} / ${localizeNum(result.maxPoints,1)}</div><div class="smallnote">${scoreLabel(result.scorePct)} · درست: ${localizeNum(result.correct)} · ردشده: ${localizeNum(result.skipped)}</div></div><div class="card"><div class="sectiontitle">تفکیک امتیاز و فیصدی بر اساس حوزه</div><div id="quizResultChartWrap" style="height:380px;overflow-x:auto;position:relative"><canvas id="quizResultColumnChart" style="display:block"></canvas></div></div><div class="card"><div class="sectiontitle">جزئیات حوزه‌ها</div>${getQuizCategories().map(c=>{const v=result.byCat[c.id];return v?`<div class="item-row"><div class="irow-top"><div><div class="ititle">${esc(c.name)}</div><div class="idesc">${localizeNum(v.points,1)} / ${localizeNum(v.maxPoints,1)} امتیاز · ${localizeNum(v.pct)}%</div></div><span class="badge gold">${localizeNum(v.pct)}%</span></div></div>`:''}).join('')}</div>${[25,50,75,100].map(th=>`<div class="card"><div class="sectiontitle">🎯 پیشنهاد برای رسیدن به ${th}%</div>${thresholdChecklist(result.weakCat,th).map(s=>`<div class="cl-item"><span style="margin-inline-end:6px">□</span><span class="cltext">${esc(s)}</span></div>`).join('')}<div class="smallnote" style="margin-top:7px">${result.scorePct>=th?'این سطح به دست آمده است.':'این چک‌لیست‌ها برای نزدیک شدن به این سطح پیشنهاد می‌شوند.'}</div></div>`).join('')}${result.weakCat?`<div class="card"><div class="sectiontitle">⚠️ حوزه نیازمند تقویت: ${esc(weakLabel)}</div><button class="btn primary sm" onclick="addWeakChecklistToDev('${result.weakCat}')">${t('add_to_dev')}</button></div>`:''}<button class="btn ghost" onclick="QUIZ_SESSION=null;renderPage()">${t('close')}</button>`;}
+function renderQuizResultChart(result){
+  const el=document.getElementById('quizResultColumnChart');
+  if(!el||typeof Chart==='undefined'){
+    if(el&&typeof Chart==='undefined') setTimeout(()=>renderQuizResultChart(result),300);
+    return;
+  }
+  const cats=getQuizCategories().filter(c=>result.byCat&&result.byCat[c.id]);
+  const labels=cats.map(c=>c.name);
+  const pcts=cats.map(c=>Number(result.byCat[c.id].pct)||0);
+  const points=cats.map(c=>Number(result.byCat[c.id].points)||0);
+  const wrap=document.getElementById('quizResultChartWrap');
+  const minWidth=Math.max(520,cats.length*130);
+  if(wrap) el.style.width=minWidth+'px';
+  el.style.height='350px';
+  if(window.quizResultChart){try{window.quizResultChart.destroy();}catch(e){}}
+  const valueLabels={id:'quizResultValueLabels',afterDatasetsDraw(chart){
+    const ctx=chart.ctx;
+    chart.data.datasets.forEach((ds,di)=>{
+      const meta=chart.getDatasetMeta(di);
+      meta.data.forEach((bar,i)=>{
+        const val=Number(ds.data[i])||0;
+        ctx.save();ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text')||'#555';
+        const txt=di===0?val+'%':val;
+        ctx.fillText(txt,bar.x,bar.y-7);ctx.restore();
+      });
+    });
+  }};
+  window.quizResultChart=new Chart(el,{type:'bar',plugins:[valueLabels],data:{labels,datasets:[
+    {label:'فیصدی',data:pcts,yAxisID:'yPct',backgroundColor:CHART_COLORS.gold,borderRadius:5,maxBarThickness:42},
+    {label:'امتیاز',data:points,yAxisID:'yPts',backgroundColor:CHART_COLORS.green,borderRadius:5,maxBarThickness:42}
+  ]},options:{responsive:true,maintainAspectRatio:false,animation:false,interaction:{mode:'index',intersect:false},scales:{x:{ticks:{autoSkip:false,maxRotation:45,minRotation:0}},yPct:{min:0,max:100,position:'left',ticks:{callback:v=>v+'%'}},yPts:{min:0,position:'right',grid:{drawOnChartArea:false}}},plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:(ctx)=>ctx.dataset.label+': '+(ctx.datasetIndex===0?ctx.parsed.y+'%':ctx.parsed.y)}}}}});
+}
+
 function addWeakChecklistToDev(cat){
-  const label = CAT_LABELS[cat][STATE.lang]||CAT_LABELS[cat].fa;
+  const label = quizCatLabel(cat);
   const items = (SUGGESTED_CHECKLISTS[cat]||[]).map(s=>({id:uid(), title:s, done:false, score:5}));
   STATE.development.push({id:uid(), title:label, description:t('weak_area'), category:label, date:todayISO(), status:'notdone', checklist:items});
   saveState(); showToast(t('save_success'));
@@ -2172,15 +2295,6 @@ function settingsProfile(){
     <div class="field"><label>${t('bio_f')}</label><textarea id="f_ubio">${esc(u.bio)}</textarea></div>
     <div class="field"><label>${t('mygoals_f')}</label><textarea id="f_ugoals">${esc(u.goalsText)}</textarea></div>
     <button class="btn primary" onclick="saveProfile()">${t('save')}</button>
-  </div>
-  <div class="card">
-    <div class="sectiontitle">${t('mygame')}</div>
-    <div class="idesc" style="margin-bottom:6px;">${t('mygame_q')}</div>
-    <textarea id="f_mygame" placeholder="${t('mygame_ph')}">${esc(STATE.myGame)}</textarea>
-    <div class="sectiontitle" style="margin-top:16px;">${t('myland')}</div>
-    <div class="idesc" style="margin-bottom:6px;">${t('myland_q')}</div>
-    <textarea id="f_myland" placeholder="${t('myland_ph')}">${esc(STATE.myLand)}</textarea>
-    <button class="btn primary" style="margin-top:12px;" onclick="saveGameLand()">${t('save')}</button>
   </div>
   `;
 }
@@ -2347,86 +2461,40 @@ function settingsPrefs(){
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
       <button class="btn primary" onclick="exportBackup()">⬇️ ${t('backup_download')}</button>
       <button class="btn" onclick="document.getElementById('restoreFileInput').click()">⬆️ ${t('backup_upload')}</button>
-      <button class="btn" onclick="saveOnlineBackup()">☁️ ذخیره آنلاین</button>
-      <button class="btn" onclick="restoreOnlineBackup()">☁️ بازیابی آنلاین</button>
       <input type="file" id="restoreFileInput" accept="application/json" style="display:none" onchange="importBackupFile(this)">
     </div>
-    <div id="onlineBackupStatus" class="smallnote" style="margin-top:10px;"></div>
   </div>`;
 }
 function telegramWebApp(){ return window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null; }
-function inTelegram(){ return !!telegramWebApp(); }
-function setOnlineBackupStatus(msg){ const el=document.getElementById('onlineBackupStatus'); if(el) el.textContent=msg; }
 function exportBackup(){
-  const dataStr = JSON.stringify(STATE, null, 2);
-  const blob = new Blob([dataStr], {type:'application/json'});
-  const fileName = 'zmqm-backup-'+todayISO()+'.json';
-  const tg = telegramWebApp();
-  if(tg && typeof tg.downloadFile === 'function'){
-    // Telegram native download requires a public HTTPS URL; a local Blob URL cannot be downloaded by Telegram.
-    // Therefore the normal browser download remains the offline path, while CloudStorage is the online path.
-    try{
-      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fileName; document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-      showToast('بکاپ آفلاین آماده شد');
-    }catch(e){ showToast('دانلود آفلاین در تلگرام ممکن نشد؛ ذخیره آنلاین را استفاده کنید'); }
-    return;
+  try{
+    // Always capture the latest state before creating the backup.
+    saveState();
+    const data = {
+      version: 4,
+      exportedAt: new Date().toISOString(),
+      app: 'بازی من، زمین من، قوانین من',
+      state: STATE
+    };
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], {type:'application/json;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'backup-' + todayISO() + '.json';
+    a.rel = 'noopener';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>{
+      try{ a.remove(); }catch(e){}
+      try{ URL.revokeObjectURL(url); }catch(e){}
+    }, 1500);
+    showToast(STATE.lang==='fa' ? 'بکاپ با موفقیت آماده شد.' : 'Backup created successfully.');
+  }catch(err){
+    console.error('Backup export failed:', err);
+    showToast(STATE.lang==='fa' ? 'دانلود بکاپ ناموفق بود.' : 'Backup download failed.');
   }
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = fileName;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
-  showToast(t('save_success'));
-}
-const TG_BACKUP_PREFIX='zmqm_backup_v1_';
-const TG_BACKUP_META=TG_BACKUP_PREFIX+'meta';
-const TG_CHUNK_SIZE=3800;
-function cloudStorage(){ const tg=telegramWebApp(); return tg && tg.CloudStorage && typeof tg.CloudStorage.setItem==='function' ? tg.CloudStorage : null; }
-function tgCall(method,...args){ return new Promise((resolve,reject)=>{ const cs=cloudStorage(); if(!cs || typeof cs[method]!=='function') return reject(new Error('Telegram CloudStorage unavailable')); try{ cs[method](...args,(err,val)=>err?reject(err):resolve(val)); }catch(e){reject(e);} }); }
-async function saveOnlineBackup(){
-  const cs=cloudStorage();
-  if(!cs){ showToast('CloudStorage تلگرام در این نسخه در دسترس نیست'); setOnlineBackupStatus('Telegram WebApp / CloudStorage در دسترس نیست؛ برنامه را از داخل Mini App باز کنید.'); return false; }
-  try{
-    const data=JSON.stringify(STATE);
-    const count=Math.ceil(data.length/TG_CHUNK_SIZE);
-    const oldMeta=await tgCall('getItem',TG_BACKUP_META).catch(()=>null);
-    let oldCount=0; try{oldCount=Number(JSON.parse(oldMeta||'{}').count)||0;}catch(e){}
-    const writes=[];
-    for(let i=0;i<count;i++) writes.push(tgCall('setItem',TG_BACKUP_PREFIX+i,data.slice(i*TG_CHUNK_SIZE,(i+1)*TG_CHUNK_SIZE)));
-    await Promise.all(writes);
-    if(oldCount>count){ const keys=[]; for(let i=count;i<oldCount;i++) keys.push(TG_BACKUP_PREFIX+i); if(keys.length) await tgCall('removeItems',keys); }
-    await tgCall('setItem',TG_BACKUP_META,JSON.stringify({version:1,count,updatedAt:new Date().toISOString()}));
-    setOnlineBackupStatus('☁️ آخرین ذخیره آنلاین: '+new Date().toLocaleString());
-    showToast('بکاپ آنلاین ذخیره شد');
-    return true;
-  }catch(e){ console.error('CloudStorage save error:',e); showToast('ذخیره آنلاین ناموفق بود'); setOnlineBackupStatus('خطای CloudStorage: '+(e && (e.message||e.description||e) ? (e.message||e.description||e) : 'نامشخص')); return false; }
-}
-async function restoreOnlineBackup(){
-  const cs=cloudStorage();
-  if(!cs){ showToast('بازیابی آنلاین فقط داخل Telegram Mini App فعال است'); return false; }
-  try{
-    const metaRaw=await tgCall('getItem',TG_BACKUP_META);
-    if(!metaRaw){ showToast('هنوز بکاپ آنلاین وجود ندارد'); return false; }
-    const meta=JSON.parse(metaRaw); const count=Number(meta.count)||0;
-    if(count<1 || count>1000) throw new Error('invalid backup metadata');
-    const keys=Array.from({length:count},(_,i)=>TG_BACKUP_PREFIX+i);
-    const vals=await tgCall('getItems',keys);
-    const data=keys.map(k=>vals[k]||'').join('');
-    if(!data) throw new Error('empty backup');
-    const parsed=JSON.parse(data);
-    STATE=Object.assign(defaultState(),parsed); normalizeState(); normalizeChecklistFlags(); saveState();
-    OPEN_GOAL_ID=null; QUIZ_SESSION=null; QUIZ_VIEW='home'; PERF_ARCHIVE_VIEW=false;
-    document.documentElement.setAttribute('data-theme',STATE.theme); applyLangDir(); renderNav(); renderHeader(); renderPage();
-    setOnlineBackupStatus('☁️ بکاپ آنلاین بازیابی شد: '+(meta.updatedAt?new Date(meta.updatedAt).toLocaleString():''));
-    showToast('بکاپ آنلاین بازیابی شد');
-    return true;
-  }catch(e){ console.error(e); showToast('بازیابی آنلاین ناموفق بود'); return false; }
-}
-let ONLINE_SAVE_TIMER=null;
-function scheduleOnlineBackup(){
-  if(!cloudStorage()) return;
-  clearTimeout(ONLINE_SAVE_TIMER);
-  ONLINE_SAVE_TIMER=setTimeout(()=>saveOnlineBackup(),1200);
 }
 function importBackupFile(input){
   const file = input.files[0]; if(!file) return;
@@ -2434,7 +2502,8 @@ function importBackupFile(input){
   reader.onload = (e)=>{
     try{
       const parsed = JSON.parse(e.target.result);
-      STATE = Object.assign(defaultState(), parsed);
+      const incoming = parsed && parsed.state && typeof parsed.state === 'object' ? parsed.state : parsed;
+      STATE = Object.assign(defaultState(), incoming);
       normalizeState();
       saveState();
       OPEN_GOAL_ID = null; QUIZ_SESSION=null; QUIZ_VIEW='home'; PERF_ARCHIVE_VIEW=false;
@@ -2465,21 +2534,151 @@ const CHART_COLORS = {gold:'#C9A227', green:'#3F9C6D', red:'#C0533B', blue:'#4A7
 function chartDefaults(){
   return { plugins:{legend:{labels:{color:CHART_COLORS.text, font:{family:'Vazirmatn'}}}}, scales:{} };
 }
+function financialChecklistProgress(){
+  const levels=Array.isArray(STATE.financialLevels)?STATE.financialLevels:[];
+  if(!levels.length)return 0;
+  let total=0,done=0;
+  levels.forEach(x=>{const cl=Array.isArray(x.checklist)?x.checklist:[];total+=cl.length;done+=cl.filter(c=>c.done===true).length;});
+  return total?Math.round(done/total*10000)/100:0;
+}
+function financialLevelChecklistPct(x){
+  const cl=Array.isArray(x&&x.checklist)?x.checklist:[];
+  return cl.length?Math.round(cl.filter(c=>c.done===true).length/cl.length*10000)/100:0;
+}
+function renderFinancialMilestoneBar(){
+    const levels=Array.isArray(STATE.financialLevels)&&STATE.financialLevels.length?STATE.financialLevels:[];
+    const target=Math.max(1,Number(STATE.financial.target)||18000), current=Math.max(0,Number(STATE.financial.current)||0);
+    if(!levels.length)return '';
+    let progressUnits=0, reachedCount=0, currentIndex=-1;
+    levels.forEach((x,i)=>{const lp=financialLevelChecklistPct(x); progressUnits+=lp/100; if(lp>=100) reachedCount++; else if(currentIndex<0) currentIndex=i;});
+    if(currentIndex<0) currentIndex=levels.length-1;
+    const pct=Math.min(100,Math.max(0,progressUnits/levels.length*100));
+    const points=levels.map((x,i)=>{
+      const lp=financialLevelChecklistPct(x), reached=lp>=100, isCurrent=!reached&&i===currentIndex;
+      return `<div class="milestone-point ${reached?'reached':''} ${isCurrent?'current':''}" title="${esc(t('level'))} ${localizeNum(x.level)} · $${formatMoney(Number(x.threshold)||0)} · ${localizeNum(lp,2)}%" onclick="navigate('goals');setTimeout(()=>toggleFinancialLevelOpen(${Number(x.level)}),0)"><span class="milestone-dot"></span><span class="milestone-label">${localizeNum(x.level)}</span><span class="milestone-value">$${formatMoney(Number(x.threshold)||0)}</span></div>`;
+    }).join('');
+    const assetPct=Math.min(100,Math.max(0,current/target*100));
+    return `<div class="card financial-milestone-card" style="margin-top:14px"><div class="financial-milestone"><div class="financial-milestone-head"><div class="financial-milestone-title">💰 ${t('financial_levels')} · چک‌لیست</div><div class="financial-milestone-current">پیشرفت چک‌لیست: ${localizeNum(pct,2)}% · ${localizeNum(reachedCount)}/${localizeNum(levels.length)} ${t('level')}</div></div><div class="milestone-scroll"><div class="milestone-track"><div class="milestone-line"></div><div class="milestone-fill" style="width:calc(${pct}% - 12px)"></div><div class="milestone-points">${points}</div></div></div><div class="milestone-legend"><span>۰٪</span><span>سطح جاری بر اساس تکمیل چک‌لیست‌ها</span><span>۱۰۰٪</span></div><div class="smallnote" style="text-align:center;margin-top:8px;">دارایی مالی: $${formatMoney(current)} / $${formatMoney(target)} · ${localizeNum(assetPct,2)}%</div></div></div>`;
+  }
+
+function setPerfTrendMode(v){
+  const allowed=['weeks-past','weeks-future','months-past','years-3'];
+  PERF_TREND_MODE=allowed.includes(v)?v:'weeks-past';
+  renderPage();
+}
+function getWeekStart(date){
+  const d=new Date(date); d.setHours(0,0,0,0);
+  const day=d.getDay();
+  const diff=(day+6)%7; // Monday as week start
+  d.setDate(d.getDate()-diff);
+  return d;
+}
+function performancePctForRange(start,end){
+  const a=new Date(start); a.setHours(0,0,0,0);
+  const b=new Date(end); b.setHours(0,0,0,0);
+  const items=allChecklistItems().filter(it=>{
+    if(!it._date)return false;
+    const d=new Date(String(it._date).slice(0,10)+'T00:00:00');
+    return !Number.isNaN(d.getTime()) && d>=a && d<b;
+  });
+  if(!items.length)return 0;
+  let tw=0,dw=0;
+  items.forEach(c=>{const w=Number(c.score)||1;tw+=w;if(c.done)dw+=w;});
+  return tw?Math.round(dw/tw*100):0;
+}
+function weeklyPerformancePct(weekStart){
+  const start=new Date(weekStart); start.setHours(0,0,0,0);
+  const end=new Date(start); end.setDate(end.getDate()+7);
+  return performancePctForRange(start,end);
+}
+function monthlyPerformancePct(monthStart){
+  const start=new Date(monthStart.getFullYear(),monthStart.getMonth(),1);
+  const end=new Date(start.getFullYear(),start.getMonth()+1,1);
+  return performancePctForRange(start,end);
+}
 function renderCharts(){
   destroyCharts();
   const lineEl=document.getElementById('chartLine');
-  if(lineEl){
-    const labels=[],data=[];
-    for(let i=59;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const iso=d.toISOString().slice(0,10);labels.push(STATE.lang==='en'?(d.getMonth()+1)+'/'+d.getDate():faDigits((d.getMonth()+1)+'/'+d.getDate()));const items=allChecklistItems().filter(it=>it._date&&it._date.slice(0,10)===iso);let pct=0;if(items.length){let tw=0,dw=0;items.forEach(c=>{const w=c.score||1;tw+=w;if(c.done)dw+=w;});pct=tw?Math.round(dw/tw*100):0;}data.push(pct);}
-    charts.line=new Chart(lineEl,{type:'line',data:{labels,datasets:[{label:t('daily'),data,borderColor:CHART_COLORS.gold,backgroundColor:'rgba(201,162,39,.15)',fill:true,tension:.35,pointRadius:3,pointHoverRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>`${ctx.parsed.y}%`}}},scales:{x:{ticks:{color:CHART_COLORS.text,maxRotation:0,autoSkip:false},grid:{color:CHART_COLORS.grid}},y:{min:0,max:100,ticks:{color:CHART_COLORS.text,callback:v=>v+'%'},grid:{color:CHART_COLORS.grid}}}}});
+  const checklistEl=document.getElementById('chartPerfChecklist');
+  if(checklistEl){
+    const sections=perfSections();
+    const labels=sections.map(sec=>sec.name);
+    const doneData=sections.map(sec=>{
+      const items=Array.isArray(STATE[sec.key])?STATE[sec.key]:[];
+      return items.reduce((sum,item)=>sum+(Array.isArray(item.checklist)?item.checklist.filter(c=>c&&c.done===true).length:0),0);
+    });
+    const notDoneData=sections.map((sec,i)=>{
+      const items=Array.isArray(STATE[sec.key])?STATE[sec.key]:[];
+      const total=items.reduce((sum,item)=>sum+(Array.isArray(item.checklist)?item.checklist.length:0),0);
+      return Math.max(0,total-doneData[i]);
+    });
+    const valuePlugin={id:'performanceChecklistValueLabels',afterDatasetsDraw(chart){
+      const ctx=chart.ctx; ctx.save(); ctx.textAlign='center'; ctx.textBaseline='bottom'; ctx.font='700 11px Vazirmatn';
+      ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text');
+      chart.data.datasets.forEach((ds,di)=>{
+        const meta=chart.getDatasetMeta(di);
+        meta.data.forEach((bar,i)=>{const value=Number(ds.data[i])||0; const y=Math.max(16,bar.y-6); ctx.fillText(localizeNum(value),bar.x,y);});
+      });
+      ctx.restore();
+    }};
+    charts.perfChecklist=new Chart(checklistEl,{type:'bar',plugins:[valuePlugin],data:{labels,datasets:[
+      {label:'انجام‌شده',data:doneData,backgroundColor:'#3F9C6D',borderRadius:5,maxBarThickness:34},
+      {label:'انجام‌نشده',data:notDoneData,backgroundColor:'#6B767C',borderRadius:5,maxBarThickness:34}
+    ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CHART_COLORS.text,font:{family:'Vazirmatn'}}},tooltip:{callbacks:{label:(ctx)=>`${ctx.dataset.label}: ${localizeNum(ctx.parsed.y)}`}}},scales:{x:{stacked:false,ticks:{color:CHART_COLORS.text,font:{family:'Vazirmatn'}},grid:{display:false}},y:{beginAtZero:true,precision:0,ticks:{color:CHART_COLORS.text,stepSize:1},grid:{color:CHART_COLORS.grid}}}}});
   }
-  function makeGauge(id,pct,label,isFinancial=false){const el=document.getElementById(id);if(!el)return;const v=Math.max(0,Math.min(100,pct));const plugin={id:id+'needle',afterDraw(chart){const ctx=chart.ctx,area=chart.chartArea,cx=(area.left+area.right)/2,cy=(area.top+area.bottom)/2+12,r=Math.min(area.right-area.left,area.bottom-area.top)*.42;const angle=Math.PI+Math.PI*v/100;ctx.save();ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(angle)*r,cy+Math.sin(angle)*r);ctx.lineWidth=4;ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--text');ctx.stroke();ctx.beginPath();ctx.arc(cx,cy,6,0,Math.PI*2);ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text');ctx.fill();ctx.textAlign='center';ctx.font='800 28px Vazirmatn';ctx.fillText((isFinancial?Math.round(v):Math.round(v))+'%',cx,cy+35);ctx.font='600 11px Vazirmatn';ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-dim');ctx.fillText(label,cx,cy+53);ctx.restore();}};const seg=isFinancial?Array.from({length:25},()=>4):[25,25,25,25];const colors=isFinancial?financialGaugeColors():[CHART_COLORS.red,'#D98F82','#8BC5A6',CHART_COLORS.green];return new Chart(el,{type:'doughnut',plugins:[plugin],data:{datasets:[{data:seg,backgroundColor:colors,borderWidth:isFinancial?2:0,borderColor:getComputedStyle(document.documentElement).getPropertyValue('--surface')}]},options:{responsive:true,maintainAspectRatio:false,rotation:-90,circumference:180,cutout:'72%',plugins:{legend:{display:false},tooltip:{enabled:false}}}});}
-  charts.goalGauge=makeGauge('chartGoalGauge',goalsProgressPct(),t('goals_pct'));
-  charts.perfGauge=makeGauge('chartPerfGauge',todayPerf(),t('today_perf'));
-  const financialPct=financialProgressPct();
-  charts.financialGauge=makeGauge('chartFinancialGauge',financialPct,t('financial_levels'),true);
+  if(lineEl){
+    const labels=[],data=[],periods=[];
+    const now=new Date(); now.setHours(0,0,0,0);
+    const fmtDate=d=>STATE.lang==='en'?`${d.getMonth()+1}/${d.getDate()}`:faDigits(`${d.getMonth()+1}/${d.getDate()}`);
+    const fmtMonth=d=>STATE.lang==='en'?`${d.getMonth()+1}/${String(d.getFullYear()).slice(-2)}`:faDigits(`${d.getMonth()+1}/${String(d.getFullYear()).slice(-2)}`);
+
+    if(PERF_TREND_MODE==='weeks-past' || PERF_TREND_MODE==='weeks-future'){
+      const base=getWeekStart(now);
+      const direction=PERF_TREND_MODE==='weeks-future'?1:-1;
+      // Always exactly 12 weekly columns.
+      for(let i=0;i<12;i++){
+        const ws=new Date(base); ws.setDate(ws.getDate() + direction*(PERF_TREND_MODE==='weeks-future'?i:11-i)*7);
+        const end=new Date(ws); end.setDate(end.getDate()+7);
+        const label=STATE.lang==='en'?`${fmtDate(ws)}–${fmtDate(new Date(end.getTime()-86400000))}`:`${fmtDate(ws)}–${fmtDate(new Date(end.getTime()-86400000))}`;
+        labels.push(label);
+        data.push(weeklyPerformancePct(ws));
+        periods.push(ws);
+      }
+    } else if(PERF_TREND_MODE==='months-past'){
+      const base=new Date(now.getFullYear(),now.getMonth(),1);
+      // Exactly 12 monthly columns.
+      for(let i=11;i>=0;i--){
+        const ms=new Date(base.getFullYear(),base.getMonth()-i,1);
+        labels.push(fmtMonth(ms)); data.push(monthlyPerformancePct(ms)); periods.push(ms);
+      }
+    } else {
+      // Three years = 36 monthly columns, preserving monthly detail.
+      const base=new Date(now.getFullYear(),now.getMonth(),1);
+      for(let i=35;i>=0;i--){
+        const ms=new Date(base.getFullYear(),base.getMonth()-i,1);
+        labels.push(fmtMonth(ms)); data.push(monthlyPerformancePct(ms)); periods.push(ms);
+      }
+    }
+
+    const inner=document.getElementById('perfTrendChartInner');
+    if(inner){
+      const count=data.length;
+      inner.style.minWidth=(count<=12?'1100px':`${Math.max(1100,count*42)}px`);
+      inner.style.height='300px';
+    }
+    const pctPlugin={id:'weeklyPctLabels',afterDatasetsDraw(chart){
+      const ctx=chart.ctx; const meta=chart.getDatasetMeta(0);
+      ctx.save(); ctx.textAlign='center'; ctx.textBaseline='bottom'; ctx.font='700 11px Vazirmatn';
+      ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text');
+      meta.data.forEach((bar,i)=>{const v=data[i];ctx.fillText(`${v}%`,bar.x,bar.y-5);});
+      ctx.restore();
+    }};
+    const isThreeYears=PERF_TREND_MODE==='years-3';
+    charts.line=new Chart(lineEl,{type:'bar',plugins:[pctPlugin],data:{labels,datasets:[{label:'عملکرد',data,backgroundColor:CHART_COLORS.gold,borderRadius:5,maxBarThickness:isThreeYears?28:42}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>`${ctx.parsed.y}%`}}},scales:{x:{ticks:{color:CHART_COLORS.text,maxRotation:0,autoSkip:isThreeYears},grid:{display:false}},y:{min:0,max:100,ticks:{color:CHART_COLORS.text,callback:v=>v+'%'},grid:{color:CHART_COLORS.grid}}}}});
+  }
   const donutEl=document.getElementById('chartDonut');if(donutEl){const items=allChecklistItems(),done=items.filter(i=>i.done).length,total=items.length;charts.donut=new Chart(donutEl,{type:'doughnut',data:{labels:[t('done'),t('notdone')],datasets:[{data:[done,total-done],backgroundColor:[CHART_COLORS.green,CHART_COLORS.red],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CHART_COLORS.text}}}}});}
 }
+
 function afterRender(){
   if(CURRENT_PAGE==='dashboard'){ renderCharts(); }
 }
