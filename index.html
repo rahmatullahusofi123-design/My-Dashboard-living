@@ -2516,7 +2516,8 @@ function importBackupFile(input){
   input.value = '';
 }
 function toggleHeaderItem(key,val){STATE.headerItems[key]=!!val;saveState();renderHeader();renderPage();}
-function setHeaderMessageInterval(v){STATE.headerMessageInterval=Math.max(1,Math.min(1440,Number(v)||5));saveState();startHeaderMessageTimer();}
+function setHeaderMessageInterval(v){STATE.headerMessageInterval=Math.max(1,Math.min(1440,Number(v)||5));saveState();startHeaderMessageTimer();
+  startUserAnalytics();}
 function addHeaderMessage(){STATE.headerMessages.push({id:uid(),text:'پیام جدید برای هدر'});STATE.activeHeaderMessageIndex=Math.floor(Math.random()*STATE.headerMessages.length);saveState();renderPage();renderHeader();}
 function editHeaderMessage(id,text){const m=STATE.headerMessages.find(x=>x.id===id);if(m&&String(text).trim()){m.text=String(text).trim();saveState();renderHeader();}}
 function deleteHeaderMessage(id){if(STATE.headerMessages.length<=1){showToast('حداقل یک پیام نگه داشته شود');return;}STATE.headerMessages=STATE.headerMessages.filter(x=>x.id!==id);STATE.activeHeaderMessageIndex%=STATE.headerMessages.length;saveState();renderPage();renderHeader();}
@@ -2681,6 +2682,35 @@ function renderCharts(){
 
 function afterRender(){
   if(CURRENT_PAGE==='dashboard'){ renderCharts(); }
+}
+
+
+/* ============ USER ANALYTICS (ISOLATED) ============ */
+const USER_TRACKING_API = 'https://normality-tracker.usofi-clash1.workers.dev/track';
+
+function getTelegramInitDataSafe(){
+  try{
+    return (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData) || '';
+  }catch(e){ return ''; }
+}
+
+async function sendUserTrackingEvent(eventName){
+  if(!USER_TRACKING_API) return;
+  const initData = getTelegramInitDataSafe();
+  if(!initData) return;
+  try{
+    await fetch(USER_TRACKING_API, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({event:eventName, initData:initData}),
+      keepalive:true
+    });
+  }catch(e){}
+}
+
+function startUserAnalytics(){
+  sendUserTrackingEvent('open');
+  setInterval(()=>sendUserTrackingEvent('heartbeat'), 60000);
 }
 
 /* ============ INIT ============ */
